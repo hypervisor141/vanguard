@@ -1,13 +1,12 @@
 package vanguard;
 
+@SuppressWarnings("unused")
 public final class VLVManager implements VLVTypeManager<VLVEntry>{
 
     private static final Length CACHE = new Length();
 
     private boolean pause;
-    private boolean directmode;
     private boolean isdone;
-
     private int endpointindex;
 
     private VLListType<VLVEntry> entries;
@@ -18,7 +17,6 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
         this.syncer = syncer;
 
         pause = true;
-        directmode = false;
         endpointindex = -1;
     }
 
@@ -26,7 +24,6 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
         entries = new VLListType<>(capacity, resizer);
 
         pause = true;
-        directmode = false;
         endpointindex = -1;
     }
 
@@ -86,70 +83,26 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
 
     @Override
     public int next(){
-        if(!pause && !directmode){
-            return iterate();
+        if(!pause){
+            int count = 0;
+
+            for(int i = 0; i < entries.size(); i++){
+                count += entries.get(i).next();
+            }
+
+            if(count == 0){
+                isdone = true;
+                pause();
+
+            }else if(syncer != null){
+                syncer.sync(this);
+            }
+
+            return count;
 
         }else{
             return 0;
         }
-    }
-
-    public int nextIsolated(long sleep, Object lock, IsolatedControl controller){
-        int count = 0;
-        long totalsleep = 0;
-        int currentcount;
-
-        synchronized(lock){
-            directmode = true;
-            controller.preLoop(this);
-        }
-
-        while(true){
-            synchronized(lock){
-                controller.preIterate(this);
-
-                currentcount = iterate();
-
-                controller.postIterate(this);
-            }
-
-            count += currentcount;
-
-            try{
-                Thread.sleep(sleep);
-            }catch(InterruptedException ex){
-                ex.printStackTrace();
-            }
-
-            if(currentcount == 0){
-                break;
-            }
-        }
-
-        synchronized(lock){
-            directmode = false;
-            controller.postLoop(this);
-        }
-
-        return count;
-    }
-
-    private int iterate(){
-        int count = 0;
-
-        for(int i = 0; i < entries.size(); i++){
-            count += entries.get(i).next();
-        }
-
-        if(count == 0){
-            isdone = true;
-            pause();
-
-        }else if(syncer != null){
-            syncer.sync(this);
-        }
-
-        return count;
     }
 
     @Override
@@ -179,7 +132,7 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     @Override
     public void fastForward(int count){
         for(int i = 0; i < count; i++){
-            iterate();
+            next();
         }
     }
 
@@ -438,8 +391,6 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
         info.append(entries.size());
         info.append("] paused[");
         info.append(pause);
-        info.append("] directmode[");
-        info.append(directmode);
         info.append("] data[");
 
         if(verbose){
@@ -467,13 +418,4 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
 
         info.append("]");
     }
-
-    public static interface IsolatedControl{
-
-        void preLoop(VLVManager proc);
-        void preIterate(VLVManager proc);
-        void postIterate(VLVManager proc);
-        void postLoop(VLVManager proc);
-    }
-
 }

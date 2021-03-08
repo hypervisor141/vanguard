@@ -1,18 +1,16 @@
 package vanguard;
 
 @SuppressWarnings("unused")
-public final class VLVManager implements VLVTypeManager<VLVEntry>{
-
-    private static final Length CACHE = new Length();
+public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
     private boolean pause;
     private boolean isdone;
     private int endpointindex;
 
-    private VLListType<VLVEntry> entries;
-    private VLSyncType<VLVManager> syncer;
+    private final VLListType<ENTRY> entries;
+    private VLSyncType<VLVManager<ENTRY>> syncer;
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager> syncer){
+    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncer){
         entries = new VLListType<>(capacity, resizer);
         this.syncer = syncer;
 
@@ -109,6 +107,12 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     public void start(){
         pause = false;
         isdone = false;
+
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).start();
+        }
     }
 
     @Override
@@ -237,8 +241,15 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
 
     @Override
     public void findEndPointIndex(){
-        length(CACHE);
-        endpointindex = CACHE.index;
+        Length length = new Length();
+        length(length);
+        endpointindex = length.index;
+
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).findEndPointIndex();
+        }
     }
 
     @Override
@@ -252,13 +263,13 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     }
 
     @Override
-    public void add(VLVEntry entry){
+    public void add(ENTRY entry){
         entries.add(entry);
     }
 
     @Override
-    public VLVEntry set(int index, VLVEntry entry){
-        VLVEntry e = entries.get(index);
+    public ENTRY set(int index, ENTRY entry){
+        ENTRY e = entries.get(index);
         entries.set(index, entry);
 
         return e;
@@ -306,14 +317,15 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     }
 
     @Override
-    public VLSyncType<VLVManager> syncer(){
+    public VLSyncType<VLVManager<ENTRY>> syncer(){
         return syncer;
     }
 
     @Override
     public float length(){
-        length(CACHE);
-        return CACHE.length;
+        Length length = new Length();
+        length(length);
+        return length.length;
     }
 
     @Override
@@ -357,12 +369,12 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     }
 
     @Override
-    public VLVEntry get(int index){
+    public ENTRY get(int index){
         return entries.get(index);
     }
 
     @Override
-    public VLListType<VLVEntry> get(){
+    public VLListType<ENTRY> get(){
         return entries;
     }
 
@@ -382,40 +394,45 @@ public final class VLVManager implements VLVTypeManager<VLVEntry>{
     }
 
     @Override
-    public void stringify(StringBuilder info, Object hint){
+    public void stringify(StringBuilder src, Object hint){
         boolean verbose = (boolean)hint;
 
-        info.append("[");
-        info.append(getClass().getSimpleName());
-        info.append("] [");
-        info.append(entries.size());
-        info.append("] paused[");
-        info.append(pause);
-        info.append("] data[");
+        src.append("[");
+        src.append(getClass().getSimpleName());
+        src.append("] [");
+        src.append(entries.size());
+        src.append("] paused[");
+        src.append(pause);
+        src.append("] done[");
+        src.append(isdone);
+        src.append("] endPointIndex[");
+        src.append(endpointindex);
+        src.append("] syncerType[");
+        src.append(syncer.getClass().getSimpleName());
+        src.append("] data[");
 
         if(verbose){
-            info.append("\n");
+            src.append("\n");
         }
 
-        info.append("[");
+        src.append("[");
+        src.append(getClass().getSimpleName());
+        src.append("] size[");
+        src.append(size());
+        src.append("] entries[");
 
-        for(int i = 0; i < entries.size(); i++){
-            info.append("[");
-            entries.get(i).stringify(info, verbose);
-            info.append("]");
+        int size = entries.size();
 
-            if(i != entries.size() - 1){
-                info.append(", ");
+        for(int i = 0; i < size; i++){
+            src.append("[");
+            src.append(i);
+            src.append("/");
+            src.append(size);
+            src.append("] ");
 
-                if(verbose){
-                    info.append("\n");
-                }
-
-            }else{
-                info.append("]");
-            }
+            entries.get(i).stringify(src, hint);
         }
 
-        info.append("]");
+        src.append("]");
     }
 }

@@ -1,15 +1,15 @@
 package vanguard;
 
-public class VLVManagerRootDynamic extends VLVManagerRoot{
+public class VLVManagerDynamic<ENTRY extends VLVTypeManager> extends VLVManager<ENTRY>{
 
-    protected VLListType<VLVTypeManager<? extends VLVTypeRunner>> entries;
+    protected VLListType<ENTRY> entries;
 
-    public VLVManagerRootDynamic(int capacity, int resizer, int entrysize){
+    public VLVManagerDynamic(int capacity, int resizer, int entrysize){
         super(capacity, resizer);
         entries = new VLListType<>(entrysize, 0);
     }
 
-    public VLVManagerRootDynamic(int capacity, int resizer, int entrysize, VLSyncType<VLVManagerRoot> syncer){
+    public VLVManagerDynamic(int capacity, int resizer, int entrysize, VLSyncType<VLVManager<ENTRY>> syncer){
         super(capacity, resizer, syncer);
         entries = new VLListType<>(entrysize, 0);
     }
@@ -23,7 +23,7 @@ public class VLVManagerRootDynamic extends VLVManagerRoot{
         remove(rootindex);
     }
 
-    public VLListType<VLVTypeManager<? extends VLVTypeRunner>> entries(){
+    public VLListType<ENTRY> entries(){
         return entries;
     }
 }

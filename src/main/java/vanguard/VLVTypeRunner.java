@@ -17,7 +17,7 @@ public interface VLVTypeRunner extends VLVTypeRunnable, VLVTypeRunnerUtils{
     void endPointIndex(int index);
     void findEndPointIndex();
     void checkForNewEndPoint(int index);
-    VLVTypeRunnable endPoint();
+    VLVTypeRunner endPoint();
     int endPointIndex();
 
     class Length{

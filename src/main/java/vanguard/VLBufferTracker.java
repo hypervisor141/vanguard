@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLBufferTracker<BUFFER extends VLBuffer<?, ?>> extends VLBufferTrackerType{
 
-    public BUFFER buffer;
+    protected BUFFER buffer;
 
     public VLBufferTracker(BUFFER buffer, int offset, int count){
         super(offset, count);
@@ -11,6 +11,14 @@ public class VLBufferTracker<BUFFER extends VLBuffer<?, ?>> extends VLBufferTrac
 
     public VLBufferTracker(){
 
+    }
+
+    public void buffer(BUFFER buffer){
+        this.buffer = buffer;
+    }
+
+    public BUFFER buffer(){
+        return buffer;
     }
 
     @Override

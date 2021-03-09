@@ -267,232 +267,260 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, byte data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
         
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, short data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, int data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, long data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, float data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, double data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, VLVTypeVariable data){
-        tracker.offset = buffer.position();
-        tracker.count = 1;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(1);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, byte[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, short[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, int[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, long[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, float[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, double[] data){
-        tracker.offset = buffer.position();
-        tracker.count = data.length;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.length);
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, VLListType<VLVTypeVariable> data){
-        tracker.offset = buffer.position();
-        tracker.count = data.size();
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.count(data.size());
 
         put(data);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, byte[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, short[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, int[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, long[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, float[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, double[] data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker<VLBuffer<ELEMENT, BUFFER>> tracker, VLListType<VLVTypeVariable> data, int offset, int count){
-        tracker.offset = offset;
-        tracker.count = count;
+        tracker.buffer(this);
+        tracker.offset(offset);
+        tracker.count(count);
 
         put(data, offset, count);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, short[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, int[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, long[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, float[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, double[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
     public int put(VLBufferTrackerInterleaved<VLBuffer<ELEMENT, BUFFER>> tracker, VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
-        tracker.count = arraycount;
-        tracker.unitoffset = unitoffset;
-        tracker.unitsize = unitsize;
-        tracker.unitsubcount = unitsubcount;
-        tracker.stride = stride;
+        tracker.buffer(this);
+        tracker.offset(buffer.position());
+        tracker.inputoffest(arrayoffset);
+        tracker.count(arraycount);
+        tracker.unitoffset(unitoffset);
+        tracker.unitsize(unitsize);
+        tracker.unitsubcount(unitsubcount);
+        tracker.stride(stride);
 
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }

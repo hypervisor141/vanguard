@@ -2,11 +2,11 @@ package vanguard;
 
 public class VLBufferTrackerInterleaved<BUFFER extends VLBuffer<?, ?>> extends VLBufferTracker<BUFFER> {
 
-    public int inputoffest;
-    public int unitoffset;
-    public int unitsize;
-    public int unitsubcount;
-    public int stride;
+    protected int inputoffest;
+    protected int unitoffset;
+    protected int unitsize;
+    protected int unitsubcount;
+    protected int stride;
 
     public VLBufferTrackerInterleaved(BUFFER buffer, int offset, int inputoffest, int count, int unitoffset, int unitsize, int unitsubcount, int stride){
         super(buffer, offset, count);
@@ -20,6 +20,46 @@ public class VLBufferTrackerInterleaved<BUFFER extends VLBuffer<?, ?>> extends V
 
     public VLBufferTrackerInterleaved(){
 
+    }
+
+    public void inputoffest(int inputoffest){
+        this.inputoffest = inputoffest;
+    }
+
+    public void unitoffset(int unitoffset){
+        this.unitoffset = unitoffset;
+    }
+
+    public void unitsize(int unitsize){
+        this.unitsize = unitsize;
+    }
+
+    public void unitsubcount(int unitsubcount){
+        this.unitsubcount = unitsubcount;
+    }
+
+    public void stride(int stride){
+        this.stride = stride;
+    }
+
+    public int inputoffest(){
+        return inputoffest;
+    }
+
+    public int unitoffset(){
+        return unitoffset;
+    }
+
+    public int unitsize(){
+        return unitsize;
+    }
+
+    public int unitsubcount(){
+        return unitsubcount;
+    }
+
+    public int stride(){
+        return stride;
     }
 
     @Override

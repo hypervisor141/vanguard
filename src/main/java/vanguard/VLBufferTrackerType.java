@@ -20,5 +20,5 @@ public abstract class VLBufferTrackerType implements VLStringify{
 
     }
 
-    abstract void buffer();
+    public abstract void buffer();
 }

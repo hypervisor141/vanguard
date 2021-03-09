@@ -16,7 +16,6 @@ public class VLThreadHost {
 
     }
 
-
     public void initialize(int size) {
         workers = new Worker[size];
         postlock = new Object();

@@ -12,7 +12,6 @@ public class VLArrayFloat extends VLArray<Float, float[]> {
         super(new float[size]);
     }
 
-
     @Override
     public void set(int index, Float element) {
         array[index] = element;

@@ -12,7 +12,6 @@ public class VLArrayInt extends VLArray<Integer, int[]> {
         super(new int[size]);
     }
 
-
     @Override
     public void set(int index, Integer element) {
         array[index] = element;

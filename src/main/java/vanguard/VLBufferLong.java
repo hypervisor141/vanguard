@@ -14,7 +14,7 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer>{
     }
 
     @Override
-    public VLBuffer initialize(ByteBuffer b){
+    public VLBufferLong initialize(ByteBuffer b){
         buffer = b.asLongBuffer();
         position(0);
 
@@ -27,12 +27,12 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer>{
     }
 
     @Override
-    public void put(VLV data){
+    public void put(VLVTypeVariable data){
         buffer.put((long)data.get());
     }
 
     @Override
-    public void put(VLListType<VLV> data, int offset, int count){
+    public void put(VLListType<VLVTypeVariable> data, int offset, int count){
         int limit = offset + count;
 
         for(int i = offset; i < limit; i++){

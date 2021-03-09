@@ -1,6 +1,8 @@
 package vanguard;
 
-public abstract class VLList implements VLStringify{
+public abstract class VLList<TYPE> implements VLStringify{
+
+    protected TYPE array;
 
     protected int resizercount;
     protected int currentsize;
@@ -29,8 +31,8 @@ public abstract class VLList implements VLStringify{
             nullify(index, count);
 
         }else{
-            Object o = array();
-            System.arraycopy(o, index + count, o, index, count);
+            TYPE array = array();
+            System.arraycopy(array, index + count, array, index, count);
         }
 
         currentsize -= count;
@@ -54,7 +56,9 @@ public abstract class VLList implements VLStringify{
 
     public abstract int realSize();
 
-    public abstract Object array();
+    public TYPE array(){
+        return array;
+    }
 
     public abstract void clear();
 

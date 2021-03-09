@@ -2,9 +2,7 @@ package vanguard;
 
 import java.util.Arrays;
 
-public final class VLListLong extends VLList{
-
-    private long[] array;
+public final class VLListLong extends VLList<long[]>{
 
     public VLListLong(int initialsize, int resizercount){
         super(resizercount, 0);
@@ -90,11 +88,6 @@ public final class VLListLong extends VLList{
     @Override
     public int realSize(){
         return array.length;
-    }
-
-    @Override
-    public long[] array(){
-        return array;
     }
 
     @Override

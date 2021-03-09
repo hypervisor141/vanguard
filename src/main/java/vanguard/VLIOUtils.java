@@ -56,10 +56,6 @@ public class VLIOUtils{
                 if(confliction){
                     readpos = srcend - 1;
                     writepos = to + count - 1;
-
-                }else{
-                    readpos = from;
-                    writepos = to;
                 }
 
                 while(left > 0){

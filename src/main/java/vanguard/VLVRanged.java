@@ -139,11 +139,10 @@ public final class VLVRanged extends VLVCurved{
 
     public static class Listener{
 
-        private Object uid;
         private float prevwrapcount = 0;
 
-        public Listener(Object uid){
-            this.uid = uid;
+        public Listener(){
+            
         }
 
         public void crossed(VLVRanged v){ }

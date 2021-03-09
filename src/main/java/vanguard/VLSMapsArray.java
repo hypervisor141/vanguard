@@ -2,11 +2,11 @@ package vanguard;
 
 public class VLSMapsArray{
 
-    public static class Var extends VLSyncMap<VLVTypeVariable, VLArray>{
+    public static class Var extends VLSyncMap<VLVTypeVariable, VLArray<Float, ?>>{
 
         private int index;
 
-        public Var(VLArray target, int index){
+        public Var(VLArray<Float, ?> target, int index){
             super(target);
             this.index = index;
         }
@@ -17,12 +17,12 @@ public class VLSMapsArray{
         }
     }
 
-    public static class Matrix extends VLSyncMap<VLVMatrix, VLArray>{
+    public static class Matrix extends VLSyncMap<VLVMatrix, VLArray<Float, ?>>{
 
         public int offset;
         public int rowindex;
 
-        public Matrix(VLArray target, int rowindex, int offset){
+        public Matrix(VLArray<Float, ?> target, int rowindex, int offset){
             super(target);
 
             this.offset = offset;

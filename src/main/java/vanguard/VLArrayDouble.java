@@ -12,7 +12,6 @@ public class VLArrayDouble extends VLArray<Double, double[]> {
         super(new double[size]);
     }
 
-
     @Override
     public void set(int index, Double element) {
         array[index] = element;

@@ -1,8 +1,9 @@
 package vanguard;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio.Buffer> implements VLStringify{
+public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends Buffer> implements VLStringify{
 
     protected PROVIDER buffer;
 
@@ -14,12 +15,15 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
 
     }
 
-    
-    public final VLBuffer initialize(int capacity){
-        return this.initialize(VLIOUtils.makeDirectByteBuffer(capacity * getTypeBytes()));
+    public final VLBuffer<ELEMENT, PROVIDER> initialize(int capacity){
+        return initialize(VLIOUtils.makeDirectByteBuffer(capacity * getTypeBytes()));
     }
 
-    public abstract VLBuffer initialize(ByteBuffer buffer);
+    public abstract VLBuffer<ELEMENT, PROVIDER> initialize(ByteBuffer buffer);
+
+    public void put(byte data){
+        throw new RuntimeException("Invalid operation.");
+    }
 
     public void put(short data){
         throw new RuntimeException("Invalid operation.");
@@ -41,8 +45,12 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
         throw new RuntimeException("Invalid operation.");
     }
 
-    public void put(VLV data){
+    public void put(VLVTypeVariable data){
         throw new RuntimeException("Invalid operation.");
+    }
+
+    public final void put(byte[] data){
+        put(data, 0, data.length);
     }
 
     public final void put(short[] data){
@@ -65,8 +73,12 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
         put(data, 0, data.length);
     }
 
-    public void put(VLListType<VLV> data){
+    public void put(VLListType<VLVTypeVariable> data){
         put(data, 0, data.size());
+    }
+
+    public void put(byte[] data, int offset, int count){
+        throw new RuntimeException("Invalid operation.");
     }
 
     public void put(short[] data, int offset, int count){
@@ -89,8 +101,31 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
         throw new RuntimeException("Invalid operation.");
     }
 
-    public void put(VLListType<VLV> data, int offset, int count){
+    public void put(VLListType<VLVTypeVariable> data, int offset, int count){
         throw new RuntimeException("Invalid operation.");
+    }
+
+    public final int putInterleaved(byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        if(unitsize == stride && unitsize == unitsubcount){
+            put(data, arrayoffset, arraycount);
+            return buffer.position();
+        }
+
+        int offset = buffer.position();
+        int arrayend = unitoffset + unitsubcount;
+        int pos = offset;
+
+        for(int i = arrayoffset; i < arraycount; i += unitsize){
+            buffer.position(pos);
+
+            for(int i2 = unitoffset; i2 < arrayend; i2++){
+                put(data[i + i2]);
+            }
+
+            pos += stride;
+        }
+
+        return offset + unitsubcount;
     }
 
     public final int putInterleaved(short[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
@@ -208,7 +243,7 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
         return offset + unitsubcount;
     }
 
-    public final int putInterleaved(VLListType<VLV> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+    public final int putInterleaved(VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         if(unitsize == unitsubcount && unitsize == stride){
             put(data, arrayoffset, arraycount);
             return buffer.position();
@@ -232,6 +267,10 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
     }
 
     public ELEMENT read(int index){
+        throw new RuntimeException("Invalid operation.");
+    }
+
+    public void read(byte[] data, int offset, int count){
         throw new RuntimeException("Invalid operation.");
     }
 
@@ -267,8 +306,7 @@ public abstract class VLBuffer<ELEMENT extends Number, PROVIDER extends java.nio
         buffer.position(pos);
     }
 
-    public void resize(int size){
-    }
+    public abstract void resize(int size);
 
     public PROVIDER provider(){
         return buffer;

@@ -12,7 +12,6 @@ public class VLArrayLong extends VLArray<Long, long[]>{
         super(new long[size]);
     }
 
-
     @Override
     public void set(int index, Long element) {
         array[index] = element;

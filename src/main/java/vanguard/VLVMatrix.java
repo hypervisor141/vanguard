@@ -37,8 +37,8 @@ public class VLVMatrix implements VLStringify{
     }
 
     public void swapRows(int index, int toindex){
-        VLListType a = matrix.get(index);
-        VLListType a2 = matrix.get(toindex);
+        VLListType<VLVTypeVariable> a = matrix.get(index);
+        VLListType<VLVTypeVariable> a2 = matrix.get(toindex);
 
         matrix.set(index, a2);
         matrix.set(toindex, a);
@@ -70,7 +70,7 @@ public class VLVMatrix implements VLStringify{
 
     @Override
     public void stringify(StringBuilder src, Object hint){
-        boolean verbose = hint == null ? false : (boolean)hint;
+        boolean verbose = hint != null && (boolean) hint;
 
         src.append("type[");
         src.append(getClass().getSimpleName());

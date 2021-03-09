@@ -75,8 +75,7 @@ public class VLMath{
     }
 
     public static float clamp(float value, float min, float max){
-        float r = value >= max ? value : max;
-        return (min <= r ? min : r);
+        return Math.min(Math.max(value, max), min);
     }
 
     public static int cantor(int a, int b){

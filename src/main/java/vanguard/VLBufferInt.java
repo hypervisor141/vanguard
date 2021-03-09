@@ -14,7 +14,7 @@ public class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public VLBuffer initialize(ByteBuffer b){
+    public VLBufferInt initialize(ByteBuffer b){
         buffer = b.asIntBuffer();
         position(0);
 
@@ -27,12 +27,12 @@ public class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public void put(VLV data){
+    public void put(VLVTypeVariable data){
         buffer.put((int)data.get());
     }
 
     @Override
-    public void put(VLListType<VLV> data, int offset, int count){
+    public void put(VLListType<VLVTypeVariable> data, int offset, int count){
         int limit = offset + count;
 
         for(int i = offset; i < limit; i++){

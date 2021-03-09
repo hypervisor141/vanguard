@@ -2,9 +2,7 @@ package vanguard;
 
 import java.util.Arrays;
 
-public final class VLListFloat extends VLList{
-
-    private float[] array;
+public final class VLListFloat extends VLList<float[]>{
 
     public VLListFloat(int initialsize, int resizercount){
         super(resizercount, 0);
@@ -90,11 +88,6 @@ public final class VLListFloat extends VLList{
     @Override
     public int realSize(){
         return array.length;
-    }
-
-    @Override
-    public float[] array(){
-        return array;
     }
 
     @Override

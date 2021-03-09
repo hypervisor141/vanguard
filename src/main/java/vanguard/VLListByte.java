@@ -2,9 +2,7 @@ package vanguard;
 
 import java.util.Arrays;
 
-public class VLListByte extends VLList{
-
-    private byte[] array;
+public class VLListByte extends VLList<byte[]>{
 
     public VLListByte(int initialsize, int resizercount){
         super(resizercount, 0);
@@ -91,11 +89,6 @@ public class VLListByte extends VLList{
     @Override
     public int realSize(){
         return array.length;
-    }
-
-    @Override
-    public byte[] array(){
-        return array;
     }
 
     @Override

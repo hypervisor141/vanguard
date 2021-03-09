@@ -12,7 +12,6 @@ public final class VLArrayShort extends VLArray<Short, short[]> {
         super(new short[size]);
     }
 
-
     @Override
     public void set(int index, Short element) {
         array[index] = element;

@@ -1,33 +1,34 @@
 package vanguard;
 
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
-public class VLBByte extends VLB<Byte, ByteBuffer> {
+public class VLBufferInt extends VLBuffer<Integer, IntBuffer> {
 
-    public VLBByte(int capacity){
+    public VLBufferInt(int capacity){
         super(capacity);
     }
 
-    public VLBByte(){
+    public VLBufferInt(){
 
     }
 
     @Override
-    public VLBByte initialize(ByteBuffer b){
-        buffer = b;
+    public VLBufferInt initialize(ByteBuffer b){
+        buffer = b.asIntBuffer();
         position(0);
 
         return this;
     }
 
     @Override
-    public void put(byte data){
+    public void put(int data){
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
-        buffer.put((byte)data.get());
+        buffer.put((int)data.get());
     }
 
     @Override
@@ -35,28 +36,28 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
         int limit = offset + count;
 
         for(int i = offset; i < limit; i++){
-            buffer.put((byte)data.get(i).get());
+            buffer.put((int)data.get(i).get());
         }
     }
 
     @Override
-    public void put(byte[] data, int offset, int count){
+    public void put(int[] data, int offset, int count){
         buffer.put(data, offset, count);
     }
 
     @Override
-    public Byte read(int index){
+    public Integer read(int index){
         return buffer.get(index);
     }
 
     @Override
-    public void read(byte[] data, int offset, int count){
+    public void read(int[] data, int offset, int count){
         buffer.get(data, offset, count);
     }
 
     @Override
     public void remove(int offset, int size){
-        ByteBuffer b = buffer;
+        IntBuffer b = buffer;
         initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
         int cap = b.capacity();
 
@@ -69,8 +70,8 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
     }
 
     @Override
-    public void removeInterleaved(int offset, int unitsize, int stride, int size){
-        ByteBuffer b = buffer;
+    public void removeInterleaved(int offset, int unitsize, int size, int stride){
+        IntBuffer b = buffer;
         initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
 
         int max = offset + ((size / unitsize) * stride);
@@ -91,7 +92,7 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
 
     @Override
     public void resize(int size){
-        ByteBuffer b = buffer;
+        IntBuffer b = buffer;
         initialize(size);
         b.position(0);
 
@@ -104,13 +105,13 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
             }
 
         }else{
-            byte[] data;
+            int[] data;
 
             if(b.capacity() <= buffer.capacity()){
-                data = new byte[b.capacity()];
+                data = new int[b.capacity()];
 
             }else{
-                data = new byte[buffer.capacity()];
+                data = new int[buffer.capacity()];
             }
 
             b.get(data);
@@ -122,7 +123,7 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
 
     @Override
     public int getTypeBytes(){
-        return 1;
+        return Integer.SIZE / Byte.SIZE;
     }
 
     @Override
@@ -130,4 +131,3 @@ public class VLBByte extends VLB<Byte, ByteBuffer> {
         return buffer.capacity() * getTypeBytes();
     }
 }
-

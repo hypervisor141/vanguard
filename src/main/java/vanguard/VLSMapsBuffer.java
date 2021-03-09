@@ -2,17 +2,17 @@ package vanguard;
 
 public class VLSMapsBuffer{
 
-    public static abstract class Base<TYPE extends VLArray<?, ?>> extends VLSyncMap<TYPE, VLB<?, ?>>{
+    public static abstract class Base<TYPE extends VLArray<?, ?>> extends VLSyncMap<TYPE, VLBuffer<?, ?>>{
 
         public int bufferoffset;
 
-        public Base(VLB<?, ?> target, int bufferoffset){
+        public Base(VLBuffer<?, ?> target, int bufferoffset){
             super(target);
             this.bufferoffset = bufferoffset;
         }
     }
 
-    public static abstract class BaseInterleaved<TYPE extends VLArray<?, ?>> extends VLSyncMap<TYPE, VLB<?, ?>>{
+    public static abstract class BaseInterleaved<TYPE extends VLArray<?, ?>> extends VLSyncMap<TYPE, VLBuffer<?, ?>>{
 
         public int bufferoffset;
         public int arrayoffset;
@@ -22,7 +22,7 @@ public class VLSMapsBuffer{
         public int unitsubcount;
         public int stride;
 
-        public BaseInterleaved(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset,
+        public BaseInterleaved(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset,
                                int unitsize, int unitsubcount, int stride){
             super(target);
 
@@ -36,7 +36,7 @@ public class VLSMapsBuffer{
         }
     }
 
-    public static class Matrix<TYPE extends VLVMatrix> extends VLSyncMap<TYPE, VLB<?, ?>>{
+    public static class Matrix<TYPE extends VLVMatrix> extends VLSyncMap<TYPE, VLBuffer<?, ?>>{
 
         public int rowindex;
         public int bufferoffset;
@@ -47,7 +47,7 @@ public class VLSMapsBuffer{
         public int unitsubcount;
         public int stride;
 
-        public Matrix(VLB<?, ?> target, int rowindex, int bufferoffset, int setarraystartindex, int setarrayendindex,
+        public Matrix(VLBuffer<?, ?> target, int rowindex, int bufferoffset, int setarraystartindex, int setarrayendindex,
                       int unitoffset, int unitsize, int unitsubcount, int stride){
             super(target);
 
@@ -70,7 +70,7 @@ public class VLSMapsBuffer{
 
     public static class ShortArray extends Base<VLArray<Short, short[]>>{
         
-        public ShortArray(VLB<?, ?> target, int bufferoffset){
+        public ShortArray(VLBuffer<?, ?> target, int bufferoffset){
             super(target, bufferoffset);
             this.bufferoffset = bufferoffset;
         }
@@ -84,7 +84,7 @@ public class VLSMapsBuffer{
 
     public static class ShortArrayI extends BaseInterleaved<VLArray<Short, short[]>>{
 
-        public ShortArrayI(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        public ShortArrayI(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
             super(target, bufferoffset, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
         }
 
@@ -97,7 +97,7 @@ public class VLSMapsBuffer{
 
     public static class IntArray extends Base<VLArray<Integer, int[]>>{
 
-        public IntArray(VLB<?, ?> target, int bufferoffset){
+        public IntArray(VLBuffer<?, ?> target, int bufferoffset){
             super(target, bufferoffset);
             this.bufferoffset = bufferoffset;
         }
@@ -111,7 +111,7 @@ public class VLSMapsBuffer{
 
     public static class IntArrayI extends BaseInterleaved<VLArray<Integer, int[]>>{
 
-        public IntArrayI(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        public IntArrayI(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
             super(target, bufferoffset, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
         }
 
@@ -124,7 +124,7 @@ public class VLSMapsBuffer{
 
     public static class LongArray extends Base<VLArray<Long, long[]>>{
 
-        public LongArray(VLB<?, ?> target, int bufferoffset){
+        public LongArray(VLBuffer<?, ?> target, int bufferoffset){
             super(target, bufferoffset);
             this.bufferoffset = bufferoffset;
         }
@@ -138,7 +138,7 @@ public class VLSMapsBuffer{
 
     public static class LongArrayI extends BaseInterleaved<VLArray<Long, long[]>>{
 
-        public LongArrayI(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        public LongArrayI(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
             super(target, bufferoffset, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
         }
 
@@ -151,7 +151,7 @@ public class VLSMapsBuffer{
 
     public static class FloatArray extends Base<VLArray<Float, float[]>>{
 
-        public FloatArray(VLB<?, ?> target, int bufferoffset){
+        public FloatArray(VLBuffer<?, ?> target, int bufferoffset){
             super(target, bufferoffset);
             this.bufferoffset = bufferoffset;
         }
@@ -165,7 +165,7 @@ public class VLSMapsBuffer{
 
     public static class FloatArrayI extends BaseInterleaved<VLArray<Float, float[]>>{
 
-        public FloatArrayI(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset,
+        public FloatArrayI(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset,
                            int unitsize, int unitsubcount, int stride){
 
             super(target, bufferoffset, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
@@ -180,7 +180,7 @@ public class VLSMapsBuffer{
 
     public static class DoubleArray extends Base<VLArray<Double, double[]>>{
 
-        public DoubleArray(VLB<?, ?> target, int bufferoffset){
+        public DoubleArray(VLBuffer<?, ?> target, int bufferoffset){
             super(target, bufferoffset);
             this.bufferoffset = bufferoffset;
         }
@@ -194,7 +194,7 @@ public class VLSMapsBuffer{
 
     public static class DoubleArrayI extends BaseInterleaved<VLArray<Double, double[]>>{
 
-        public DoubleArrayI(VLB<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        public DoubleArrayI(VLBuffer<?, ?> target, int bufferoffset, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
             super(target, bufferoffset, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
         }
 

@@ -1,6 +1,6 @@
 package vanguard;
 
-public abstract class VLBufferTrackerType<INPUT> implements VLStringify{
+public abstract class VLBufferTrackerType implements VLStringify{
 
     public int offset;
     public int count;

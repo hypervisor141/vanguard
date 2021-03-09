@@ -1,15 +1,15 @@
 package vanguard;
 
-public class VLBTracker<INPUT, BUFFER extends VLB<?, ?>> extends VLBufferTrackerType<INPUT>{
+public class VLBufferTracker<BUFFER extends VLBuffer<?, ?>> extends VLBufferTrackerType{
 
     public BUFFER buffer;
 
-    public VLBTracker(BUFFER buffer, int offset, int count){
+    public VLBufferTracker(BUFFER buffer, int offset, int count){
         super(offset, count);
         this.buffer = buffer;
     }
 
-    public VLBTracker(){
+    public VLBufferTracker(){
 
     }
 

@@ -3,18 +3,18 @@ package vanguard;
 import java.nio.ByteBuffer;
 import java.nio.DoubleBuffer;
 
-public class VLBDouble extends VLB<Double, DoubleBuffer> {
+public class VLBufferDouble extends VLBuffer<Double, DoubleBuffer> {
     
-    public VLBDouble(int capacity) {
+    public VLBufferDouble(int capacity) {
         super(capacity);
     }
 
-    public VLBDouble(){
+    public VLBufferDouble(){
 
     }
 
     @Override
-    public VLBDouble initialize(ByteBuffer b){
+    public VLBufferDouble initialize(ByteBuffer b){
         buffer = b.asDoubleBuffer();
         position(0);
 

@@ -1,34 +1,34 @@
 package vanguard;
 
 import java.nio.ByteBuffer;
-import java.nio.LongBuffer;
+import java.nio.ShortBuffer;
 
-public class VLBLong extends VLB<Long, LongBuffer> {
+public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
 
-    public VLBLong(int capacity){
+    public VLBufferShort(int capacity){
         super(capacity);
     }
 
-    public VLBLong(){
+    public VLBufferShort(){
 
     }
 
     @Override
-    public VLBLong initialize(ByteBuffer b){
-        buffer = b.asLongBuffer();
+    public VLBufferShort initialize(ByteBuffer b){
+        buffer = b.asShortBuffer();
         position(0);
 
         return this;
     }
 
     @Override
-    public void put(long data){
+    public void put(short data){
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
-        buffer.put((long)data.get());
+        buffer.put((short)data.get());
     }
 
     @Override
@@ -36,28 +36,28 @@ public class VLBLong extends VLB<Long, LongBuffer> {
         int limit = offset + count;
 
         for(int i = offset; i < limit; i++){
-            buffer.put((long)data.get(i).get());
+            buffer.put((short)data.get(i).get());
         }
     }
 
     @Override
-    public void put(long[] data, int offset, int count){
+    public void put(short[] data, int offset, int count){
         buffer.put(data, offset, count);
     }
 
     @Override
-    public Long read(int index){
+    public Short read(int index){
         return buffer.get(index);
     }
 
     @Override
-    public void read(long[] data, int offset, int count){
+    public void read(short[] data, int offset, int count){
         buffer.get(data, offset, count);
     }
 
     @Override
     public void remove(int offset, int size){
-        LongBuffer b = buffer;
+        ShortBuffer b = buffer;
         initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
         int cap = b.capacity();
 
@@ -71,7 +71,7 @@ public class VLBLong extends VLB<Long, LongBuffer> {
 
     @Override
     public void removeInterleaved(int offset, int unitsize, int stride, int size){
-        LongBuffer b = buffer;
+        ShortBuffer b = buffer;
         initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
 
         int max = offset + ((size / unitsize) * stride);
@@ -92,7 +92,7 @@ public class VLBLong extends VLB<Long, LongBuffer> {
 
     @Override
     public void resize(int size){
-        LongBuffer b = buffer;
+        ShortBuffer b = buffer;
         initialize(size);
         b.position(0);
 
@@ -105,13 +105,13 @@ public class VLBLong extends VLB<Long, LongBuffer> {
             }
 
         }else{
-            long[] data;
+            short[] data;
 
             if(b.capacity() <= buffer.capacity()){
-                data = new long[b.capacity()];
+                data = new short[b.capacity()];
 
             }else{
-                data = new long[buffer.capacity()];
+                data = new short[buffer.capacity()];
             }
 
             b.get(data);
@@ -123,7 +123,7 @@ public class VLBLong extends VLB<Long, LongBuffer> {
 
     @Override
     public int getTypeBytes(){
-        return Long.SIZE / Byte.SIZE;
+        return Short.SIZE / Byte.SIZE;
     }
 
     @Override

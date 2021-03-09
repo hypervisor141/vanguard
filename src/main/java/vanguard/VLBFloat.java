@@ -3,18 +3,18 @@ package vanguard;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
-public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
+public class VLBFloat extends VLB<Float, FloatBuffer> {
 
-    public VLBufferFloat(int capacity) {
+    public VLBFloat(int capacity) {
         super(capacity);
     }
 
-    public VLBufferFloat() {
+    public VLBFloat() {
 
     }
 
     @Override
-    public VLBufferFloat initialize(ByteBuffer b) {
+    public VLBFloat initialize(ByteBuffer b) {
         buffer = b.asFloatBuffer();
         position(0);
 

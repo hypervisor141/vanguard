@@ -3,18 +3,18 @@ package vanguard;
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 
-public class VLBufferLong extends VLBuffer<Long, LongBuffer>{
+public class VLBLong extends VLB<Long, LongBuffer> {
 
-    public VLBufferLong(int capacity){
+    public VLBLong(int capacity){
         super(capacity);
     }
 
-    public VLBufferLong(){
+    public VLBLong(){
 
     }
 
     @Override
-    public VLBufferLong initialize(ByteBuffer b){
+    public VLBLong initialize(ByteBuffer b){
         buffer = b.asLongBuffer();
         position(0);
 

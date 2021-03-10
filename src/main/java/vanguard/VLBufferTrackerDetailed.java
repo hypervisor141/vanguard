@@ -64,15 +64,9 @@ public class VLBufferTrackerDetailed<BUFFER> extends VLBufferTracker<BUFFER> {
 
     @Override
     public void stringify(StringBuilder src, Object hint){
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] buffer[");
-        src.append(buffer.getClass().getSimpleName());
-        src.append("] offset[");
-        src.append(offset);
-        src.append("] count[");
-        src.append(count);
-        src.append("] unitOffset[");
+        super.stringify(src, hint);
+
+        src.append(" unitOffset[");
         src.append(unitoffset);
         src.append("] unitSize[");
         src.append(unitsize);

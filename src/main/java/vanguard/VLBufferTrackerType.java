@@ -3,6 +3,7 @@ package vanguard;
 public abstract class VLBufferTrackerType<BUFFER> implements VLStringify{
 
     protected BUFFER buffer;
+
     protected int offset;
     protected int count;
 

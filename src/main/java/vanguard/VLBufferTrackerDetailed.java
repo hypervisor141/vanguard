@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLBufferTrackerDetailed<BUFFER extends VLBuffer<?, ?>> extends VLBufferTracker<BUFFER> {
+public class VLBufferTrackerDetailed<BUFFER> extends VLBufferTracker<BUFFER> {
 
     protected int inputoffest;
     protected int unitoffset;
@@ -80,10 +80,6 @@ public class VLBufferTrackerDetailed<BUFFER extends VLBuffer<?, ?>> extends VLBu
         src.append(unitsubcount);
         src.append("] stride[");
         src.append(stride);
-        src.append("] content[ ");
-
-        buffer.stringify(src, hint);
-
-        src.append(" ]");
+        src.append("]");
     }
 }

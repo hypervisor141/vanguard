@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLStringify{
 
     protected BUFFER buffer;
+    protected int preInitCapacity;
 
     public VLBuffer(int capacity){
         initialize(capacity);
@@ -16,7 +17,12 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public final VLBuffer<ELEMENT, BUFFER> initialize(int capacity){
+        preInitCapacity = capacity;
         return initialize(VLIOUtils.makeDirectByteBuffer(capacity * getTypeBytes()));
+    }
+
+    public final void initialize(){
+        initialize(preInitCapacity);
     }
 
     public abstract VLBuffer<ELEMENT, BUFFER> initialize(ByteBuffer buffer);
@@ -567,6 +573,10 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public abstract void resize(int size);
 
+    public void adjustPreInitCapacity(int amount){
+        preInitCapacity += amount;
+    }
+
     public BUFFER provider(){
         return buffer;
     }
@@ -586,6 +596,10 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public abstract int sizeBytes();
+
+    public int preInitCapacity(){
+        return preInitCapacity;
+    }
 
     @Override
     public void stringify(StringBuilder src, Object hint){

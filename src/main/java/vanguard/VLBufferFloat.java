@@ -1,24 +1,13 @@
 package vanguard;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
-
-    public VLBufferFloat(int capacity) {
-        super(capacity);
-    }
+public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
 
     public VLBufferFloat() {
 
-    }
-
-    @Override
-    public VLBufferFloat initialize(ByteBuffer b) {
-        buffer = b.asFloatBuffer();
-        position(0);
-
-        return this;
     }
 
     @Override
@@ -58,7 +47,7 @@ public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
     @Override
     public void remove(int offset, int size) {
         FloatBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
         for (int i = 0; i < offset; i++) {
@@ -72,7 +61,7 @@ public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
     @Override
     public void removeInterleaved(int offset, int unitsize, int size, int stride) {
         FloatBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
@@ -93,7 +82,7 @@ public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
     @Override
     public void resize(int size) {
         FloatBuffer b = buffer;
-        initialize(size);
+        initialize(size, buffer.order());
         b.position(0);
 
         if (b.hasArray()) {
@@ -129,5 +118,38 @@ public class VLBufferFloat extends VLBuffer<Float, FloatBuffer> {
     @Override
     public int sizeBytes() {
         return buffer.capacity() * getTypeBytes();
+    }
+
+    public static class Normal extends VLBufferFloat{
+
+        public Normal(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            buffer = FloatBuffer.allocate(capacity);
+            buffer.position(0);
+
+            return null;
+        }
+    }
+
+    public static class Direct extends VLBufferFloat{
+
+        public Direct(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
+            buffer.order(order);
+            buffer.position(0);
+
+            this.buffer = buffer.asFloatBuffer();
+
+            return buffer;
+        }
     }
 }

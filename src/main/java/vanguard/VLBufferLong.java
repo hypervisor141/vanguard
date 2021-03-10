@@ -1,24 +1,13 @@
 package vanguard;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.LongBuffer;
 
-public class VLBufferLong extends VLBuffer<Long, LongBuffer> {
-
-    public VLBufferLong(int capacity){
-        super(capacity);
-    }
+public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
 
     public VLBufferLong(){
 
-    }
-
-    @Override
-    public VLBufferLong initialize(ByteBuffer b){
-        buffer = b.asLongBuffer();
-        position(0);
-
-        return this;
     }
 
     @Override
@@ -58,7 +47,7 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer> {
     @Override
     public void remove(int offset, int size){
         LongBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
         for(int i = 0; i < offset; i++){
@@ -72,7 +61,7 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer> {
     @Override
     public void removeInterleaved(int offset, int unitsize, int stride, int size){
         LongBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
@@ -93,7 +82,7 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer> {
     @Override
     public void resize(int size){
         LongBuffer b = buffer;
-        initialize(size);
+        initialize(size, buffer.order());
         b.position(0);
 
         if(b.hasArray()){
@@ -129,6 +118,39 @@ public class VLBufferLong extends VLBuffer<Long, LongBuffer> {
     @Override
     public int sizeBytes(){
         return buffer.capacity() * getTypeBytes();
+    }
+
+    public static class Normal extends VLBufferLong{
+
+        public Normal(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            buffer = LongBuffer.allocate(capacity);
+            buffer.position(0);
+
+            return null;
+        }
+    }
+
+    public static class Direct extends VLBufferLong{
+
+        public Direct(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
+            buffer.order(order);
+            buffer.position(0);
+
+            this.buffer = buffer.asLongBuffer();
+
+            return buffer;
+        }
     }
 }
 

@@ -1,24 +1,13 @@
 package vanguard;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
 
-public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
-
-    public VLBufferShort(int capacity){
-        super(capacity);
-    }
+public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
 
     public VLBufferShort(){
 
-    }
-
-    @Override
-    public VLBufferShort initialize(ByteBuffer b){
-        buffer = b.asShortBuffer();
-        position(0);
-
-        return this;
     }
 
     @Override
@@ -58,12 +47,13 @@ public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
     @Override
     public void remove(int offset, int size){
         ShortBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
         for(int i = 0; i < offset; i++){
             buffer.put(b.get(i));
         }
+
         for(int i = offset + size; i < cap; i++){
             buffer.put(b.get(i));
         }
@@ -72,7 +62,7 @@ public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
     @Override
     public void removeInterleaved(int offset, int unitsize, int stride, int size){
         ShortBuffer b = buffer;
-        initialize(VLIOUtils.makeDirectByteBuffer(buffer.capacity() - size));
+        initialize(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
@@ -80,11 +70,13 @@ public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
         for(int i = 0; i < offset; i++){
             buffer.put(b.get(i));
         }
+
         for(int i = offset + unitsize; i < max; i += stride){
             for(int i2 = 0; i2 < chunksize; i2++){
                 buffer.put(b.get(i + i2));
             }
         }
+
         for(int i = max; i < b.capacity(); i++){
             buffer.put(b.get(i));
         }
@@ -93,7 +85,7 @@ public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
     @Override
     public void resize(int size){
         ShortBuffer b = buffer;
-        initialize(size);
+        initialize(size, buffer.order());
         b.position(0);
 
         if(b.hasArray()){
@@ -129,6 +121,39 @@ public class VLBufferShort extends VLBuffer<Short, ShortBuffer> {
     @Override
     public int sizeBytes(){
         return buffer.capacity() * getTypeBytes();
+    }
+
+    public static class Normal extends VLBufferShort{
+
+        public Normal(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            buffer = ShortBuffer.allocate(capacity);
+            buffer.position(0);
+
+            return null;
+        }
+    }
+
+    public static class Direct extends VLBufferShort{
+
+        public Direct(){
+
+        }
+
+        @Override
+        protected ByteBuffer initialize(int capacity, ByteOrder order){
+            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
+            buffer.order(order);
+            buffer.position(0);
+
+            this.buffer = buffer.asShortBuffer();
+
+            return buffer;
+        }
     }
 }
 

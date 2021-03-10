@@ -2,30 +2,26 @@ package vanguard;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLStringify{
 
     protected BUFFER buffer;
     protected int preInitCapacity;
 
-    public VLBuffer(int capacity){
-        initialize(capacity);
-    }
-
     public VLBuffer(){
-
+        preInitCapacity = 0;
     }
 
-    public final VLBuffer<ELEMENT, BUFFER> initialize(int capacity){
-        preInitCapacity = capacity;
-        return initialize(VLIOUtils.makeDirectByteBuffer(capacity * getTypeBytes()));
+    protected abstract ByteBuffer initialize(int capacity, ByteOrder order);
+
+    public final ByteBuffer initialize(ByteOrder order){
+        return initialize(preInitCapacity, order);
     }
 
-    public final void initialize(){
-        initialize(preInitCapacity);
+    public void initialize(BUFFER buffer){
+        this.buffer = buffer;
     }
-
-    public abstract VLBuffer<ELEMENT, BUFFER> initialize(ByteBuffer buffer);
 
     public void put(byte data){
         throw new RuntimeException("Invalid operation.");

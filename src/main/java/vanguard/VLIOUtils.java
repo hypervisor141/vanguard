@@ -378,12 +378,4 @@ public class VLIOUtils{
         getLongBytes(input, data, 0);
         return data;
     }
-
-    public static ByteBuffer makeDirectByteBuffer(int capacity){
-        ByteBuffer bb = ByteBuffer.allocateDirect(capacity);
-        bb.order(ByteOrder.nativeOrder());
-        bb.position(0);
-
-        return bb;
-    }
 }

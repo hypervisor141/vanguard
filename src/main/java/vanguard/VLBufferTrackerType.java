@@ -1,17 +1,27 @@
 package vanguard;
 
-public abstract class VLBufferTrackerType implements VLStringify{
+public abstract class VLBufferTrackerType<BUFFER> implements VLStringify{
 
+    protected BUFFER buffer;
     protected int offset;
     protected int count;
 
-    public VLBufferTrackerType(int offset, int count){
+    public VLBufferTrackerType(BUFFER buffer, int offset, int count){
+        this.buffer = buffer;
         this.offset = offset;
         this.count = count;
     }
 
     public VLBufferTrackerType(){
 
+    }
+
+    public void buffer(BUFFER buffer){
+        this.buffer = buffer;
+    }
+
+    public BUFFER buffer(){
+        return buffer;
     }
 
     public void offset(int offset){

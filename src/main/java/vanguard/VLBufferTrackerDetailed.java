@@ -8,7 +8,7 @@ public class VLBufferTrackerDetailed<BUFFER> extends VLBufferTracker<BUFFER> {
     protected int unitsubcount;
     protected int stride;
 
-    public VLBufferTrackerDetailed(BUFFER buffer, int offset, int inputoffest, int count, int unitoffset, int unitsize, int unitsubcount, int stride){
+    public VLBufferTrackerDetailed(BUFFER buffer, int offset, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int count){
         super(buffer, offset, count);
 
         this.inputoffest = inputoffest;

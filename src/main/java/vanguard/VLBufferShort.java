@@ -11,6 +11,12 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
     }
 
     @Override
+    public void initialize(ByteBuffer buffer){
+        this.buffer = buffer.asShortBuffer();
+        buffer.position(0);
+    }
+
+    @Override
     public void put(short data){
         buffer.put(data);
     }
@@ -130,7 +136,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = ShortBuffer.allocate(capacity);
             buffer.position(0);
 
@@ -145,7 +151,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
             buffer.order(order);
             buffer.position(0);

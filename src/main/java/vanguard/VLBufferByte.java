@@ -10,6 +10,12 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
     }
 
     @Override
+    public void initialize(ByteBuffer buffer){
+        this.buffer = buffer;
+        buffer.position(0);
+    }
+
+    @Override
     public void put(byte data){
         buffer.put(data);
     }
@@ -126,7 +132,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = ByteBuffer.allocate(capacity);
             buffer.order(order);
             buffer.position(0);
@@ -142,7 +148,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = ByteBuffer.allocateDirect(capacity);
             buffer.order(order);
             buffer.position(0);

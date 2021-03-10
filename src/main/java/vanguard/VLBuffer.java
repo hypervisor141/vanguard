@@ -13,7 +13,9 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         preInitCapacity = 0;
     }
 
-    protected abstract ByteBuffer initialize(int capacity, ByteOrder order);
+    public abstract ByteBuffer initialize(int capacity, ByteOrder order);
+
+    public abstract void initialize(ByteBuffer buffer);
 
     public final ByteBuffer initialize(ByteOrder order){
         return initialize(preInitCapacity, order);

@@ -6,8 +6,14 @@ import java.nio.FloatBuffer;
 
 public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
 
-    public VLBufferFloat() {
+    public VLBufferFloat(){
 
+    }
+
+    @Override
+    public void initialize(ByteBuffer buffer){
+        this.buffer = buffer.asFloatBuffer();
+        buffer.position(0);
     }
 
     @Override
@@ -127,7 +133,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = FloatBuffer.allocate(capacity);
             buffer.position(0);
 
@@ -142,7 +148,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
         }
 
         @Override
-        protected ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
             buffer.order(order);
             buffer.position(0);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class VLThreadWorker extends Thread{
 
-    private final ArrayList<VLThreadTask<VLThreadWorker>> tasks;
+    private final ArrayList<VLThreadTaskType<VLThreadWorker>> tasks;
     private final Object masterlock;
     public final Object lock;
 
@@ -23,7 +23,7 @@ public class VLThreadWorker extends Thread{
     public void run(){
         super.run();
 
-        ArrayList<VLThreadTask<VLThreadWorker>> currenttasks = new ArrayList<>();
+        ArrayList<VLThreadTaskType<VLThreadWorker>> currenttasks = new ArrayList<>();
 
         while(enabled){
             synchronized(lock){
@@ -75,14 +75,14 @@ public class VLThreadWorker extends Thread{
         }
     }
 
-    public void post(VLThreadTask<VLThreadWorker> task){
+    public void post(VLThreadTaskType<VLThreadWorker> task){
         synchronized(lock){
             tasks.add(task);
             lock.notify();
         }
     }
 
-    public void post(ArrayList<VLThreadTask<VLThreadWorker>> tasklist){
+    public void post(ArrayList<VLThreadTaskType<VLThreadWorker>> tasklist){
         synchronized(lock){
             tasks.addAll(tasklist);
             lock.notify();

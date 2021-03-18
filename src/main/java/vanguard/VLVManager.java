@@ -3,7 +3,7 @@ package vanguard;
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
-    private boolean pause;
+    private boolean paused;
     private boolean isdone;
     private int endpointindex;
 
@@ -14,14 +14,14 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         entries = new VLListType<>(capacity, resizer);
         this.syncer = syncer;
 
-        pause = true;
+        paused = true;
         endpointindex = -1;
     }
 
     public VLVManager(int capacity, int resizer){
         entries = new VLListType<>(capacity, resizer);
 
-        pause = true;
+        paused = true;
         endpointindex = -1;
     }
 
@@ -81,7 +81,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public int next(){
-        if(!pause){
+        if(!paused){
             int count = 0;
 
             for(int i = 0; i < entries.size(); i++){
@@ -105,7 +105,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public void start(){
-        pause = false;
+        paused = false;
         isdone = false;
 
         int size = entries.size();
@@ -117,7 +117,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public void pause(){
-        pause = true;
+        paused = true;
     }
 
     @Override
@@ -385,7 +385,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public boolean paused(){
-        return pause;
+        return paused;
     }
 
     @Override
@@ -402,7 +402,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         src.append("] [");
         src.append(entries.size());
         src.append("] paused[");
-        src.append(pause);
+        src.append(paused);
         src.append("] done[");
         src.append(isdone);
         src.append("] endPointIndex[");

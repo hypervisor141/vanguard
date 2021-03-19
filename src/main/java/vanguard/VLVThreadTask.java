@@ -3,7 +3,8 @@ package vanguard;
 public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
 
     public final VLVTypeRunner root;
-    private final Object lock;
+    public final Object lock;
+
     private final long freqmillis;
     private final long freqextrananos;
     private final boolean debug;
@@ -28,6 +29,27 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
         int changes = 0;
 
         while(worker.isEnabled()){
+            offsettime = System.nanoTime();
+
+            synchronized(lock){
+                changes = root.next();
+            }
+
+            reporter.completed(changes);
+
+            if(changes == 0){
+                try{
+                    synchronized(root){
+                        root.wait();
+                    }
+
+                }catch(InterruptedException ex){
+                    //
+                }
+            }
+
+            elapsed = System.nanoTime() - offsettime;
+
             if(elapsed < frequencynanos){
                 try{
                     compensatedtime = frequencynanos - elapsed;
@@ -48,16 +70,6 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
                 System.out.println(elapsed - frequencynanos);
                 System.out.println("ns]");
             }
-
-            offsettime = System.nanoTime();
-
-            synchronized(lock){
-                changes = root.next();
-            }
-
-            reporter.completed(changes);
-
-            elapsed = System.nanoTime() - offsettime;
         }
     }
 

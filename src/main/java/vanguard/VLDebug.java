@@ -74,7 +74,7 @@ public final class VLDebug{
         System.out.print("[");
         System.out.print(TAG);
         System.out.print("] ");
-        System.out.print(text);
+        System.out.println(text);
     }
 
     public static void printD() {

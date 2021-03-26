@@ -26,31 +26,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(byte data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(short data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(int data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(long data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(float data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(double data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(VLVTypeVariable data){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(byte[] data){
@@ -82,31 +82,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(byte[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(short[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(int[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(long[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(float[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(double[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(VLListType<VLVTypeVariable> data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public int put(byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
@@ -530,31 +530,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public ELEMENT read(int index){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(byte[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(short[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(int[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(long[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(float[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(double[] data, int offset, int count){
-        throw new RuntimeException("Invalid operation.");
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public abstract void remove(int offset, int size);

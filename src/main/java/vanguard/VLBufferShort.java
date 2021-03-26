@@ -152,7 +152,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
 
         @Override
         public ByteBuffer initialize(int capacity, ByteOrder order){
-            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity * getTypeBytes());
             buffer.order(order);
             buffer.position(0);
 

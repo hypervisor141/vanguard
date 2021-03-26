@@ -149,7 +149,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
 
         @Override
         public ByteBuffer initialize(int capacity, ByteOrder order){
-            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(capacity * getTypeBytes());
             buffer.order(order);
             buffer.position(0);
 

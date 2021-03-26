@@ -77,6 +77,13 @@ public final class VLDebug{
         System.out.println(text);
     }
 
+    public static void printDirectE(String text) {
+        System.err.print("[");
+        System.err.print(TAG);
+        System.err.print("] ");
+        System.err.println(text);
+    }
+
     public static void printD() {
         LINES = BUILDER.toString().split("\n");
 
@@ -91,7 +98,7 @@ public final class VLDebug{
         LINES = BUILDER.toString().split("\n");
 
         for (int i = 0; i < LINES.length; i++) {
-            printDirect(LINES[i]);
+            printDirectE(LINES[i]);
         }
 
         recreate();

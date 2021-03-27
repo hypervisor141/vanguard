@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLBufferTrackerDetailed<BUFFER> extends VLBufferTracker<BUFFER> {
+public class VLBufferTrackerDetailed extends VLBufferTracker{
 
     protected int inputoffest;
     protected int unitoffset;
@@ -8,8 +8,8 @@ public class VLBufferTrackerDetailed<BUFFER> extends VLBufferTracker<BUFFER> {
     protected int unitsubcount;
     protected int stride;
 
-    public VLBufferTrackerDetailed(BUFFER buffer, int offset, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int count){
-        super(buffer, offset, count);
+    public VLBufferTrackerDetailed(int offset, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int count){
+        super(offset, count);
 
         this.inputoffest = inputoffest;
         this.unitoffset = unitoffset;

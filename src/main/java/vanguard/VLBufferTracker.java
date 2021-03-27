@@ -1,28 +1,17 @@
 package vanguard;
 
-public class VLBufferTracker<BUFFER> implements VLStringify{
-
-    protected BUFFER buffer;
+public class VLBufferTracker implements VLStringify{
 
     protected int offset;
     protected int count;
 
-    public VLBufferTracker(BUFFER buffer, int offset, int count){
-        this.buffer = buffer;
+    public VLBufferTracker(int offset, int count){
         this.offset = offset;
         this.count = count;
     }
 
     public VLBufferTracker(){
 
-    }
-
-    public void buffer(BUFFER buffer){
-        this.buffer = buffer;
-    }
-
-    public BUFFER buffer(){
-        return buffer;
     }
 
     public void offset(int offset){
@@ -45,8 +34,6 @@ public class VLBufferTracker<BUFFER> implements VLStringify{
     public void stringify(StringBuilder src, Object hint){
         src.append("[");
         src.append(getClass().getSimpleName());
-        src.append("] buffer[");
-        src.append(buffer.getClass().getSimpleName());
         src.append("] offset[");
         src.append(offset);
         src.append("] count[");

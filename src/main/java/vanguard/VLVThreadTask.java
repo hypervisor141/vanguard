@@ -49,8 +49,6 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
 
             elapsednanos = System.nanoTime() - offsettime;
 
-            System.out.println(elapsednanos + "  " + frequencynanos);
-
             if(elapsednanos < frequencynanos){
                 try{
                     compensationnanos = frequencynanos - elapsednanos;

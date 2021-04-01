@@ -8,6 +8,7 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
     private final long freqmillis;
     private final long freqextrananos;
     private final boolean debug;
+
     private final PostReporter reporter;
 
     public VLVThreadTask(VLVTypeRunner root, Object lock, long freqmillis, long freqextrananos, boolean debug, PostReporter reporter){
@@ -62,13 +63,14 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
                 }
 
             }else if(debug){
-                System.out.println("[WARNING] [");
-                System.out.println(worker.getName());
-                System.out.println("] [VLV processor thread falling behind pre-set frequency of ");
-                System.out.println(frequencynanos);
-                System.out.println("ns by ");
-                System.out.println(elapsed - frequencynanos);
-                System.out.println("ns]");
+                VLDebug.append("[WARNING] [");
+                VLDebug.append(worker.getName());
+                VLDebug.append("] [VLV processor thread falling behind pre-set frequency of ");
+                VLDebug.append(frequencynanos);
+                VLDebug.append("ns by ");
+                VLDebug.append(elapsed - frequencynanos);
+                VLDebug.append("ns]");
+                VLDebug.printD();
             }
         }
     }

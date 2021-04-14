@@ -501,6 +501,76 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
     }
 
+    public void update(VLBufferTracker tracker, byte[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, short[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, int[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, long[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, float[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, double[] data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public void update(VLBufferTracker tracker, VLListType<VLVTypeVariable> data){
+        buffer.position(tracker.offset);
+        put(data, 0, tracker.count);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, byte[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, short[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, int[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, long[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, float[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, double[] data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
+    public int update(VLBufferTrackerDetailed tracker, VLListType<VLVTypeVariable> data){
+        buffer.position(tracker.offset);
+        return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
+    }
+
     public ELEMENT read(int index){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }

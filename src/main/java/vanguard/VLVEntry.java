@@ -26,21 +26,25 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void initialize(int cycles){
         target.initialize(cycles);
+        sync();
     }
 
     @Override
     public void initialize(float changerate){
         target.initialize(changerate);
+        sync();
     }
 
     @Override
     public void initializeFixedDirection(int cycles){
         target.initializeFixedDirection(cycles);
+        sync();
     }
 
     @Override
     public void initializeFixedDirection(float changerate){
         target.initializeFixedDirection(changerate);
+        sync();
     }
 
     @Override
@@ -63,6 +67,7 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void chain(int cycles, float to){
         target.chain(cycles, to);
+        sync();
     }
 
     @Override
@@ -73,11 +78,18 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void reset(){
         target.reset();
+        sync();
     }
 
     @Override
     public void finish(){
         target.finish();
+        sync();
+    }
+
+    @Override
+    public void syncer(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncer = (VLSyncType<VLVEntry>)syncer;
     }
 
     @Override
@@ -209,6 +221,7 @@ public class VLVEntry implements VLVTypeRunner{
             target.initializeFixedDirection(cycles);
         }
 
+        sync();
         activate();
     }
 
@@ -228,6 +241,7 @@ public class VLVEntry implements VLVTypeRunner{
             target.initializeFixedDirection(changerate);
         }
 
+        sync();
         activate();
     }
 
@@ -246,6 +260,7 @@ public class VLVEntry implements VLVTypeRunner{
             delayBy(delaymin + VLVManager.RANDOM.nextInt(delaymax - delaymin));
         }
 
+        sync();
         activate();
     }
 

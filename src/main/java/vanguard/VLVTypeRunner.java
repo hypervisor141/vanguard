@@ -7,8 +7,9 @@ public interface VLVTypeRunner extends VLVTypeRunnable, VLVTypeRunnerUtils{
     void sync();
     void delay(int delay);
     void delayBy(int amount);
+    void syncer(VLSyncType<? extends VLVTypeRunner> syncer);
     void resetDelayTrackers();
-    VLSyncType<?> syncer();
+    VLSyncType<? extends VLVTypeRunner> syncer();
     void length(Length results);
     int delay();
     boolean paused();

@@ -135,6 +135,9 @@ public class VLVEntry implements VLVTypeRunner{
                 advancement = target.next();
                 sync();
             }
+
+        }else{
+            resetDelayTrackers();
         }
 
         return advancement;

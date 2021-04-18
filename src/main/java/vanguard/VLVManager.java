@@ -187,8 +187,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).reverse();
         }
-
-        resetDelayTrackers();
     }
 
     @Override

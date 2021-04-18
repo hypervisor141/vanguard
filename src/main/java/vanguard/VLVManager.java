@@ -115,12 +115,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     public void start(){
         paused = false;
         isdone = false;
-
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).start();
-        }
     }
 
     @Override

@@ -14,12 +14,12 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager> extends VLVManager<
         entries = new VLListType<>(entrysize, 0);
     }
 
-    public int activate(int index){
+    public int activateEntry(int index){
         add(entries.get(index));
         return size() - 1;
     }
 
-    public void deactivate(int rootindex){
+    public void deactivateEntry(int rootindex){
         remove(rootindex);
     }
 

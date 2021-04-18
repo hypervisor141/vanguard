@@ -130,6 +130,17 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
+    public void syncAll(){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).syncAll();
+        }
+
+        sync();
+    }
+
+    @Override
     public void fastForward(int count){
         for(int i = 0; i < count; i++){
             next();

@@ -148,6 +148,11 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
+    public void syncAll(){
+        sync();
+    }
+
+    @Override
     public void delay(int delay){
         this.delay = delay;
         resetDelayTrackers();

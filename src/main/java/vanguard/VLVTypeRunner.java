@@ -5,6 +5,7 @@ public interface VLVTypeRunner extends VLVTypeRunnable, VLVTypeRunnerUtils{
     void start();
     void pause();
     void sync();
+    void syncAll();
     void delay(int delay);
     void delayBy(int amount);
     void syncer(VLSyncType<? extends VLVTypeRunner> syncer);

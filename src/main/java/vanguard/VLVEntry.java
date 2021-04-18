@@ -78,6 +78,7 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void reset(){
         target.reset();
+        resetDelayTrackers();
         sync();
     }
 

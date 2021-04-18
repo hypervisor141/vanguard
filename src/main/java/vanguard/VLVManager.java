@@ -197,7 +197,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
             entries.get(i).reset();
         }
 
-        resetDelayTrackers();
         sync();
     }
 

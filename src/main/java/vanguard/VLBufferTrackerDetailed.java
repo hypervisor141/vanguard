@@ -7,8 +7,10 @@ public class VLBufferTrackerDetailed extends VLBufferTracker{
     protected int unitsize;
     protected int unitsubcount;
     protected int stride;
+    protected int endposition;
+    protected int typebytesize;
 
-    public VLBufferTrackerDetailed(int offset, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int count){
+    public VLBufferTrackerDetailed(int offset, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int count, int endposition, int typebytesize){
         super(offset, count);
 
         this.inputoffest = inputoffest;
@@ -16,6 +18,8 @@ public class VLBufferTrackerDetailed extends VLBufferTracker{
         this.unitsize = unitsize;
         this.unitsubcount = unitsubcount;
         this.stride = stride;
+        this.endposition = endposition;
+        this.typebytesize = typebytesize;
     }
 
     public VLBufferTrackerDetailed(){
@@ -42,6 +46,14 @@ public class VLBufferTrackerDetailed extends VLBufferTracker{
         this.stride = stride;
     }
 
+    public void endposition(int endposition){
+        this.endposition = endposition;
+    }
+
+    public void typebytesize(int typebytesize){
+        this.typebytesize = typebytesize;
+    }
+
     public int inputoffest(){
         return inputoffest;
     }
@@ -62,6 +74,14 @@ public class VLBufferTrackerDetailed extends VLBufferTracker{
         return stride;
     }
 
+    public int endposition(){
+        return endposition;
+    }
+
+    public int typebytesize(){
+        return typebytesize;
+    }
+
     @Override
     public void stringify(StringBuilder src, Object hint){
         super.stringify(src, hint);
@@ -74,6 +94,10 @@ public class VLBufferTrackerDetailed extends VLBufferTracker{
         src.append(unitsubcount);
         src.append("] stride[");
         src.append(stride);
+        src.append("] endPosition[");
+        src.append(endposition);
+        src.append("] typeByteSize[");
+        src.append(typebytesize);
         src.append("]");
     }
 }

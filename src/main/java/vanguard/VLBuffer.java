@@ -440,7 +440,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;
@@ -457,7 +457,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;
@@ -474,7 +474,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;
@@ -491,7 +491,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;
@@ -508,7 +508,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;
@@ -525,7 +525,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position());
+        tracker.endposition(buffer.position() - 1);
         tracker.typebytesize(getTypeBytes());
 
         return nextoffset;

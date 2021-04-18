@@ -130,6 +130,28 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
+    public void startAll(){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).startAll();
+        }
+
+        start();
+    }
+
+    @Override
+    public void pauseAll(){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).pauseAll();
+        }
+
+        pause();
+    }
+
+    @Override
     public void syncAll(){
         int size = entries.size();
 

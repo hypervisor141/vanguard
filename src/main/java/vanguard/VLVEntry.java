@@ -148,6 +148,16 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
+    public void startAll(){
+        start();
+    }
+
+    @Override
+    public void pauseAll(){
+        pause();
+    }
+
+    @Override
     public void syncAll(){
         sync();
     }

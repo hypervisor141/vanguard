@@ -5,14 +5,11 @@ import java.util.ArrayList;
 public class VLThreadWorker extends Thread{
 
     private final ArrayList<VLThreadTaskType<VLThreadWorker>> tasks;
-    private final Object masterlock;
     public final Object lock;
 
     private volatile boolean enabled;
 
-    public VLThreadWorker(Object masterlock){
-        this.masterlock = masterlock;
-
+    public VLThreadWorker(){
         tasks = new ArrayList<>(10);
         lock = new Object();
 
@@ -49,10 +46,6 @@ public class VLThreadWorker extends Thread{
             }
 
             currenttasks.clear();
-
-            synchronized(masterlock){
-                masterlock.notify();
-            }
         }
     }
 

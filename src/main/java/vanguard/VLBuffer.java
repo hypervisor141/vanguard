@@ -579,80 +579,38 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void update(VLBufferTracker tracker, byte[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, short[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, int[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, long[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, float[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, double[] data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public void update(VLBufferTracker tracker, VLListType<VLVTypeVariable> data){
-        if(tracker.stride == -1){
-            buffer.position(tracker.offset);
-            put(data, 0, tracker.count);
-
-        }else{
-            buffer.position(tracker.offset);
-            put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
-        }
+        buffer.position(tracker.offset);
+        put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
     public ELEMENT read(int index){

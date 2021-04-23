@@ -271,262 +271,309 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(VLBufferTracker tracker, byte data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, short data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, int data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, long data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, float data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, double data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, VLVTypeVariable data){
-        tracker.offset(buffer.position());
-        tracker.count(1);
+        tracker.offset = buffer.position();
+        tracker.count = 1;
+        tracker.endposition = tracker.offset + 1;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, byte[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, short[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, int[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, long[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, float[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, double[] data){
-        tracker.offset(buffer.position());
-        tracker.count(data.length);
+        tracker.offset = buffer.position();
+        tracker.count = data.length;
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data){
-        tracker.offset(buffer.position());
-        tracker.count(data.size());
+        tracker.offset = buffer.position();
+        tracker.count = data.size();
+        tracker.endposition = tracker.offset + tracker.count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data);
     }
 
     public void put(VLBufferTracker tracker, byte[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, short[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, int[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, long[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, float[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, double[] data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
     public void put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data, int offset, int count){
-        tracker.offset(offset);
-        tracker.count(count);
+        tracker.offset = offset;
+        tracker.count = count;
+        tracker.endposition = offset + count;
+        tracker.typebytesize = getTypeBytes();
 
         put(data, offset, count);
     }
 
-    public int put(VLBufferTrackerDetailed tracker, byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
-
-        return put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
-    }
-
-    public int put(VLBufferTrackerDetailed tracker, short[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
 
-    public int put(VLBufferTrackerDetailed tracker, int[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, short[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
 
-    public int put(VLBufferTrackerDetailed tracker, long[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, int[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
 
-    public int put(VLBufferTrackerDetailed tracker, float[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, long[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
 
-    public int put(VLBufferTrackerDetailed tracker, double[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, float[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
 
-    public int put(VLBufferTrackerDetailed tracker, VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
-        tracker.offset(buffer.position());
-        tracker.inputoffest(arrayoffset);
-        tracker.count(arraycount);
-        tracker.unitoffset(unitoffset);
-        tracker.unitsize(unitsize);
-        tracker.unitsubcount(unitsubcount);
-        tracker.stride(stride);
+    public int put(VLBufferTracker tracker, double[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
 
         int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
 
-        tracker.endposition(buffer.position() - 1);
-        tracker.typebytesize(getTypeBytes());
+        tracker.endposition = buffer.position() - 1;
+
+        return nextoffset;
+    }
+
+    public int put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
+        tracker.offset = buffer.position();
+        tracker.inputoffest = arrayoffset;
+        tracker.count = arraycount;
+        tracker.unitoffset = unitoffset;
+        tracker.unitsize = unitsize;
+        tracker.unitsubcount = unitsubcount;
+        tracker.stride = stride;
+        tracker.typebytesize = getTypeBytes();
+
+        int nextoffset = put(data, arrayoffset, arraycount, unitoffset, unitsize, unitsubcount, stride);
+
+        tracker.endposition = buffer.position() - 1;
 
         return nextoffset;
     }
@@ -566,37 +613,37 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         put(data, 0, tracker.count);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, byte[] data){
+    public int updateInterleaved(VLBufferTracker tracker, byte[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, short[] data){
+    public int updateInterleaved(VLBufferTracker tracker, short[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, int[] data){
+    public int updateInterleaved(VLBufferTracker tracker, int[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, long[] data){
+    public int updateInterleaved(VLBufferTracker tracker, long[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, float[] data){
+    public int updateInterleaved(VLBufferTracker tracker, float[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, double[] data){
+    public int updateInterleaved(VLBufferTracker tracker, double[] data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }
 
-    public int update(VLBufferTrackerDetailed tracker, VLListType<VLVTypeVariable> data){
+    public int updateInterleaved(VLBufferTracker tracker, VLListType<VLVTypeVariable> data){
         buffer.position(tracker.offset);
         return put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);
     }

@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLBufferTracker implements VLStringify{
 
-    public int offset
+    public int offset;
     public int count;
     public int inputoffest;
     public int unitoffset;
@@ -38,14 +38,6 @@ public class VLBufferTracker implements VLStringify{
 
     public VLBufferTracker(){
 
-    }
-
-    public int offset(){
-        return offset;
-    }
-
-    public int count(){
-        return count;
     }
 
     @Override

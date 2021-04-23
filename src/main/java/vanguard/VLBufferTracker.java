@@ -2,15 +2,15 @@ package vanguard;
 
 public class VLBufferTracker implements VLStringify{
 
-    protected int offset;
-    protected int count;
-    protected int inputoffest;
-    protected int unitoffset;
-    protected int unitsize;
-    protected int unitsubcount;
-    protected int stride;
-    protected int endposition;
-    protected int typebytesize;
+    public int offset
+    public int count;
+    public int inputoffest;
+    public int unitoffset;
+    public int unitsize;
+    public int unitsubcount;
+    public int stride;
+    public int endposition;
+    public int typebytesize;
 
     public VLBufferTracker(int offset, int count, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int endposition, int typebytesize){
         this.offset = offset;

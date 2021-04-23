@@ -273,8 +273,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, byte data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -282,8 +287,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, short data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -291,8 +301,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, int data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -300,8 +315,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, long data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -309,8 +329,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, float data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -318,8 +343,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, double data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -327,8 +357,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, VLVTypeVariable data){
         tracker.offset = buffer.position();
         tracker.count = 1;
-        tracker.endposition = tracker.offset + 1;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + 1;
 
         put(data);
     }
@@ -336,17 +371,26 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, byte[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
-
+        tracker.endposition = tracker.offset + tracker.count;
         put(data);
     }
 
     public void put(VLBufferTracker tracker, short[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -354,8 +398,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, int[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -363,8 +412,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, long[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -372,8 +426,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, float[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -381,8 +440,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, double[] data){
         tracker.offset = buffer.position();
         tracker.count = data.length;
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -390,8 +454,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data){
         tracker.offset = buffer.position();
         tracker.count = data.size();
-        tracker.endposition = tracker.offset + tracker.count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = tracker.offset + tracker.count;
 
         put(data);
     }
@@ -399,8 +468,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, byte[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -408,8 +482,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, short[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -417,8 +496,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, int[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -426,8 +510,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, long[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -435,8 +524,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, float[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -444,8 +538,13 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, double[] data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
@@ -453,16 +552,21 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     public void put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data, int offset, int count){
         tracker.offset = offset;
         tracker.count = count;
-        tracker.endposition = offset + count;
+        tracker.inputoffest = 0;
+        tracker.unitoffset = 0;
+        tracker.unitsize = 1;
+        tracker.unitsubcount = 1;
+        tracker.stride = 1;
         tracker.typebytesize = getTypeBytes();
+        tracker.endposition = offset + count;
 
         put(data, offset, count);
     }
 
     public int put(VLBufferTracker tracker, byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -478,8 +582,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, short[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -495,8 +599,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, int[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -512,8 +616,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, long[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -529,8 +633,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, float[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -546,8 +650,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, double[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;
@@ -563,8 +667,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int put(VLBufferTracker tracker, VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
         tracker.offset = buffer.position();
-        tracker.inputoffest = arrayoffset;
         tracker.count = arraycount;
+        tracker.inputoffest = arrayoffset;
         tracker.unitoffset = unitoffset;
         tracker.unitsize = unitsize;
         tracker.unitsubcount = unitsubcount;

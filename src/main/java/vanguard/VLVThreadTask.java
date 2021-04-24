@@ -31,6 +31,13 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
         }
     }
 
+    @Override
+    public void destroyRequested(){
+        synchronized(root){
+            root.notify();
+        }
+    }
+
     private void runWithCompensator(VLThreadWorker worker){
         long offsettime = 0;
         long elapsednanos = 0;

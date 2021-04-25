@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
+public class VLVThreadTask implements VLThreadTaskType<VLThread>{
 
     public final VLVTypeRunner root;
 
@@ -22,7 +22,7 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
     }
 
     @Override
-    public void run(VLThreadWorker worker){
+    public void run(VLThread worker){
         if(enablecompensator){
             runWithCompensator(worker);
 
@@ -32,13 +32,13 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
     }
 
     @Override
-    public void destroyRequested(){
+    public void requestDestruction(){
         synchronized(root){
             root.notify();
         }
     }
 
-    private void runWithCompensator(VLThreadWorker worker){
+    private void runWithCompensator(VLThread worker){
         long offsettime = 0;
         long elapsednanos = 0;
         long frequencynanos = freqmillis * 1000000 + freqextrananos;
@@ -46,7 +46,7 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
         long sleepmillis = 0;
         int changes = 0;
 
-        while(worker.isEnabled()){
+        while(worker.enabled()){
             offsettime = System.nanoTime();
 
             synchronized(root){
@@ -92,10 +92,10 @@ public class VLVThreadTask implements VLThreadTaskType<VLThreadWorker>{
         }
     }
 
-    private void runDirect(VLThreadWorker worker){
+    private void runDirect(VLThread worker){
         int changes = 0;
 
-        while(worker.isEnabled()){
+        while(worker.enabled()){
             synchronized(root){
                 changes = root.next();
             }

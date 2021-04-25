@@ -1,11 +1,9 @@
 package vanguard;
 
-import java.util.ArrayList;
-
 public class VLThreadManager{
 
     private final Object masterlock;
-    private final VLListType<VLThreadWorker> workers;
+    private VLListType<VLThread> workers;
 
     public VLThreadManager(int capacity){
         masterlock = new Object();
@@ -28,13 +26,13 @@ public class VLThreadManager{
         }
     }
 
-    public void add(VLThreadWorker worker){
+    public void add(VLThread worker){
         synchronized (masterlock){
             workers.add(worker);
         }
     }
 
-    public VLListType<VLThreadWorker> workers(){
+    public VLListType<VLThread> workers(){
         return workers;
     }
 
@@ -42,8 +40,8 @@ public class VLThreadManager{
         return masterlock;
     }
 
-    public VLThreadWorker waitForFreeWorker(long waittime){
-        VLThreadWorker free;
+    public VLThread waitForFreeWorker(long waittime){
+        VLThread free;
 
         synchronized (masterlock){
             while((free = checkForFreeWorker()) == null){
@@ -59,18 +57,15 @@ public class VLThreadManager{
         }
     }
 
-    public VLThreadWorker checkForFreeWorker(){
-        synchronized (masterlock){
+    public VLThread checkForFreeWorker(){
+        synchronized(masterlock){
             int size = workers.size();
-            VLThreadWorker worker;
 
             for(int i = 0; i < size; i++){
-                worker = workers.get(i);
+                VLThread worker = workers.get(i);
 
-                synchronized (worker.lock){
-                    if(worker.isTaskQueueEmpty()){
-                        return worker;
-                    }
+                if(worker.countQueuedTasks() == 0){
+                    return worker;
                 }
             }
 
@@ -80,19 +75,12 @@ public class VLThreadManager{
 
     public void destroy(){
         int size = workers.size();
-        VLThreadWorker worker;
 
         for(int i = 0; i < size; i++){
-            worker = workers.get(i);
-
-            try{
-                worker.disable();
-                worker.join();
-
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
+            workers.get(i).requestDestruction();
         }
+
+        workers = null;
     }
 
 }

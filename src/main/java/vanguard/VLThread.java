@@ -4,7 +4,8 @@ public class VLThread extends Thread{
 
     private final VLListType<VLThreadTaskType> tasks;
     private final VLListType<VLThreadTaskType> active;
-    public final Object lock;
+    private final Object lock;
+    public final Object internallock;
 
     private volatile boolean enabled;
     private volatile boolean lockdown;
@@ -13,7 +14,9 @@ public class VLThread extends Thread{
     public VLThread(int resizer){
         tasks = new VLListType<>(resizer, resizer);
         active = new VLListType<>(resizer, resizer);
+
         lock = new Object();
+        internallock = new Object();
 
         enabled = true;
         lockdown = false;
@@ -102,6 +105,10 @@ public class VLThread extends Thread{
         synchronized(lock){
             while(!waiting){
                 try{
+                    synchronized(internallock){
+                        internallock.notifyAll();
+                    }
+
                     lock.wait();
 
                 }catch(InterruptedException ex){
@@ -139,6 +146,10 @@ public class VLThread extends Thread{
 
                 while(!waiting){
                     try{
+                        synchronized(internallock){
+                            internallock.notifyAll();
+                        }
+
                         lock.wait();
 
                     }catch(InterruptedException ex){

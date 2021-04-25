@@ -27,7 +27,7 @@ public class VLVThreadTask implements VLThreadTaskType{
             runWithCompensator(thread);
 
         }else{
-            runDirect(thread);
+            runDirectly(thread);
         }
     }
 
@@ -88,7 +88,7 @@ public class VLVThreadTask implements VLThreadTaskType{
         }
     }
 
-    private void runDirect(VLThread worker){
+    private void runDirectly(VLThread worker){
         int changes = 0;
 
         while(worker.enabled()){

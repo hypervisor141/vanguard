@@ -82,5 +82,4 @@ public class VLThreadManager{
 
         workers = null;
     }
-
 }

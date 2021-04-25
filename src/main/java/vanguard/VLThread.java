@@ -3,16 +3,16 @@ package vanguard;
 public class VLThread extends Thread{
 
     private final VLListType<VLThreadTaskType> tasks;
-    private final VLListType<VLThreadTaskType> taskcache;
+    private final VLListType<VLThreadTaskType> active;
     public final Object lock;
 
     private volatile boolean enabled;
-    private boolean lockdown;
-    private boolean waiting;
+    private volatile boolean lockdown;
+    private volatile boolean waiting;
 
     public VLThread(int resizer){
         tasks = new VLListType<>(resizer, resizer);
-        taskcache = new VLListType<>(resizer, resizer);
+        active = new VLListType<>(resizer, resizer);
         lock = new Object();
 
         enabled = true;
@@ -26,46 +26,42 @@ public class VLThread extends Thread{
 
         while(true){
             synchronized(lock){
-                if(!enabled){
-                    tasks.clear();
-                    taskcache.clear();
-                    return;
-                }
+                while(enabled && (lockdown || countQueuedTasks() == 0)){
+                    waiting = true;
 
-                while(lockdown || tasks.size() == 0){
                     try{
-                        waiting = true;
                         lock.notifyAll();
                         lock.wait();
-                        waiting = false;
 
                     }catch(InterruptedException ex){
                         //
                     }
 
-                    if(!enabled){
-                        tasks.clear();
-                        taskcache.clear();
-                        return;
-                    }
+                    waiting = false;
                 }
 
-                synchronized (taskcache){
-                    taskcache.add(tasks);
-                }
+                if(!enabled){
+                    tasks.nullify();
+                    tasks.virtualSize(0);
 
-                tasks.clear();
+                    return;
+
+                }else{
+                    active.add(tasks);
+
+                    tasks.nullify();
+                    tasks.virtualSize(0);
+                }
             }
 
-            synchronized (taskcache){
-                int size = taskcache.size();
+            int size = active.size();
 
-                for(int i = 0; i < size; i++){
-                    taskcache.get(i).run(this);
-                }
-
-                taskcache.clear();
+            for(int i = 0; i < size && !lockdown; i++){
+                active.get(i).run(this);
             }
+
+            active.nullify();
+            active.virtualSize(0);
         }
     }
 
@@ -76,17 +72,24 @@ public class VLThread extends Thread{
             while(!enabled){
                 try{
                     lock.wait();
+
                 }catch(InterruptedException ex){
-                    ex.printStackTrace();
+                    //
                 }
             }
         }
     }
 
     public boolean enabled(){
-        synchronized(lock){
-            return enabled;
-        }
+        return enabled;
+    }
+
+    public boolean locked(){
+        return lockdown;
+    }
+
+    public boolean waiting(){
+        return waiting;
     }
 
     public int countQueuedTasks(){
@@ -95,15 +98,9 @@ public class VLThread extends Thread{
         }
     }
 
-    public int countActiveTasks(){
-        synchronized(taskcache){
-            return taskcache.size();
-        }
-    }
-
     public void waitTillFree(){
         synchronized(lock){
-            while(true){
+            while(!waiting){
                 try{
                     lock.wait();
 
@@ -115,75 +112,61 @@ public class VLThread extends Thread{
     }
 
     public void post(VLThreadTaskType task){
-        synchronized(lock){
-            if(!lockdown){
+        if(!lockdown){
+            synchronized(lock){
                 tasks.add(task);
                 lock.notifyAll();
             }
         }
     }
 
-    public void post(VLListType<VLThreadTaskType> tasklist){
-        synchronized(lock){
-            if(!lockdown){
-                tasks.add(tasklist);
+    public void post(VLListType<VLThreadTaskType> list){
+        if(!lockdown){
+            synchronized(lock){
+                tasks.add(list);
                 lock.notifyAll();
             }
         }
     }
 
     public void lockdown(){
-        synchronized(lock){
+        if(!lockdown){
             lockdown = true;
 
-            tasks.clear();
+            synchronized(lock){
+                tasks.nullify();
+                tasks.virtualSize(0);
 
-            synchronized(taskcache){
-                taskcache.clear();
-            }
+                while(!waiting){
+                    try{
+                        lock.wait();
 
-            while(!waiting){
-                try{
-                    lock.wait();
-
-                }catch(InterruptedException ex){
-                    ex.printStackTrace();
+                    }catch(InterruptedException ex){
+                        ex.printStackTrace();
+                    }
                 }
             }
         }
     }
 
     public void unlock(){
+        lockdown = false;
+
         synchronized(lock){
-            lockdown = false;
             lock.notifyAll();
         }
     }
 
     public void requestDestruction(){
-        int size = 0;
-
-        synchronized (taskcache){
-            size = taskcache.size();
-
-            for(int i = 0; i < size; i++){
-                taskcache.get(i).requestDestruction();
-            }
-
-            taskcache.clear();
-        }
+        enabled = false;
 
         synchronized(lock){
-            size = tasks.size();
+            tasks.nullify();
+            tasks.virtualSize(0);
 
-            for(int i = 0; i < size; i++){
-                tasks.get(i).requestDestruction();
+            if(waiting){
+                lock.notifyAll();
             }
-
-            tasks.clear();
-
-            enabled = false;
-            lock.notifyAll();
         }
 
         while(isAlive()){

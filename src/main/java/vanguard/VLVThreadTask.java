@@ -31,17 +31,10 @@ public class VLVThreadTask implements VLThreadTaskType{
         }
     }
 
-    @Override
-    public void requestDestruction(){
-        synchronized(root){
-            root.notifyAll();
-        }
-    }
-
     private void runWithCompensator(VLThread worker){
         long frequencynanos = freqmillis * 1000000 + freqextrananos;
 
-        while(worker.enabled()){
+        while(worker.enabled() && !worker.locked()){
             long offsettime = System.nanoTime();
             int changes;
 
@@ -60,30 +53,31 @@ public class VLVThreadTask implements VLThreadTaskType{
                 }catch(InterruptedException ex){
                     //
                 }
-            }
 
-            long elapsednanos = System.nanoTime() - offsettime;
+            }else{
+                long elapsednanos = System.nanoTime() - offsettime;
 
-            if(elapsednanos < frequencynanos){
-                try{
-                    long compensationnanos = frequencynanos - elapsednanos;
-                    long sleepmillis = (long)Math.floor(compensationnanos / 1000000F);
+                if(elapsednanos < frequencynanos){
+                    try{
+                        long compensationnanos = frequencynanos - elapsednanos;
+                        long sleepmillis = (long)Math.floor(compensationnanos / 1000000F);
 
-                    Thread.sleep(sleepmillis, (int)(compensationnanos - (sleepmillis * 1000000)));
+                        Thread.sleep(sleepmillis, (int)(compensationnanos - (sleepmillis * 1000000)));
 
-                }catch(InterruptedException ex){
-                    ex.printStackTrace();
+                    }catch(InterruptedException ex){
+                        ex.printStackTrace();
+                    }
+
+                }else if(debug){
+                    VLDebug.append("[WARNING] [");
+                    VLDebug.append(worker.getName());
+                    VLDebug.append("] [VLV processor thread falling behind pre-set frequency of ");
+                    VLDebug.append(frequencynanos);
+                    VLDebug.append("ns by ");
+                    VLDebug.append(elapsednanos - frequencynanos);
+                    VLDebug.append("ns]");
+                    VLDebug.printD();
                 }
-
-            }else if(debug){
-                VLDebug.append("[WARNING] [");
-                VLDebug.append(worker.getName());
-                VLDebug.append("] [VLV processor thread falling behind pre-set frequency of ");
-                VLDebug.append(frequencynanos);
-                VLDebug.append("ns by ");
-                VLDebug.append(elapsednanos - frequencynanos);
-                VLDebug.append("ns]");
-                VLDebug.printD();
             }
         }
     }
@@ -107,13 +101,14 @@ public class VLVThreadTask implements VLThreadTaskType{
                 }catch(InterruptedException ex){
                     //
                 }
-            }
 
-            try{
-                Thread.sleep(freqmillis, freqextrananos);
+            }else{
+                try{
+                    Thread.sleep(freqmillis, freqextrananos);
 
-            }catch(InterruptedException ex){
-                ex.printStackTrace();
+                }catch(InterruptedException ex){
+                    ex.printStackTrace();
+                }
             }
         }
     }

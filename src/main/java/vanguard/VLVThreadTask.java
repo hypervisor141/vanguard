@@ -34,20 +34,16 @@ public class VLVThreadTask implements VLThreadTaskType<VLThread>{
     @Override
     public void requestDestruction(){
         synchronized(root){
-            root.notify();
+            root.notifyAll();
         }
     }
 
     private void runWithCompensator(VLThread worker){
-        long offsettime = 0;
-        long elapsednanos = 0;
         long frequencynanos = freqmillis * 1000000 + freqextrananos;
-        long compensationnanos = 0;
-        long sleepmillis = 0;
-        int changes = 0;
 
         while(worker.enabled()){
-            offsettime = System.nanoTime();
+            long offsettime = System.nanoTime();
+            int changes;
 
             synchronized(root){
                 changes = root.next();
@@ -66,12 +62,12 @@ public class VLVThreadTask implements VLThreadTaskType<VLThread>{
                 }
             }
 
-            elapsednanos = System.nanoTime() - offsettime;
+            long elapsednanos = System.nanoTime() - offsettime;
 
             if(elapsednanos < frequencynanos){
                 try{
-                    compensationnanos = frequencynanos - elapsednanos;
-                    sleepmillis = (long)Math.floor(compensationnanos / 1000000F);
+                    long compensationnanos = frequencynanos - elapsednanos;
+                    long sleepmillis = (long)Math.floor(compensationnanos / 1000000F);
 
                     Thread.sleep(sleepmillis, (int)(compensationnanos - (sleepmillis * 1000000)));
 

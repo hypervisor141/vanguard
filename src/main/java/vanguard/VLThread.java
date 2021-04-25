@@ -7,6 +7,8 @@ public class VLThread extends Thread{
     public final Object lock;
 
     private volatile boolean enabled;
+    private boolean lockdown;
+    private boolean waiting;
 
     public VLThread(int resizer){
         tasks = new VLListType<>(resizer, resizer);
@@ -14,6 +16,8 @@ public class VLThread extends Thread{
         lock = new Object();
 
         enabled = true;
+        lockdown = false;
+        waiting = false;
     }
 
     @Override
@@ -28,9 +32,12 @@ public class VLThread extends Thread{
                     return;
                 }
 
-                while(tasks.size() == 0){
+                while(lockdown || tasks.size() == 0){
                     try{
+                        waiting = true;
+                        lock.notifyAll();
                         lock.wait();
+                        waiting = false;
 
                     }catch(InterruptedException ex){
                         //
@@ -57,6 +64,20 @@ public class VLThread extends Thread{
             }
 
             taskcache.clear();
+        }
+    }
+
+    public void requestStart(){
+        start();
+
+        synchronized(lock){
+            while(!enabled){
+                try{
+                    lock.wait();
+                }catch(InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 
@@ -93,14 +114,43 @@ public class VLThread extends Thread{
 
     public void post(VLThreadTaskType<VLThread> task){
         synchronized(lock){
-            tasks.add(task);
-            lock.notifyAll();
+            if(!lockdown){
+                tasks.add(task);
+                lock.notifyAll();
+            }
         }
     }
 
     public void post(VLListType<VLThreadTaskType<VLThread>> tasklist){
         synchronized(lock){
-            tasks.add(tasklist);
+            if(!lockdown){
+                tasks.add(tasklist);
+                lock.notifyAll();
+            }
+        }
+    }
+
+    public void lockdown(){
+        synchronized(lock){
+            lockdown = true;
+
+            tasks.clear();
+            taskcache.clear();
+
+            while(!waiting){
+                try{
+                    lock.wait();
+
+                }catch(InterruptedException ex){
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void unlock(){
+        synchronized(lock){
+            lockdown = false;
             lock.notifyAll();
         }
     }

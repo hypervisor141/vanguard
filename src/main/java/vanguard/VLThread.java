@@ -57,15 +57,13 @@ public class VLThread extends Thread{
                 tasks.clear();
             }
 
-            synchronized (taskcache){
-                int size = taskcache.size();
+            int size = taskcache.size();
 
-                for(int i = 0; i < size; i++){
-                    taskcache.get(i).run(this);
-                }
-
-                taskcache.clear();
+            for(int i = 0; i < size; i++){
+                taskcache.get(i).run(this);
             }
+
+            taskcache.clear();
         }
     }
 
@@ -137,7 +135,10 @@ public class VLThread extends Thread{
             lockdown = true;
 
             tasks.clear();
-            taskcache.clear();
+
+            synchronized(taskcache){
+                taskcache.clear();
+            }
 
             while(!waiting){
                 try{
@@ -166,6 +167,8 @@ public class VLThread extends Thread{
             for(int i = 0; i < size; i++){
                 taskcache.get(i).requestDestruction();
             }
+
+            taskcache.clear();
         }
 
         synchronized(lock){
@@ -174,6 +177,8 @@ public class VLThread extends Thread{
             for(int i = 0; i < size; i++){
                 tasks.get(i).requestDestruction();
             }
+
+            tasks.clear();
 
             enabled = false;
             lock.notifyAll();

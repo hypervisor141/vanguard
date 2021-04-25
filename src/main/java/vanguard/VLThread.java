@@ -57,13 +57,15 @@ public class VLThread extends Thread{
                 tasks.clear();
             }
 
-            int size = taskcache.size();
+            synchronized (taskcache){
+                int size = taskcache.size();
 
-            for(int i = 0; i < size; i++){
-                taskcache.get(i).run(this);
+                for(int i = 0; i < size; i++){
+                    taskcache.get(i).run(this);
+                }
+
+                taskcache.clear();
             }
-
-            taskcache.clear();
         }
     }
 

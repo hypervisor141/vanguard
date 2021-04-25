@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLVThreadTask implements VLThreadTaskType<VLThread>{
+public class VLVThreadTask implements VLThreadTaskType{
 
     public final VLVTypeRunner root;
 

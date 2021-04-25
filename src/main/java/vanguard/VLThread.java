@@ -2,8 +2,8 @@ package vanguard;
 
 public class VLThread extends Thread{
 
-    private final VLListType<VLThreadTaskType<VLThread>> tasks;
-    private final VLListType<VLThreadTaskType<VLThread>> taskcache;
+    private final VLListType<VLThreadTaskType> tasks;
+    private final VLListType<VLThreadTaskType> taskcache;
     public final Object lock;
 
     private volatile boolean enabled;
@@ -112,7 +112,7 @@ public class VLThread extends Thread{
         }
     }
 
-    public void post(VLThreadTaskType<VLThread> task){
+    public void post(VLThreadTaskType task){
         synchronized(lock){
             if(!lockdown){
                 tasks.add(task);
@@ -121,7 +121,7 @@ public class VLThread extends Thread{
         }
     }
 
-    public void post(VLListType<VLThreadTaskType<VLThread>> tasklist){
+    public void post(VLListType<VLThreadTaskType> tasklist){
         synchronized(lock){
             if(!lockdown){
                 tasks.add(tasklist);

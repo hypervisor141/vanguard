@@ -22,12 +22,12 @@ public class VLVThreadTask implements VLThreadTaskType<VLThread>{
     }
 
     @Override
-    public void run(VLThread worker){
+    public void run(VLThread thread){
         if(enablecompensator){
-            runWithCompensator(worker);
+            runWithCompensator(thread);
 
         }else{
-            runDirect(worker);
+            runDirect(thread);
         }
     }
 

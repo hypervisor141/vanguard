@@ -1,7 +1,7 @@
 package vanguard;
 
-public interface VLThreadTaskType<WORKER extends VLThread> {
+public interface VLThreadTaskType{
 
-    void run(WORKER worker);
+    void run(VLThread thread);
     void requestDestruction();
 }

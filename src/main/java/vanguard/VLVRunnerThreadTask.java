@@ -1,7 +1,5 @@
 package vanguard;
 
-import sun.misc.GThreadHelper;
-
 public class VLVRunnerThreadTask implements VLThreadTaskType{
 
     public final VLVTypeRunner root;
@@ -9,21 +7,24 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
     private final long freqmillis;
     private final int freqextrananos;
-
-    private final boolean debug;
     private final boolean enablecompensator;
 
     private final PostReporter reporter;
 
-    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean debug, boolean enablecompensator, PostReporter reporter){
+    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, PostReporter reporter, String logtag){
         this.root = root;
         this.freqmillis = freqmillis;
         this.freqextrananos = freqextrananos;
-        this.debug = debug;
         this.enablecompensator = enablecompensator;
         this.reporter = reporter;
 
-        log = debug ? new VLLog() : null;
+        if(logtag != null){
+            log = new VLLog(VLGlobal.LOGTAG, 3);
+            log.tag(1, logtag);
+
+        }else{
+            log = null;
+        }
     }
 
     @Override
@@ -72,8 +73,8 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
                     ex.printStackTrace();
                 }
 
-            }else if(debug){
-                log.tag(worker.getName());
+            }else if(log != null){
+                log.tag(2, worker.getName());
                 log.append("[WARNING] [");
                 log.append(worker.getName());
                 log.append("] [VLV processor thread falling behind pre-set frequency of ");

@@ -3,14 +3,19 @@ package vanguard;
 public class VLLog{
 
     private StringBuilder builder = new StringBuilder();
-    private String tag;
+    private String[] tags;
 
-    public VLLog(String tag){
-        this.tag = tag;
+    public VLLog(String[] tags){
+        this.tags = tags;
     }
 
-    public VLLog(){
+    public VLLog(String firsttag, int tagsize){
+        tags = new String[tagsize];
+        tags[0] = firsttag;
+    }
 
+    public VLLog(int tagsize){
+        this.tags = new String[tagsize];
     }
 
     public void append(Object s){
@@ -73,11 +78,28 @@ public class VLLog{
         builder = new StringBuilder(builder.capacity());
     }
 
-    public void tag(String tag){
-        this.tag = tag;
+    public void tag(int index, String tag){
+        this.tags[index] = tag;
+    }
+
+    public void printTag(String tag){
+        append("[");
+        append(tag);
+        append("]");
+    }
+
+    public void printTags(){
+        int size = tags.length;
+
+        for(int i = 0; i < size; i++){
+            printTag(tags[i]);
+            append(" ");
+        }
     }
 
     public void printInfo(){
+        printTags();
+
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 
@@ -89,6 +111,8 @@ public class VLLog{
     }
 
     public void printError(){
+        printTags();
+
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 
@@ -101,14 +125,14 @@ public class VLLog{
 
     public void printInfo(String text){
         System.out.print("[");
-        System.out.print(tag);
+        System.out.print(tags);
         System.out.print("] ");
         System.out.println(text);
     }
 
     public void printError(String text){
         System.err.print("[");
-        System.err.print(tag);
+        System.err.print(tags);
         System.err.print("] ");
         System.err.println(text);
     }

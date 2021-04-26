@@ -2,51 +2,55 @@ package vanguard;
 
 public class VLTiming{
 
-    public static final String TAG = "VANGUARD";
-
     private static long NANOTIME;
     private static long ACCUMULATETIME;
     private static String TARGET;
+    private static VLLog log;
 
     public static void startTiming(String target){
         TARGET = target;
         NANOTIME = System.nanoTime();
+
+        log = new VLLog(new String[]{
+                VLGlobal.LOGTAG, "GLOBALTIMING"
+        });
     }
 
-    public static String finishAccumulateTime(String prefix, String tag){
-        String str = "(" + prefix + ")" + "ACCUMULATE(" + ACCUMULATETIME + "ns, " + (long)Math.floor(ACCUMULATETIME / 1000000f) + "ms) ";
+    public static void finishAccumulateTime(String prefix){
+        log.append("(");
+        log.append(prefix);
+        log.append(")");
+        log.append("ACCUMULATE(");
+        log.append(ACCUMULATETIME);
+        log.append("ns, ");
+        log.append((long)Math.floor(ACCUMULATETIME / 1000000f));
+        log.append("ms) ");
+        log.printInfo();
+
         ACCUMULATETIME = 0;
-
-        if(tag != null){
-            System.out.print("[");
-            System.out.print(TAG);
-            System.out.print("] ");
-            System.out.print(str);
-        }
-
-        return str;
     }
 
-    public static String finishTiming(String prefix, String tag, boolean accumulate){
+    public static void finishTiming(String prefix, boolean accumulate){
         long time = System.nanoTime();
         long diff = time - NANOTIME;
-        String str = "(" + prefix + ")" + TARGET + "(" + diff + "ns, " + (long)Math.floor(diff / 1000000f) + "ms) ";
+
+        log.append("(");
+        log.append(prefix);
+        log.append(")");
+        log.append(TARGET);
+        log.append("(");
+        log.append(diff);
+        log.append("ns, ");
+        log.append((long)Math.floor(diff / 1000000f));
+        log.append("ms) ");
+        log.printInfo();
 
         if(accumulate){
             ACCUMULATETIME += diff;
         }
-
-        if(tag != null){
-            System.out.print("[");
-            System.out.print(TAG);
-            System.out.print("] ");
-            System.out.print(str);
-        }
-
-        return str;
     }
 
-    public static long timeFunction(Runnable task, int testcount, int reportpercetile, boolean log){
+    public static long timeFunction(Runnable task, int testcount, int reportpercetile, boolean enablelog){
         long time;
         long diff;
         long avg = 0;
@@ -55,10 +59,12 @@ public class VLTiming{
         long testperc = 0;
         long threshold = reportpercetile == 0 ? 0 : (long)(testcount * (reportpercetile / 100f));
 
-        VLLog logger = new VLLog(TAG);
+        VLLog log = new VLLog(new String[]{
+                VLGlobal.LOGTAG, "TIMING"
+        });
 
-        if(log && threshold != 0){
-            logger.printInfo("Test progress : "+ testperc + "%");
+        if(enablelog && threshold != 0){
+            log.printInfo("Test progress : "+ testperc + "%");
         }
 
         for(int e = 0; e < testcount; e++){
@@ -81,15 +87,15 @@ public class VLTiming{
                 avg = (avg + diff) / 2;
             }
 
-            if(log && threshold != 0 && e != 0 && e % threshold == 0){
+            if(enablelog && threshold != 0 && e != 0 && e % threshold == 0){
                 testperc += reportpercetile;
-                logger.printInfo("Test progress : " + testperc + "%");
+                log.printInfo("Test progress : " + testperc + "%");
             }
         }
 
-        if(log){
-            logger.printInfo("Test progress : 100%");
-            logger.printInfo("Avg : " + avg + "ns (" + (avg / 1000000f) + "ms)" + " Max : " + max + "ns (" + (max / 1000000f) + "ms)" + " Min : " + min + "ns (" + (min / 1000000f) + "ms)");
+        if(enablelog){
+            log.printInfo("Test progress : 100%");
+            log.printInfo("Avg : " + avg + "ns (" + (avg / 1000000f) + "ms)" + " Max : " + max + "ns (" + (max / 1000000f) + "ms)" + " Min : " + min + "ns (" + (min / 1000000f) + "ms)");
         }
 
         return avg;

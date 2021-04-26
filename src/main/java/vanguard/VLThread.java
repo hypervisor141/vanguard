@@ -68,13 +68,13 @@ public class VLThread extends Thread{
         }
     }
 
-    public void requestStart(){
+    public void requestStart(long waittime){
         start();
 
         synchronized(lock){
             while(!enabled){
                 try{
-                    lock.wait();
+                    lock.wait(waittime);
 
                 }catch(InterruptedException ex){
                     //
@@ -101,7 +101,7 @@ public class VLThread extends Thread{
         }
     }
 
-    public void waitTillFree(){
+    public void waitTillFree(long waittime){
         synchronized(lock){
             while(!waiting){
                 try{
@@ -109,7 +109,7 @@ public class VLThread extends Thread{
                         internallock.notifyAll();
                     }
 
-                    lock.wait();
+                    lock.wait(waittime);
 
                 }catch(InterruptedException ex){
                     return;
@@ -136,7 +136,7 @@ public class VLThread extends Thread{
         }
     }
 
-    public void lockdown(){
+    public void lockdown(long waittime){
         if(!lockdown){
             lockdown = true;
 
@@ -150,7 +150,7 @@ public class VLThread extends Thread{
                             internallock.notifyAll();
                         }
 
-                        lock.wait();
+                        lock.wait(waittime);
 
                     }catch(InterruptedException ex){
                         ex.printStackTrace();

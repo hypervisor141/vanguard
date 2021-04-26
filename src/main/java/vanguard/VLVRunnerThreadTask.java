@@ -75,9 +75,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
             }else if(log != null){
                 log.tag(2, worker.getName());
-                log.append("[WARNING] [");
-                log.append(worker.getName());
-                log.append("] [VLV processor thread falling behind pre-set frequency of ");
+                log.append("[WARNING] [VLV processor thread falling behind pre-set frequency of ");
                 log.append(frequencynanos);
                 log.append("ns by ");
                 log.append(elapsednanos - frequencynanos);

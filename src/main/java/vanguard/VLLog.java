@@ -82,24 +82,7 @@ public class VLLog{
         this.tags[index] = tag;
     }
 
-    public void printTag(String tag){
-        append("[");
-        append(tag);
-        append("]");
-    }
-
-    public void printTags(){
-        int size = tags.length;
-
-        for(int i = 0; i < size; i++){
-            printTag(tags[i]);
-            append(" ");
-        }
-    }
-
     public void printInfo(){
-        printTags();
-
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 
@@ -111,8 +94,6 @@ public class VLLog{
     }
 
     public void printError(){
-        printTags();
-
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 
@@ -124,17 +105,43 @@ public class VLLog{
     }
 
     public void printInfo(String text){
-        System.out.print("[");
-        System.out.print(tags);
-        System.out.print("] ");
+        printTags();
         System.out.println(text);
     }
 
     public void printError(String text){
-        System.err.print("[");
-        System.err.print(tags);
-        System.err.print("] ");
+        printTagsError();
         System.err.println(text);
+    }
+
+    public void printTag(String tag){
+        System.out.print("[");
+        System.out.print(tag);
+        System.out.print("]");
+    }
+
+    public void printTags(){
+        int size = tags.length;
+
+        for(int i = 0; i < size; i++){
+            printTag(tags[i]);
+            System.out.print(" ");
+        }
+    }
+
+    public void printTagError(String tag){
+        System.err.print("[");
+        System.err.print(tag);
+        System.err.print("]");
+    }
+
+    public void printTagsError(){
+        int size = tags.length;
+
+        for(int i = 0; i < size; i++){
+            printTagError(tags[i]);
+            System.err.print(" ");
+        }
     }
 
     public void release(){

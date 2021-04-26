@@ -40,7 +40,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
     private void runWithCompensator(VLThread worker){
         long frequencynanos = freqmillis * 1000000 + freqextrananos;
 
-        while(worker.enabled() && !worker.locked()){
+        while(worker.running() && !worker.locked()){
             long offsettime = System.nanoTime();
             int changes;
 
@@ -51,12 +51,11 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
                 if(changes == 0){
                     try{
                         worker.internallock.wait();
+                        continue;
 
                     }catch(InterruptedException ex){
                         //
                     }
-
-                    continue;
                 }
             }
 
@@ -86,7 +85,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
     }
 
     private void runDirectly(VLThread worker){
-        while(worker.enabled()){
+        while(worker.running() && !worker.locked()){
             synchronized(worker.internallock){
                 int changes = root.next();
                 reporter.completed(changes);
@@ -94,12 +93,11 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
                 if(changes == 0){
                     try{
                         worker.internallock.wait();
+                        continue;
 
                     }catch(InterruptedException ex){
                         //
                     }
-
-                    continue;
                 }
             }
 

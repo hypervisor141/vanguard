@@ -64,7 +64,7 @@ public class VLThreadManager{
             for(int i = 0; i < size; i++){
                 VLThread worker = workers.get(i);
 
-                if(worker.countQueuedTasks() == 0){
+                if(worker.sizeQueuedTasks() == 0){
                     return worker;
                 }
             }

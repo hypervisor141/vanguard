@@ -4,21 +4,22 @@ public class VLThread extends Thread{
 
     private final VLListType<VLThreadTaskType> tasks;
     private final VLListType<VLThreadTaskType> active;
-    private final Object lock;
+
+    private final Object mainlock;
     public final Object internallock;
 
-    private volatile boolean enabled;
-    private volatile boolean lockdown;
+    private boolean running;
+    private boolean lockdown;
     private volatile boolean waiting;
 
     public VLThread(int resizer){
         tasks = new VLListType<>(resizer, resizer);
         active = new VLListType<>(resizer, resizer);
 
-        lock = new Object();
+        mainlock = new Object();
         internallock = new Object();
 
-        enabled = true;
+        running = false;
         lockdown = false;
         waiting = false;
     }
@@ -27,39 +28,47 @@ public class VLThread extends Thread{
     public void run(){
         super.run();
 
+        synchronized(mainlock){
+            running = true;
+            mainlock.notifyAll();
+        }
+
         while(true){
-            synchronized(lock){
-                while(enabled && (lockdown || countQueuedTasks() == 0)){
-                    waiting = true;
+            synchronized(mainlock){
+                if(running){
+                    if(tasks.size() == 0){
+                        try{
+                            waiting = true;
+                            mainlock.notifyAll();
 
-                    try{
-                        lock.notifyAll();
-                        lock.wait();
+                            mainlock.wait();
 
-                    }catch(InterruptedException ex){
-                        //
+                            waiting = false;
+                            mainlock.notifyAll();
+
+                        }catch(InterruptedException ex){
+                            //
+                        }
                     }
 
-                    waiting = false;
-                }
-
-                if(!enabled){
-                    tasks.nullify();
-                    tasks.virtualSize(0);
-
-                    return;
-
-                }else{
                     active.add(tasks);
 
                     tasks.nullify();
                     tasks.virtualSize(0);
+
+                }else{
+                    lockdown = false;
+
+                    tasks.nullify();
+                    tasks.virtualSize(0);
+
+                    return;
                 }
             }
 
             int size = active.size();
 
-            for(int i = 0; i < size && !lockdown; i++){
+            for(int i = 0; i < size && !locked(); i++){
                 active.get(i).run(this);
             }
 
@@ -68,13 +77,13 @@ public class VLThread extends Thread{
         }
     }
 
-    public void requestStart(long waittime){
+    public void requestStart(){
         start();
 
-        synchronized(lock){
-            while(!enabled){
+        synchronized(mainlock){
+            while(!running){
                 try{
-                    lock.wait(waittime);
+                    mainlock.wait();
 
                 }catch(InterruptedException ex){
                     //
@@ -83,33 +92,29 @@ public class VLThread extends Thread{
         }
     }
 
-    public boolean enabled(){
-        return enabled;
-    }
-
-    public boolean locked(){
-        return lockdown;
-    }
-
-    public boolean waiting(){
-        return waiting;
-    }
-
-    public int countQueuedTasks(){
-        synchronized(lock){
-            return tasks.size();
+    public void post(VLThreadTaskType task){
+        synchronized(mainlock){
+            if(!lockdown){
+                tasks.add(task);
+                mainlock.notifyAll();
+            }
         }
     }
 
-    public void waitTillFree(long waittime){
-        synchronized(lock){
+    public void post(VLListType<VLThreadTaskType> list){
+        synchronized(mainlock){
+            if(!lockdown){
+                tasks.add(list);
+                mainlock.notifyAll();
+            }
+        }
+    }
+
+    public void waitTillFree(){
+        synchronized(mainlock){
             while(!waiting){
                 try{
-                    synchronized(internallock){
-                        internallock.notifyAll();
-                    }
-
-                    lock.wait(waittime);
+                    mainlock.wait();
 
                 }catch(InterruptedException ex){
                     return;
@@ -118,29 +123,11 @@ public class VLThread extends Thread{
         }
     }
 
-    public void post(VLThreadTaskType task){
-        if(!lockdown){
-            synchronized(lock){
-                tasks.add(task);
-                lock.notifyAll();
-            }
-        }
-    }
+    public void lockdown(){
+        synchronized(mainlock){
+            if(!lockdown){
+                lockdown = true;
 
-    public void post(VLListType<VLThreadTaskType> list){
-        if(!lockdown){
-            synchronized(lock){
-                tasks.add(list);
-                lock.notifyAll();
-            }
-        }
-    }
-
-    public void lockdown(long waittime){
-        if(!lockdown){
-            lockdown = true;
-
-            synchronized(lock){
                 tasks.nullify();
                 tasks.virtualSize(0);
 
@@ -150,10 +137,10 @@ public class VLThread extends Thread{
                             internallock.notifyAll();
                         }
 
-                        lock.wait(waittime);
+                        mainlock.wait();
 
                     }catch(InterruptedException ex){
-                        ex.printStackTrace();
+                        //
                     }
                 }
             }
@@ -163,20 +150,20 @@ public class VLThread extends Thread{
     public void unlock(){
         lockdown = false;
 
-        synchronized(lock){
-            lock.notifyAll();
+        synchronized(mainlock){
+            mainlock.notifyAll();
         }
     }
 
     public void requestDestruction(){
-        enabled = false;
+        running = false;
 
-        synchronized(lock){
+        synchronized(mainlock){
             tasks.nullify();
             tasks.virtualSize(0);
 
             if(waiting){
-                lock.notifyAll();
+                mainlock.notifyAll();
             }
         }
 
@@ -187,6 +174,30 @@ public class VLThread extends Thread{
             }catch(InterruptedException ex){
                 //
             }
+        }
+    }
+
+    public boolean running(){
+        synchronized(mainlock){
+            return running;
+        }
+    }
+
+    public boolean locked(){
+        synchronized(mainlock){
+            return lockdown;
+        }
+    }
+
+    public boolean waiting(){
+        synchronized(mainlock){
+            return waiting;
+        }
+    }
+
+    public int sizeQueuedTasks(){
+        synchronized(mainlock){
+            return tasks.size();
         }
     }
 }

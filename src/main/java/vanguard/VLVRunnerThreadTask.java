@@ -1,8 +1,11 @@
 package vanguard;
 
+import sun.misc.GThreadHelper;
+
 public class VLVRunnerThreadTask implements VLThreadTaskType{
 
     public final VLVTypeRunner root;
+    public final VLLog log;
 
     private final long freqmillis;
     private final int freqextrananos;
@@ -19,6 +22,8 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
         this.debug = debug;
         this.enablecompensator = enablecompensator;
         this.reporter = reporter;
+
+        log = debug ? new VLLog() : null;
     }
 
     @Override
@@ -68,14 +73,15 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
                 }
 
             }else if(debug){
-                VLDebug.append("[WARNING] [");
-                VLDebug.append(worker.getName());
-                VLDebug.append("] [VLV processor thread falling behind pre-set frequency of ");
-                VLDebug.append(frequencynanos);
-                VLDebug.append("ns by ");
-                VLDebug.append(elapsednanos - frequencynanos);
-                VLDebug.append("ns]");
-                VLDebug.printD();
+                log.tag(worker.getName());
+                log.append("[WARNING] [");
+                log.append(worker.getName());
+                log.append("] [VLV processor thread falling behind pre-set frequency of ");
+                log.append(frequencynanos);
+                log.append("ns by ");
+                log.append(elapsednanos - frequencynanos);
+                log.append("ns]");
+                log.printInfo();
             }
         }
     }

@@ -55,10 +55,10 @@ public class VLTiming{
         long testperc = 0;
         long threshold = reportpercetile == 0 ? 0 : (long)(testcount * (reportpercetile / 100f));
 
-        VLDebug.tag(TAG);
+        VLLog logger = new VLLog(TAG);
 
         if(log && threshold != 0){
-            VLDebug.printDirect("Test progress : "+ testperc + "%");
+            logger.printInfo("Test progress : "+ testperc + "%");
         }
 
         for(int e = 0; e < testcount; e++){
@@ -83,13 +83,13 @@ public class VLTiming{
 
             if(log && threshold != 0 && e != 0 && e % threshold == 0){
                 testperc += reportpercetile;
-                VLDebug.printDirect("Test progress : " + testperc + "%");
+                logger.printInfo("Test progress : " + testperc + "%");
             }
         }
 
         if(log){
-            VLDebug.printDirect("Test progress : 100%");
-            VLDebug.printDirect("Avg : " + avg + "ns (" + (avg / 1000000f) + "ms)" + " Max : " + max + "ns (" + (max / 1000000f) + "ms)" + " Min : " + min + "ns (" + (min / 1000000f) + "ms)");
+            logger.printInfo("Test progress : 100%");
+            logger.printInfo("Avg : " + avg + "ns (" + (avg / 1000000f) + "ms)" + " Max : " + max + "ns (" + (max / 1000000f) + "ms)" + " Min : " + min + "ns (" + (min / 1000000f) + "ms)");
         }
 
         return avg;

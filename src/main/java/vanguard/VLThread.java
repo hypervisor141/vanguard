@@ -183,6 +183,12 @@ public class VLThread extends Thread{
         }
     }
 
+    public void notifyInternalLock(){
+        synchronized(internallock){
+            internallock.notifyAll();
+        }
+    }
+
     public boolean locked(){
         synchronized(mainlock){
             return lockdown;

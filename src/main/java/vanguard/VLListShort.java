@@ -14,6 +14,10 @@ public final class VLListShort extends VLList<short[]>{
         array = data;
     }
 
+    public VLListShort(VLListShort src, int depth){
+        copy(src, depth);
+    }
+
     public void add(short item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
@@ -134,6 +138,11 @@ public final class VLListShort extends VLList<short[]>{
         for(; index < count; index++){
             array[index] = 0;
         }
+    }
+
+    @Override
+    public VLListShort duplicate(int depth){
+        return new VLListShort(this, depth);
     }
 
     @Override

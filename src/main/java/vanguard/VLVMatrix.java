@@ -1,11 +1,18 @@
 package vanguard;
 
-public class VLVMatrix implements VLStringify{
+public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
+
+    public static final int DEPTH_SHALLOW_ROWS = 1;
+    public static final int DEPTH_DEEP_ROWS_SHALLOW_COLUMNS = 2;
 
     protected VLListType<VLListType<VLVTypeVariable>> matrix;
 
     public VLVMatrix(int capacity, int resizer){
         matrix = new VLListType<>(capacity, resizer);
+    }
+
+    public VLVMatrix(VLVMatrix src, int depth){
+        copy(src, depth);
     }
 
     public void addRow(int initialcapacity, int resizercount){
@@ -66,6 +73,66 @@ public class VLVMatrix implements VLStringify{
 
     public int sizeColumns(int index){
         return matrix.get(index).size();
+    }
+
+    @Override
+    public void copy(VLVMatrix src, int depth){
+        VLListType<VLListType<VLVTypeVariable>> targetmat = src.matrix;
+
+        if(depth == DEPTH_MIN){
+            matrix = src.matrix;
+
+        }else{
+            matrix = new VLListType<>(targetmat.size(), targetmat.resizerCount());
+            matrix.maximizeVirtualSize();
+
+            int rowsize = matrix.size();
+
+            if(depth == DEPTH_SHALLOW_ROWS){
+                for(int i = 0; i < rowsize; i++){
+                    VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
+                    matrix.set(i, new VLListType<>((VLVTypeVariable[])targetrow.array(), targetrow.resizerCount()));
+                }
+
+            }else if(depth == DEPTH_DEEP_ROWS_SHALLOW_COLUMNS){
+                for(int i = 0; i < rowsize; i++){
+                    VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
+                    VLListType<VLVTypeVariable> clonedrow = new VLListType<>(targetrow.size(), targetrow.resizerCount());
+                    clonedrow.virtualSize(clonedrow.realSize());
+
+                    int columnsize = targetrow.size();
+
+                    for(int i2 = 0; i2 < columnsize; i2++){
+                        clonedrow.set(i2, (VLVTypeVariable)targetrow.get(i2).duplicate(DEPTH_MAX));
+                    }
+
+                    matrix.set(i, clonedrow);
+                }
+
+            }else if(depth == DEPTH_MAX){
+                for(int i = 0; i < rowsize; i++){
+                    VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
+                    VLListType<VLVTypeVariable> clonedrow = new VLListType<>(targetrow.size(), targetrow.resizerCount());
+                    clonedrow.virtualSize(clonedrow.realSize());
+
+                    int columnsize = targetrow.size();
+
+                    for(int i2 = 0; i2 < columnsize; i2++){
+                        clonedrow.set(i2, targetrow.get(i2));
+                    }
+
+                    matrix.set(i, clonedrow);
+                }
+
+            }else{
+                throw new RuntimeException("Invalid depth : " + depth);
+            }
+        }
+    }
+
+    @Override
+    public VLVMatrix duplicate(int depth){
+        return new VLVMatrix(this, depth);
     }
 
     @Override

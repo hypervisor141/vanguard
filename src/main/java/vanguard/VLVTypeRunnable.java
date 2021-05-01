@@ -1,6 +1,6 @@
 package vanguard;
 
-public interface VLVTypeRunnable extends VLStringify{
+public interface VLVTypeRunnable extends VLStringify, VLCopyable<VLVTypeRunnable> {
 
     void initialize(int cycles);
     void initialize(float changerate);

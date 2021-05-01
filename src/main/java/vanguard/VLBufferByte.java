@@ -5,6 +5,10 @@ import java.nio.ByteOrder;
 
 public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
+    public VLBufferByte(VLBufferByte src, int depth){
+        copy(src, depth);
+    }
+
     public VLBufferByte(){
 
     }
@@ -125,7 +129,40 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         return buffer.capacity() * getTypeBytes();
     }
 
+    @Override
+    public void copy(VLBuffer<Byte, ByteBuffer> src, int depth){
+        ByteBuffer target = src.buffer;
+        preInitCapacity = src.preInitCapacity;
+
+        if(depth == DEPTH_MIN){
+            initialize(target);
+
+        }else if(depth == DEPTH_MAX){
+            initialize(target.capacity(), target.order());
+
+            if(target.hasArray()){
+                buffer.put(target.array());
+
+            }else{
+                int size = target.capacity();
+
+                for(int i = 0; i < size; i++){
+                    buffer.put(target.get(i));
+                }
+            }
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+
+        buffer.position(0);
+    }
+
     public static class Normal extends VLBufferByte{
+
+        public Normal(Normal src, int depth){
+            super(src, depth);
+        }
 
         public Normal(){
 
@@ -139,9 +176,18 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
             return null;
         }
+
+        @Override
+        public Normal duplicate(int depth){
+            return new Normal(this, depth);
+        }
     }
 
     public static class Direct extends VLBufferByte{
+
+        public Direct(Direct src, int depth){
+            super(src, depth);
+        }
 
         public Direct(){
 
@@ -154,6 +200,11 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
             buffer.position(0);
 
             return buffer;
+        }
+
+        @Override
+        public Direct duplicate(int depth){
+            return new Direct(this, depth);
         }
     }
 }

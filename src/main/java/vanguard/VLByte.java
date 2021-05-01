@@ -1,42 +1,42 @@
 package vanguard;
 
-public class VLInt implements VLPrimitive{
+public class VLByte implements VLPrimitive{
 
-    private int field;
+    private byte field;
 
-    public VLInt(int v){
+    public VLByte(byte v){
         field = v;
     }
 
-    public VLInt(VLInt src, int depth){
+    public VLByte(VLByte src, int depth){
         copy(src, depth);
     }
 
-    public VLInt(){
+    public VLByte(){
 
     }
 
-    public void set(int field){
+    public void set(byte field){
         this.field = field;
     }
 
-    public int get(){
+    public byte get(){
         return field;
     }
 
     @Override
     public void copy(VLPrimitive src, int depth){
-        field = ((VLInt)src).field;
+        field = ((VLByte)src).field;
     }
 
     @Override
-    public VLInt duplicate(int depth){
-        return new VLInt(this, depth);
+    public VLByte duplicate(int depth){
+        return new VLByte(this, depth);
     }
 
     @Override
     public void stringify(StringBuilder src, Object hint){
-        src.append("int[");
+        src.append("byte[");
         src.append(field);
         src.append("]");
     }

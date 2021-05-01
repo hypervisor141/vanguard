@@ -14,6 +14,10 @@ public final class VLListDouble extends VLList<double[]>{
         array = data;
     }
 
+    public VLListDouble(VLListDouble src, int depth){
+        copy(src, depth);
+    }
+
     public void add(double item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
@@ -134,6 +138,11 @@ public final class VLListDouble extends VLList<double[]>{
         for(; index < count; index++){
             array[index] = 0;
         }
+    }
+
+    @Override
+    public VLListDouble duplicate(int depth){
+        return new VLListDouble(this, depth);
     }
 
     @Override

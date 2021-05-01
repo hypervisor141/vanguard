@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLBufferTracker implements VLStringify{
+public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>{
 
     public int offset;
     public int count;
@@ -36,8 +36,30 @@ public class VLBufferTracker implements VLStringify{
         this.endposition = offset + count;
     }
 
+    public VLBufferTracker(VLBufferTracker src, int depth){
+        copy(src, depth);
+    }
+
     public VLBufferTracker(){
 
+    }
+
+    @Override
+    public void copy(VLBufferTracker src, int depth){
+        offset= src.offset;
+        count= src.count;
+        inputoffest= src.inputoffest;
+        unitoffset= src.unitoffset;
+        unitsize= src.unitsize;
+        unitsubcount= src.unitsubcount;
+        stride= src.stride;
+        endposition= src.endposition;
+        typebytesize= src.typebytesize;
+    }
+
+    @Override
+    public VLBufferTracker duplicate(int depth) {
+        return new VLBufferTracker(this, depth);
     }
 
     @Override

@@ -10,7 +10,16 @@ public class VLVControl extends VLVLinear{
         super(0, changerate, changerate, loop);
     }
 
+    public VLVControl(VLVControl src, int depth){
+        copy(src, depth);
+    }
+
     public VLVControl(){
 
+    }
+
+    @Override
+    public VLVControl duplicate(int depth){
+        return new VLVControl(this, depth);
     }
 }

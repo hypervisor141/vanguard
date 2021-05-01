@@ -2,27 +2,27 @@ package vanguard;
 
 import java.util.Arrays;
 
-public class VLArrayLong extends VLArray<Long, long[]>{
+public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
 
-    public VLArrayLong(long[] s) {
+    public VLArrayBoolean(boolean[] s) {
         super(s);
     }
 
-    public VLArrayLong(int size) {
-        super(new long[size]);
+    public VLArrayBoolean(int size) {
+        super(new boolean[size]);
     }
 
-    public VLArrayLong(VLArrayLong src, int depth){
+    public VLArrayBoolean(VLArrayBoolean src, int depth){
         copy(src, depth);
     }
 
     @Override
-    public void set(int index, Long element) {
+    public void set(int index, Boolean element) {
         array[index] = element;
     }
 
     @Override
-    public Long get(int index) {
+    public Boolean get(int index) {
         return array[index];
     }
 
@@ -37,7 +37,7 @@ public class VLArrayLong extends VLArray<Long, long[]>{
     }
 
     @Override
-    public void copy(VLArray<Long, long[]> src, int depth){
+    public void copy(VLArray<Boolean, boolean[]> src, int depth){
         if(depth == DEPTH_MIN){
             this.array = src.array;
 
@@ -50,8 +50,8 @@ public class VLArrayLong extends VLArray<Long, long[]>{
     }
 
     @Override
-    public VLArrayLong duplicate(int depth){
-        return new VLArrayLong(this, depth);
+    public VLArrayBoolean duplicate(int depth){
+        return new VLArrayBoolean(this, depth);
     }
 
     @Override

@@ -6,6 +6,10 @@ import java.nio.ShortBuffer;
 
 public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
 
+    public VLBufferShort(VLBufferShort src, int depth){
+        copy(src, depth);
+    }
+
     public VLBufferShort(){
 
     }
@@ -129,7 +133,40 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
         return buffer.capacity() * getTypeBytes();
     }
 
+    @Override
+    public void copy(VLBuffer<Short, ShortBuffer> src, int depth){
+        ShortBuffer target = src.buffer;
+        preInitCapacity = src.preInitCapacity;
+
+        if(depth == DEPTH_MIN){
+            initialize(target);
+
+        }else if(depth == DEPTH_MAX){
+            initialize(target.capacity(), target.order());
+
+            if(target.hasArray()){
+                buffer.put(target.array());
+
+            }else{
+                int size = target.capacity();
+
+                for(int i = 0; i < size; i++){
+                    buffer.put(target.get(i));
+                }
+            }
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+
+        buffer.position(0);
+    }
+
     public static class Normal extends VLBufferShort{
+
+        public Normal(Normal src, int depth){
+            super(src, depth);
+        }
 
         public Normal(){
 
@@ -142,9 +179,18 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
 
             return null;
         }
+
+        @Override
+        public Normal duplicate(int depth){
+            return new Normal(this, depth);
+        }
     }
 
     public static class Direct extends VLBufferShort{
+
+        public Direct(Direct src, int depth){
+            super(src, depth);
+        }
 
         public Direct(){
 
@@ -159,6 +205,11 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
             this.buffer = buffer.asShortBuffer();
 
             return buffer;
+        }
+
+        @Override
+        public Direct duplicate(int depth){
+            return new Direct(this, depth);
         }
     }
 }

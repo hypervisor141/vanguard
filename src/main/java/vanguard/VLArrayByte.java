@@ -12,6 +12,10 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
         super(new byte[size]);
     }
 
+    public VLArrayByte(VLArrayByte src, int depth){
+        copy(src, depth);
+    }
+
     @Override
     public void set(int index, Byte element) {
         array[index] = element;
@@ -30,6 +34,24 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
     @Override
     public int size() {
         return array.length;
+    }
+
+    @Override
+    public void copy(VLArray<Byte, byte[]> src, int depth){
+        if(depth == DEPTH_MIN){
+            this.array = src.array;
+
+        }else if(depth == DEPTH_MAX){
+            array = src.array.clone();
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+    }
+
+    @Override
+    public VLArrayByte duplicate(int depth){
+        return new VLArrayByte(this, depth);
     }
 
     @Override

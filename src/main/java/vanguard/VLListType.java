@@ -14,6 +14,10 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         array = data;
     }
 
+    public VLListType(VLListType<TYPE> src, int depth){
+        copy(src, depth);
+    }
+
     public void add(TYPE item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
@@ -82,6 +86,17 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
         if(index != -1){
             remove(index);
+        }
+    }
+
+    @Override
+    public void remove(int index, int count){
+        super.remove(index, count);
+
+        int cap = currentsize + count;
+
+        for(int i = currentsize; i < cap; i++){
+            array[i] = null;
         }
     }
 

@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-version '8.6.2'
+version '9.1.0'
 
 repositories {
     mavenCentral()

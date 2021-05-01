@@ -4,7 +4,7 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLStringify{
+public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLStringify, VLCopyable<VLBuffer<ELEMENT, BUFFER>>{
 
     protected BUFFER buffer;
     protected int preInitCapacity;

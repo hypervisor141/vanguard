@@ -1,11 +1,15 @@
 package vanguard;
 
-public class VLFloat implements VLStringify{
+public class VLFloat implements VLPrimitive{
 
     private float field;
 
     public VLFloat(float v){
         field = v;
+    }
+
+    public VLFloat(VLFloat src, int depth){
+        copy(src, depth);
     }
 
     public VLFloat(){
@@ -18,6 +22,16 @@ public class VLFloat implements VLStringify{
 
     public float get(){
         return field;
+    }
+
+    @Override
+    public void copy(VLPrimitive src, int depth){
+        field = ((VLFloat)src).field;
+    }
+
+    @Override
+    public VLFloat duplicate(int depth){
+        return new VLFloat(this, depth);
     }
 
     @Override

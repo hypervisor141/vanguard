@@ -14,6 +14,10 @@ public final class VLListFloat extends VLList<float[]>{
         array = data;
     }
 
+    public VLListFloat(VLListFloat src, int depth){
+        copy(src, depth);
+    }
+
     public void add(float item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
@@ -134,6 +138,11 @@ public final class VLListFloat extends VLList<float[]>{
         for(; index < count; index++){
             array[index] = 0;
         }
+    }
+
+    @Override
+    public VLListFloat duplicate(int depth){
+        return new VLListFloat(this, depth);
     }
 
     @Override

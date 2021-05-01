@@ -34,6 +34,10 @@ public class VLVCurved extends VLVariable{
         this.curve = curve;
     }
 
+    public VLVCurved(VLVCurved src, int depth){
+        copy(src, depth);
+    }
+
     public VLVCurved(){
 
     }
@@ -116,6 +120,20 @@ public class VLVCurved extends VLVariable{
 
     public Curve getCurve(){
         return curve;
+    }
+
+    @Override
+    public void copy(VLVTypeRunnable src, int depth) {
+        super.copy(src, depth);
+        VLVCurved target = (VLVCurved)src;
+
+        curve = target.curve;
+        tracker = target.tracker;
+    }
+
+    @Override
+    public VLVCurved duplicate(int depth){
+        return new VLVCurved(this, depth);
     }
 
     public abstract static class Curve{

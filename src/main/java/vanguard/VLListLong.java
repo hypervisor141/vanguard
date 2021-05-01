@@ -14,6 +14,10 @@ public final class VLListLong extends VLList<long[]>{
         array = data;
     }
 
+    public VLListLong(VLListLong src, int depth){
+        copy(src, depth);
+    }
+
     public void add(long item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
@@ -134,6 +138,11 @@ public final class VLListLong extends VLList<long[]>{
         for(; index < count; index++){
             array[index] = 0;
         }
+    }
+
+    @Override
+    public VLListLong duplicate(int depth){
+        return new VLListLong(this, depth);
     }
 
     @Override

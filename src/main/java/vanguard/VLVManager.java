@@ -3,11 +3,13 @@ package vanguard;
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
+    public static final int DEPTH_SHALLOW_ENTRIES = 1;
+
     private boolean paused;
     private boolean isdone;
     private int endpointindex;
 
-    private final VLListType<ENTRY> entries;
+    private VLListType<ENTRY> entries;
     private VLSyncType<VLVManager<ENTRY>> syncer;
 
     public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncer){
@@ -23,6 +25,14 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
         paused = true;
         endpointindex = -1;
+    }
+
+    public VLVManager(VLVManager<ENTRY> src, int depth){
+        copy(src, depth);
+    }
+
+    protected VLVManager(){
+
     }
 
     @Override
@@ -432,6 +442,45 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     @Override
     public boolean done(){
         return isdone;
+    }
+
+    @Override
+    public void copy(VLVTypeRunnable src, int depth){
+        VLVManager<ENTRY> target = (VLVManager<ENTRY>)src;
+        paused = target.paused;
+        isdone = target.isdone;
+        endpointindex = target.endpointindex;
+        syncer = target.syncer;
+
+        if(depth == DEPTH_MIN){
+            entries = target.entries;
+
+        }else{
+            VLListType<ENTRY> srcentries = target.entries;
+            entries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
+            entries.maximizeVirtualSize();
+
+            int size = entries.size();
+
+            if(depth == DEPTH_SHALLOW_ENTRIES){
+                for(int i = 0; i < size; i++){
+                    entries.set(i, srcentries.get(i));
+                }
+
+            }else if(depth == DEPTH_MAX){
+                for(int i = 0; i < size; i++){
+                    entries.add((ENTRY)srcentries.get(i).duplicate(DEPTH_MAX));
+                }
+
+            }else{
+                throw new RuntimeException("Invalid depth : " + depth);
+            }
+        }
+    }
+
+    @Override
+    public VLVManager<ENTRY> duplicate(int depth){
+        return new VLVManager<>(this, depth);
     }
 
     @Override

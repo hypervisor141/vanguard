@@ -2,7 +2,7 @@ package vanguard;
 
 import java.util.Arrays;
 
-public final class VLArrayShort extends VLArray<Short, short[]> {
+public final class VLArrayShort extends VLArray<Short, short[]>{
 
     public VLArrayShort(short[] s) {
         super(s);
@@ -10,6 +10,10 @@ public final class VLArrayShort extends VLArray<Short, short[]> {
 
     public VLArrayShort(int size) {
         super(new short[size]);
+    }
+
+    public VLArrayShort(VLArrayShort src, int depth){
+        copy(src, depth);
     }
 
     @Override
@@ -33,7 +37,25 @@ public final class VLArrayShort extends VLArray<Short, short[]> {
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint) {
+    public void copy(VLArray<Short, short[]> src, int depth){
+        if(depth == DEPTH_MIN){
+            this.array = src.array;
+
+        }else if(depth == DEPTH_MAX){
+            array = src.array.clone();
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+    }
+
+    @Override
+    public VLArrayShort duplicate(int depth){
+        return new VLArrayShort(this, depth);
+    }
+
+    @Override
+    public void stringify(StringBuilder src, Object hint){
         super.stringify(src, hint);
 
         src.append(" content[");

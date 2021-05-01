@@ -1,11 +1,15 @@
 package vanguard;
 
-public abstract class VLArray<TYPE, PROVIDER> implements VLStringify{
-
+public abstract class VLArray<TYPE, PROVIDER> implements VLStringify, VLCopyable<VLArray<TYPE, PROVIDER>>{
+    
     protected PROVIDER array;
 
     public VLArray(PROVIDER array) {
         this.array = array;
+    }
+
+    protected VLArray(){
+
     }
 
     public void transform(int index, VLVMatrix obj, boolean replace){
@@ -24,7 +28,7 @@ public abstract class VLArray<TYPE, PROVIDER> implements VLStringify{
 
     public abstract TYPE get(int index);
 
-    public PROVIDER provider() {
+    public PROVIDER provider(){
         return array;
     }
 

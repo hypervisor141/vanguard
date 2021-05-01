@@ -1,11 +1,15 @@
 package vanguard;
 
-public class VLDouble implements VLStringify{
+public class VLDouble implements VLPrimitive{
 
     private double field;
 
     public VLDouble(double v){
         field = v;
+    }
+
+    public VLDouble(VLDouble src, int depth){
+        copy(src, depth);
     }
 
     public VLDouble(){
@@ -18,6 +22,16 @@ public class VLDouble implements VLStringify{
 
     public double get(){
         return field;
+    }
+
+    @Override
+    public void copy(VLPrimitive src, int depth){
+        field = ((VLDouble)src).field;
+    }
+
+    @Override
+    public VLDouble duplicate(int depth){
+        return new VLDouble(this, depth);
     }
 
     @Override

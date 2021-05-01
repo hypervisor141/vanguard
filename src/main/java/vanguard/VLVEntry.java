@@ -23,6 +23,10 @@ public class VLVEntry implements VLVTypeRunner{
         delaytracker = 0;
     }
 
+    public VLVEntry(VLVEntry src, int depth){
+        copy(src, depth);
+    }
+
     @Override
     public void initialize(int cycles){
         target.initialize(cycles);
@@ -281,6 +285,29 @@ public class VLVEntry implements VLVTypeRunner{
 
         sync();
         activate();
+    }
+
+    @Override
+    public void copy(VLVTypeRunnable src, int depth) {
+        VLVEntry entry = (VLVEntry)src;
+
+        if(depth == DEPTH_MIN){
+            target = entry.target;
+
+        }else if(depth == DEPTH_MAX){
+            target = (VLVTypeVariable)entry.target.duplicate(DEPTH_MAX);
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+
+        delay = entry.delay;
+        delaytracker = entry.delaytracker;
+    }
+
+    @Override
+    public VLVEntry duplicate(int depth){
+        return new VLVEntry(this, depth);
     }
 
     @Override

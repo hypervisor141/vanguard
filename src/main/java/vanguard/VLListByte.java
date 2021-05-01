@@ -14,6 +14,9 @@ public class VLListByte extends VLList<byte[]>{
         array = data;
     }
 
+    public VLListByte(VLListByte src, int depth){
+        copy(src, depth);
+    }
 
     public void add(byte item){
         if(currentsize >= array.length){
@@ -135,6 +138,11 @@ public class VLListByte extends VLList<byte[]>{
         for(; index < count; index++){
             array[index] = 0;
         }
+    }
+
+    @Override
+    public VLListByte duplicate(int depth){
+        return new VLListByte(this, depth);
     }
 
     @Override

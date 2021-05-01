@@ -41,6 +41,10 @@ public final class VLVRanged extends VLVCurved{
         this.listener = listener;
     }
 
+    public VLVRanged(VLVRanged src, int depth){
+        copy(src, depth);
+    }
+
     public VLVRanged(){
         
     }
@@ -135,6 +139,24 @@ public final class VLVRanged extends VLVCurved{
 
     public int getWrapCounts(){
         return wrapcounts;
+    }
+
+    @Override
+    public void copy(VLVTypeRunnable src, int depth) {
+        super.copy(src, depth);
+
+        VLVRanged target = (VLVRanged)src;
+
+        high = target.high;
+        low = target.low;
+        rangedvalue = target.rangedvalue;
+        wrapcounts = target.wrapcounts;
+        listener = target.listener;
+    }
+
+    @Override
+    public VLVRanged duplicate(int depth){
+        return new VLVRanged(this, depth);
     }
 
     public static class Listener{

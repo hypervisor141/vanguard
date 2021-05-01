@@ -2,9 +2,21 @@ package vanguard;
 
 public class VLV implements VLVTypeVariable{
 
-    public static final VLV ZERO = new VLV(0);
-    public static final VLV ONE = new VLV(1);
-    public static final VLV NEGATIVE_ONE = new VLV(-1);
+    private static final class VLVSTATIC extends VLV{
+
+        private VLVSTATIC(int value){
+            super(value);
+        }
+
+        @Override
+        public VLV duplicate(int depth){
+            return this;
+        }
+    };
+
+    public static final VLV ZERO = new VLVSTATIC(0);
+    public static final VLV ONE = new VLVSTATIC(1);
+    public static final VLV NEGATIVE_ONE = new VLVSTATIC(-1);
 
     protected float value;
 
@@ -12,8 +24,12 @@ public class VLV implements VLVTypeVariable{
         this.value = value;
     }
 
+    public VLV(VLV src, int depth){
+        copy(src, depth);
+    }
+
     public VLV(){
-        value = 0;
+
     }
 
     @Override
@@ -104,6 +120,16 @@ public class VLV implements VLVTypeVariable{
     @Override
     public boolean active(){
         return false;
+    }
+
+    @Override
+    public void copy(VLVTypeRunnable src, int depth){
+        value = ((VLV)src).value;
+    }
+
+    @Override
+    public VLV duplicate(int depth){
+        return new VLV(this, depth);
     }
 
     @Override

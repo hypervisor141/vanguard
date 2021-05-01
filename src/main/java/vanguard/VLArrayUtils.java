@@ -2,6 +2,11 @@ package vanguard;
 
 public final class VLArrayUtils{
 
+    public static void addInPlace(int index, int dynamicsize, boolean[] b, boolean b2){
+        spaceOutInPlace(b, dynamicsize, index, 1);
+        b[index] = b2;
+    }
+
     public static void addInPlace(int index, int dynamicsize, byte[] b, byte b2){
         spaceOutInPlace(b, dynamicsize, index, 1);
         b[index] = b2;
@@ -35,6 +40,13 @@ public final class VLArrayUtils{
     public static void addInPlace(int index, int dynamicsize, Object[] b, Object b2){
         spaceOutInPlace(b, dynamicsize, index, 1);
         b[index] = b2;
+    }
+
+    public static boolean[] slice(boolean[] array, int from, int to){
+        boolean[] sliced = new boolean[from - to];
+        System.arraycopy(array, from, sliced, 0, sliced.length);
+
+        return sliced;
     }
 
     public static byte[] slice(byte[] array, int from, int to){
@@ -84,6 +96,15 @@ public final class VLArrayUtils{
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
+    }
+
+    public static boolean[] spaceOut(boolean[] b, int index, int count){
+        boolean[] newarray = new boolean[b.length + count];
+
+        System.arraycopy(b, 0, newarray, 0, index);
+        System.arraycopy(b, index, newarray, index + count, b.length - index);
+
+        return newarray;
     }
 
     public static byte[] spaceOut(byte[] b, int index, int count){
@@ -153,6 +174,26 @@ public final class VLArrayUtils{
         System.arraycopy(b, index, b, index + count, dynamicsize - index);
     }
 
+    public static int indexOf(boolean[] b, boolean element){
+        for(int i = 0; i < b.length; i++){
+            if(b[i] == element){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    public static int indexOf(byte[] b, byte element){
+        for(int i = 0; i < b.length; i++){
+            if(b[i] == element){
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public static int indexOf(short[] b, short element){
         for(int i = 0; i < b.length; i++){
             if(b[i] == element){
@@ -213,14 +254,22 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(byte[] b, byte element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
-                return i;
-            }
+    public static boolean[] remove(boolean[] b, int index, int count){
+        boolean[] array = new boolean[b.length - count];
+        int lastindex = b.length - 1;
+
+        if(index < lastindex && index > 0){
+            System.arraycopy(b, 0, array, 0, index);
+            System.arraycopy(b, index + count, array, index, array.length - index);
+
+        }else if(index == lastindex){
+            System.arraycopy(b, 0, array, 0, array.length);
+
+        }else{
+            System.arraycopy(b, count, array, 0, array.length);
         }
 
-        return -1;
+        return array;
     }
 
     public static byte[] remove(byte[] b, int index, int count){
@@ -349,6 +398,17 @@ public final class VLArrayUtils{
         return array;
     }
 
+    public static boolean[] remove(boolean[] b, boolean element){
+        int index = indexOf(b, element);
+
+        if(index != -1){
+            return remove(b, index, 1);
+
+        }else{
+            return b;
+        }
+    }
+
     public static byte[] remove(byte[] b, byte element){
         int index = indexOf(b, element);
 
@@ -424,6 +484,13 @@ public final class VLArrayUtils{
         }else{
             return b;
         }
+    }
+
+    public static boolean[] resize(boolean[] array, int count){
+        boolean[] resized = new boolean[count];
+        System.arraycopy(array, 0, resized, 0, array.length);
+
+        return resized;
     }
 
     public static byte[] resize(byte[] array, int count){

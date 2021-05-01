@@ -3,8 +3,13 @@ package vanguard;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
+
+    public VLBufferInt(VLBufferInt src, int depth){
+        copy(src, depth);
+    }
 
     public VLBufferInt(){
 
@@ -126,7 +131,40 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         return buffer.capacity() * getTypeBytes();
     }
 
+    @Override
+    public void copy(VLBuffer<Integer, IntBuffer> src, int depth){
+        IntBuffer target = src.buffer;
+        preInitCapacity = src.preInitCapacity;
+
+        if(depth == DEPTH_MIN){
+            initialize(target);
+
+        }else if(depth == DEPTH_MAX){
+            initialize(target.capacity(), target.order());
+
+            if(target.hasArray()){
+                buffer.put(target.array());
+
+            }else{
+                int size = target.capacity();
+
+                for(int i = 0; i < size; i++){
+                    buffer.put(target.get(i));
+                }
+            }
+
+        }else{
+            throw new RuntimeException("Invalid depth : " + depth);
+        }
+
+        buffer.position(0);
+    }
+
     public static class Normal extends VLBufferInt{
+
+        public Normal(Normal src, int depth){
+            super(src, depth);
+        }
 
         public Normal(){
 
@@ -139,9 +177,18 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
             return null;
         }
+
+        @Override
+        public Normal duplicate(int depth){
+            return new Normal(this, depth);
+        }
     }
 
     public static class Direct extends VLBufferInt{
+
+        public Direct(Direct src, int depth){
+            super(src, depth);
+        }
 
         public Direct(){
 
@@ -156,6 +203,11 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             this.buffer = buffer.asIntBuffer();
 
             return buffer;
+        }
+
+        @Override
+        public Direct duplicate(int depth){
+            return new Direct(this, depth);
         }
     }
 }

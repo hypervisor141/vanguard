@@ -1,6 +1,6 @@
 package vanguard;
 
-public abstract class VLArray<TYPE, PROVIDER> implements VLStringify, VLCopyable<VLArray<TYPE, PROVIDER>>{
+public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLStringify, VLCopyable<VLArray<TYPE, PROVIDER>>{
     
     protected PROVIDER array;
 
@@ -22,19 +22,18 @@ public abstract class VLArray<TYPE, PROVIDER> implements VLStringify, VLCopyable
         this.array = array;
     }
 
-    public abstract void resize(int size);
-
-    public abstract int size();
-
     public abstract TYPE get(int index);
 
+    @Override
     public PROVIDER provider(){
         return array;
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint) {
-        src.append("size[");
+    public void stringify(StringBuilder src, Object hint){
+        src.append("provider[");
+        src.append(array.getClass().getSimpleName());
+        src.append("] size[");
         src.append(size());
         src.append("]");
     }

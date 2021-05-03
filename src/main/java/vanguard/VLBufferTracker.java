@@ -46,15 +46,15 @@ public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>
 
     @Override
     public void copy(VLBufferTracker src, long flags){
-        offset= src.offset;
-        count= src.count;
-        inputoffest= src.inputoffest;
-        unitoffset= src.unitoffset;
-        unitsize= src.unitsize;
-        unitsubcount= src.unitsubcount;
-        stride= src.stride;
-        endposition= src.endposition;
-        typebytesize= src.typebytesize;
+        offset = src.offset;
+        count = src.count;
+        inputoffest = src.inputoffest;
+        unitoffset = src.unitoffset;
+        unitsize = src.unitsize;
+        unitsubcount = src.unitsubcount;
+        stride = src.stride;
+        endposition = src.endposition;
+        typebytesize = src.typebytesize;
     }
 
     @Override

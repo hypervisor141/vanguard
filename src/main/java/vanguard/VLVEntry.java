@@ -291,14 +291,14 @@ public class VLVEntry implements VLVTypeRunner{
     public void copy(VLVTypeRunnable src, long flags) {
         VLVEntry entry = (VLVEntry)src;
 
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
+        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
             target = entry.target;
 
-        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
-            target = (VLVTypeVariable)entry.target.duplicate(FLAG_DEEP_COPY);
+        }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
+            target = (VLVTypeVariable)entry.target.duplicate(FLAG_MAX_DEPTH);
 
         }else{
-            throw new RuntimeException("Invalid depth : " + flags);
+            throw new RuntimeException("Invalid flags : " + flags);
         }
 
         delay = entry.delay;

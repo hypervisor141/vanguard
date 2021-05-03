@@ -38,14 +38,14 @@ public class VLArrayInt extends VLArray<Integer, int[]> {
 
     @Override
     public void copy(VLArray<Integer, int[]> src, long flags){
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
-            this.array = src.array;
-
-        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+        if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             array = src.array.clone();
 
+        }else if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+            this.array = src.array;
+
         }else{
-            throw new RuntimeException("Invalid depth : " + flags);
+            throw new RuntimeException("Invalid flags : " + flags);
         }
     }
 

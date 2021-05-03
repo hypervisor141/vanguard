@@ -38,14 +38,14 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
 
     @Override
     public void copy(VLArray<Boolean, boolean[]> src, long flags){
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
-            this.array = src.array;
-
-        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+        if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             array = src.array.clone();
 
+        }else if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+            this.array = src.array;
+
         }else{
-            throw new RuntimeException("Invalid depth : " + flags);
+            throw new RuntimeException("Invalid flags : " + flags);
         }
     }
 

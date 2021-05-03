@@ -4,6 +4,10 @@ package vanguard;
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
     public static final long FLAG_SHALLOW_ENTRIES = 0x2L;
+    public static final long FLAG_CUSTOM_SYNCER = 0x10L;
+    public static final long FLAG_SYNCER_SHALLOW_ENTRIES = 0x100L;
+    public static final long FLAG_SYNCER_PLACEHOLDER = 0x200L;
+    public static final long FLAG_SYNCER_MAX_DEPTH = 0x300L;
 
     private boolean paused;
     private boolean isdone;
@@ -448,34 +452,47 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     public void copy(VLVTypeRunnable src, long flags){
         VLVManager<ENTRY> target = (VLVManager<ENTRY>)src;
 
-        paused = target.paused;
-        isdone = target.isdone;
-        endpointindex = target.endpointindex;
-        syncer = target.syncer;
-
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
+        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
             entries = target.entries;
 
         }else{
             VLListType<ENTRY> srcentries = target.entries;
-            entries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
-            entries.maximizeVirtualSize();
-
-            int size = entries.size();
 
             if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-                for(int i = 0; i < size; i++){
-                    entries.set(i, srcentries.get(i));
-                }
+                entries = srcentries.duplicate(FLAG_MAX_DEPTH);
 
-            }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+            }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
+                entries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
+                entries.maximizeVirtualSize();
+
+                int size = entries.size();
+
                 for(int i = 0; i < size; i++){
-                    entries.add((ENTRY)srcentries.get(i).duplicate(FLAG_DEEP_COPY));
+                    entries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_MAX_DEPTH));
                 }
 
             }else{
                 throw new RuntimeException("Invalid depth : " + flags);
             }
+        }
+
+        paused = target.paused;
+        isdone = target.isdone;
+        endpointindex = target.endpointindex;
+
+        if((flags & FLAG_CUSTOM_SYNCER) == FLAG_CUSTOM_SYNCER){
+            if((flags & FLAG_SYNCER_PLACEHOLDER) == FLAG_SYNCER_PLACEHOLDER){
+                syncer = target.syncer.duplicate(FLAG_MINIMAL);
+
+            }else if((flags & FLAG_SYNCER_SHALLOW_ENTRIES) == FLAG_SYNCER_SHALLOW_ENTRIES){
+                syncer = target.syncer.duplicate(VLSyncType.FLAG_SHALLOW_ENTRIES);
+
+            }else if((flags & FLAG_SYNCER_MAX_DEPTH) == FLAG_SYNCER_MAX_DEPTH){
+                syncer = target.syncer.duplicate(FLAG_MAX_DEPTH);
+            }
+
+        }else{
+            syncer = target.syncer;
         }
     }
 

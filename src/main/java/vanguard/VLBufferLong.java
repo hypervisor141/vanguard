@@ -133,12 +133,8 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
     @Override
     public void copy(VLBuffer<Long, LongBuffer> src, long flags){
         LongBuffer target = src.buffer;
-        preInitCapacity = src.preInitCapacity;
 
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
-            initialize(target);
-
-        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+        if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             initialize(target.capacity(), target.order());
 
             if(target.hasArray()){
@@ -152,11 +148,16 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
                 }
             }
 
+            buffer.position(0);
+
+        }else if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+            initialize(target);
+
         }else{
-            throw new RuntimeException("Invalid depth : " + flags);
+            throw new RuntimeException("Invalid flags : " + flags);
         }
 
-        buffer.position(0);
+        preInitCapacity = src.preInitCapacity;
     }
 
     public static class Normal extends VLBufferLong{

@@ -37,24 +37,23 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
         VLVManagerDynamic<ENTRY> target = (VLVManagerDynamic<ENTRY>)src;
 
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
+        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
             backingentries = target.backingentries;
 
         }else{
             VLListType<ENTRY> srcentries = target.backingentries;
-            backingentries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
-            backingentries.maximizeVirtualSize();
-
-            int size = backingentries.size();
 
             if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-                for(int i = 0; i < size; i++){
-                    backingentries.set(i, srcentries.get(i));
-                }
+                backingentries = srcentries.duplicate(FLAG_MAX_DEPTH);
 
-            }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+            }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
+                backingentries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
+                backingentries.maximizeVirtualSize();
+
+                int size = backingentries.size();
+
                 for(int i = 0; i < size; i++){
-                    backingentries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_DEEP_COPY));
+                    backingentries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_MAX_DEPTH));
                 }
 
             }else{

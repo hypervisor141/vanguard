@@ -2,8 +2,6 @@ package vanguard;
 
 public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncType<SOURCE>>>{
 
-    public static final long FLAG_SHALLOW_ENTRIES = 0x2L;
-
     public VLSyncParallel(int capacity, int resizer){
         super(new VLListType<>(capacity, resizer));
     }
@@ -30,14 +28,14 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
     public void copy(VLSyncType<SOURCE> src, long flags){
         VLSyncParallel<SOURCE> syncer = (VLSyncParallel<SOURCE>)src;
 
-        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
+        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
             target = syncer.target;
 
         }else if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
             VLListType<VLSyncType<SOURCE>> entries = syncer.target;
             target = new VLListType<>((VLSyncType<SOURCE>[])entries.array().clone(), entries.resizerCount());
 
-        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
+        }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             VLListType<VLSyncType<SOURCE>> entries = syncer.target;
             target = new VLListType<>(entries.realSize(), entries.resizerCount());
             target.maximizeVirtualSize();
@@ -45,11 +43,11 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
             int size = target.size();
 
             for(int i = 0; i < size; i++){
-                target.set(i, entries.get(i));
+                target.set(i, (VLSyncType<SOURCE>)entries.get(i).duplicate(FLAG_MAX_DEPTH));
             }
 
         }else{
-            throw new RuntimeException("Invalid depth : " + flags);
+            throw new RuntimeException("Invalid flags : " + flags);
         }
     }
 

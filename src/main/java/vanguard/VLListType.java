@@ -152,6 +152,11 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     }
 
     @Override
+    public VLListType<TYPE> duplicate(int depth){
+        return new VLListType<>(this, depth);
+    }
+
+    @Override
     public void stringify(StringBuilder src, Object hint){
         super.stringify(src, hint);
 

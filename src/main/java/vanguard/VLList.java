@@ -99,9 +99,7 @@ public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYP
     }
 
     @Override
-    public VLList<TYPE> duplicate(int depth){
-        throw new RuntimeException("Can't duplicate this class directly.");
-    }
+    public abstract VLList<TYPE> duplicate(int depth);
 
     @Override
     public void stringify(StringBuilder src, Object hint){

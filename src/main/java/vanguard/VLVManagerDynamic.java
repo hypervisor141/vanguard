@@ -14,8 +14,8 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         backingentries = new VLListType<>(entrysize, 0);
     }
 
-    public VLVManagerDynamic(VLVManagerDynamic<ENTRY> src, int depth){
-        copy(src, depth);
+    public VLVManagerDynamic(VLVManagerDynamic<ENTRY> src, long flags){
+        copy(src, flags);
     }
 
     public int activateEntry(int index){
@@ -32,12 +32,12 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, int depth){
-        super.copy(src, depth);
+    public void copy(VLVTypeRunnable src, long flags){
+        super.copy(src, flags);
 
         VLVManagerDynamic<ENTRY> target = (VLVManagerDynamic<ENTRY>)src;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             backingentries = target.backingentries;
 
         }else{
@@ -47,24 +47,24 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
             int size = backingentries.size();
 
-            if(depth == DEPTH_SHALLOW_ENTRIES){
+            if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
                 for(int i = 0; i < size; i++){
                     backingentries.set(i, srcentries.get(i));
                 }
 
-            }else if(depth == DEPTH_MAX){
+            }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
                 for(int i = 0; i < size; i++){
-                    backingentries.set(i, (ENTRY)srcentries.get(i).duplicate(DEPTH_MAX));
+                    backingentries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_DEEP_COPY));
                 }
 
             }else{
-                throw new RuntimeException("Invalid depth : " + depth);
+                throw new RuntimeException("Invalid depth : " + flags);
             }
         }
     }
 
     @Override
-    public VLVManagerDynamic<ENTRY> duplicate(int depth){
-        return new VLVManagerDynamic<>(this, depth);
+    public VLVManagerDynamic<ENTRY> duplicate(long flags){
+        return new VLVManagerDynamic<>(this, flags);
     }
 }

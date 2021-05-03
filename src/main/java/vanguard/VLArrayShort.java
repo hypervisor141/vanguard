@@ -12,8 +12,8 @@ public final class VLArrayShort extends VLArray<Short, short[]>{
         super(new short[size]);
     }
 
-    public VLArrayShort(VLArrayShort src, int depth){
-        copy(src, depth);
+    public VLArrayShort(VLArrayShort src, long flags){
+        copy(src, flags);
     }
 
     @Override
@@ -37,21 +37,21 @@ public final class VLArrayShort extends VLArray<Short, short[]>{
     }
 
     @Override
-    public void copy(VLArray<Short, short[]> src, int depth){
-        if(depth == DEPTH_MIN){
+    public void copy(VLArray<Short, short[]> src, long flags){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             this.array = src.array;
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             array = src.array.clone();
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public VLArrayShort duplicate(int depth){
-        return new VLArrayShort(this, depth);
+    public VLArrayShort duplicate(long flags){
+        return new VLArrayShort(this, flags);
     }
 
     @Override

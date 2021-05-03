@@ -36,8 +36,8 @@ public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>
         this.endposition = offset + count;
     }
 
-    public VLBufferTracker(VLBufferTracker src, int depth){
-        copy(src, depth);
+    public VLBufferTracker(VLBufferTracker src, long flags){
+        copy(src, flags);
     }
 
     public VLBufferTracker(){
@@ -45,7 +45,7 @@ public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>
     }
 
     @Override
-    public void copy(VLBufferTracker src, int depth){
+    public void copy(VLBufferTracker src, long flags){
         offset= src.offset;
         count= src.count;
         inputoffest= src.inputoffest;
@@ -58,8 +58,8 @@ public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>
     }
 
     @Override
-    public VLBufferTracker duplicate(int depth) {
-        return new VLBufferTracker(this, depth);
+    public VLBufferTracker duplicate(long flags) {
+        return new VLBufferTracker(this, flags);
     }
 
     @Override

@@ -8,8 +8,8 @@ public class VLFloat implements VLPrimitive{
         field = v;
     }
 
-    public VLFloat(VLFloat src, int depth){
-        copy(src, depth);
+    public VLFloat(VLFloat src, long flags){
+        copy(src, flags);
     }
 
     public VLFloat(){
@@ -25,13 +25,13 @@ public class VLFloat implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLFloat)src).field;
     }
 
     @Override
-    public VLFloat duplicate(int depth){
-        return new VLFloat(this, depth);
+    public VLFloat duplicate(long flags){
+        return new VLFloat(this, flags);
     }
 
     @Override

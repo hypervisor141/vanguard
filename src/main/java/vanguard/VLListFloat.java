@@ -14,8 +14,8 @@ public final class VLListFloat extends VLList<float[]>{
         array = data;
     }
 
-    public VLListFloat(VLListFloat src, int depth){
-        copy(src, depth);
+    public VLListFloat(VLListFloat src, long flags){
+        copy(src, flags);
     }
 
     public void add(float item){
@@ -141,8 +141,8 @@ public final class VLListFloat extends VLList<float[]>{
     }
 
     @Override
-    public VLListFloat duplicate(int depth){
-        return new VLListFloat(this, depth);
+    public VLListFloat duplicate(long flags){
+        return new VLListFloat(this, flags);
     }
 
     @Override

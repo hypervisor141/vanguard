@@ -8,8 +8,8 @@ public class VLByte implements VLPrimitive{
         field = v;
     }
 
-    public VLByte(VLByte src, int depth){
-        copy(src, depth);
+    public VLByte(VLByte src, long flags){
+        copy(src, flags);
     }
 
     public VLByte(){
@@ -25,13 +25,13 @@ public class VLByte implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLByte)src).field;
     }
 
     @Override
-    public VLByte duplicate(int depth){
-        return new VLByte(this, depth);
+    public VLByte duplicate(long flags){
+        return new VLByte(this, flags);
     }
 
     @Override

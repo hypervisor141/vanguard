@@ -83,23 +83,23 @@ public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYP
     }
 
     @Override
-    public void copy(VLList<TYPE> src, int depth){
+    public void copy(VLList<TYPE> src, long flags){
         resizercount = src.resizercount;
         currentsize = src.currentsize;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             this.array = src.array;
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             System.arraycopy(src.array, 0, array, 0, realSize());
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public abstract VLList<TYPE> duplicate(int depth);
+    public abstract VLList<TYPE> duplicate(long flags);
 
     @Override
     public void stringify(StringBuilder src, Object hint){

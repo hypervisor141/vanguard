@@ -3,12 +3,11 @@ package vanguard;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
 
 public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
-    public VLBufferInt(VLBufferInt src, int depth){
-        copy(src, depth);
+    public VLBufferInt(VLBufferInt src, long flags){
+        copy(src, flags);
     }
 
     public VLBufferInt(){
@@ -132,14 +131,14 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public void copy(VLBuffer<Integer, IntBuffer> src, int depth){
+    public void copy(VLBuffer<Integer, IntBuffer> src, long flags){
         IntBuffer target = src.buffer;
         preInitCapacity = src.preInitCapacity;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             initialize(target);
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             initialize(target.capacity(), target.order());
 
             if(target.hasArray()){
@@ -154,7 +153,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             }
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
 
         buffer.position(0);
@@ -162,8 +161,8 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
     public static class Normal extends VLBufferInt{
 
-        public Normal(Normal src, int depth){
-            super(src, depth);
+        public Normal(Normal src, long flags){
+            super(src, flags);
         }
 
         public Normal(){
@@ -179,15 +178,15 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         }
 
         @Override
-        public Normal duplicate(int depth){
-            return new Normal(this, depth);
+        public Normal duplicate(long flags){
+            return new Normal(this, flags);
         }
     }
 
     public static class Direct extends VLBufferInt{
 
-        public Direct(Direct src, int depth){
-            super(src, depth);
+        public Direct(Direct src, long flags){
+            super(src, flags);
         }
 
         public Direct(){
@@ -206,8 +205,8 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         }
 
         @Override
-        public Direct duplicate(int depth){
-            return new Direct(this, depth);
+        public Direct duplicate(long flags){
+            return new Direct(this, flags);
         }
     }
 }

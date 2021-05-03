@@ -12,8 +12,8 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
         super(new byte[size]);
     }
 
-    public VLArrayByte(VLArrayByte src, int depth){
-        copy(src, depth);
+    public VLArrayByte(VLArrayByte src, long flags){
+        copy(src, flags);
     }
 
     @Override
@@ -37,21 +37,21 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
     }
 
     @Override
-    public void copy(VLArray<Byte, byte[]> src, int depth){
-        if(depth == DEPTH_MIN){
+    public void copy(VLArray<Byte, byte[]> src, long flags){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             this.array = src.array;
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             array = src.array.clone();
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public VLArrayByte duplicate(int depth){
-        return new VLArrayByte(this, depth);
+    public VLArrayByte duplicate(long flags){
+        return new VLArrayByte(this, flags);
     }
 
     @Override

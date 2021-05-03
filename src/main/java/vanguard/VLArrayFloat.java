@@ -12,8 +12,8 @@ public class VLArrayFloat extends VLArray<Float, float[]> {
         super(new float[size]);
     }
 
-    public VLArrayFloat(VLArrayFloat src, int depth){
-        copy(src, depth);
+    public VLArrayFloat(VLArrayFloat src, long flags){
+        copy(src, flags);
     }
 
     @Override
@@ -37,21 +37,21 @@ public class VLArrayFloat extends VLArray<Float, float[]> {
     }
 
     @Override
-    public void copy(VLArray<Float, float[]> src, int depth){
-        if(depth == DEPTH_MIN){
+    public void copy(VLArray<Float, float[]> src, long flags){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             this.array = src.array;
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             array = src.array.clone();
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public VLArrayFloat duplicate(int depth){
-        return new VLArrayFloat(this, depth);
+    public VLArrayFloat duplicate(long flags){
+        return new VLArrayFloat(this, flags);
     }
 
     @Override

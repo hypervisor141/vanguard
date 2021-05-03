@@ -3,7 +3,7 @@ package vanguard;
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
-    public static final int DEPTH_SHALLOW_ENTRIES = 1;
+    public static final long FLAG_SHALLOW_ENTRIES = 0x2L;
 
     private boolean paused;
     private boolean isdone;
@@ -27,8 +27,8 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         endpointindex = -1;
     }
 
-    public VLVManager(VLVManager<ENTRY> src, int depth){
-        copy(src, depth);
+    public VLVManager(VLVManager<ENTRY> src, long flags){
+        copy(src, flags);
     }
 
     protected VLVManager(){
@@ -445,14 +445,15 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, int depth){
+    public void copy(VLVTypeRunnable src, long flags){
         VLVManager<ENTRY> target = (VLVManager<ENTRY>)src;
+
         paused = target.paused;
         isdone = target.isdone;
         endpointindex = target.endpointindex;
         syncer = target.syncer;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             entries = target.entries;
 
         }else{
@@ -462,25 +463,25 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
             int size = entries.size();
 
-            if(depth == DEPTH_SHALLOW_ENTRIES){
+            if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
                 for(int i = 0; i < size; i++){
                     entries.set(i, srcentries.get(i));
                 }
 
-            }else if(depth == DEPTH_MAX){
+            }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
                 for(int i = 0; i < size; i++){
-                    entries.add((ENTRY)srcentries.get(i).duplicate(DEPTH_MAX));
+                    entries.add((ENTRY)srcentries.get(i).duplicate(FLAG_DEEP_COPY));
                 }
 
             }else{
-                throw new RuntimeException("Invalid depth : " + depth);
+                throw new RuntimeException("Invalid depth : " + flags);
             }
         }
     }
 
     @Override
-    public VLVManager<ENTRY> duplicate(int depth){
-        return new VLVManager<>(this, depth);
+    public VLVManager<ENTRY> duplicate(long flags){
+        return new VLVManager<>(this, flags);
     }
 
     @Override

@@ -8,8 +8,8 @@ public class VLInt implements VLPrimitive{
         field = v;
     }
 
-    public VLInt(VLInt src, int depth){
-        copy(src, depth);
+    public VLInt(VLInt src, long flags){
+        copy(src, flags);
     }
 
     public VLInt(){
@@ -25,13 +25,13 @@ public class VLInt implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLInt)src).field;
     }
 
     @Override
-    public VLInt duplicate(int depth){
-        return new VLInt(this, depth);
+    public VLInt duplicate(long flags){
+        return new VLInt(this, flags);
     }
 
     @Override

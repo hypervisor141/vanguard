@@ -2,9 +2,9 @@ package vanguard;
 
 public interface VLCopyable<TYPE>{
 
-    static final int DEPTH_MIN = 0;
-    static final int DEPTH_MAX = 1000;
+    long FLAG_SHALLOW_COPY = 0x1L;
+    long FLAG_DEEP_COPY = 0xFFFFFFFFFFFFFFFFL;
 
-    void copy(TYPE src, int depth);
-    TYPE duplicate(int depth);
+    void copy(TYPE src, long flags);
+    TYPE duplicate(long flags);
 }

@@ -2,8 +2,8 @@ package vanguard;
 
 public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
 
-    public static final int DEPTH_SHALLOW_ROWS = 1;
-    public static final int DEPTH_DEEP_ROWS_SHALLOW_COLUMNS = 2;
+    public static final long FLAG_SHALLOW_ROWS = 0x2L;
+    public static final long FLAG_DEEP_ROWS_SHALLOW_COLUMNS = 0x3L;
 
     protected VLListType<VLListType<VLVTypeVariable>> matrix;
 
@@ -11,8 +11,8 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
         matrix = new VLListType<>(capacity, resizer);
     }
 
-    public VLVMatrix(VLVMatrix src, int depth){
-        copy(src, depth);
+    public VLVMatrix(VLVMatrix src, long flags){
+        copy(src, flags);
     }
 
     public void addRow(int initialcapacity, int resizercount){
@@ -76,10 +76,10 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
     }
 
     @Override
-    public void copy(VLVMatrix src, int depth){
+    public void copy(VLVMatrix src, long flags){
         VLListType<VLListType<VLVTypeVariable>> targetmat = src.matrix;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             matrix = src.matrix;
 
         }else{
@@ -88,13 +88,13 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
 
             int rowsize = matrix.size();
 
-            if(depth == DEPTH_SHALLOW_ROWS){
+            if((flags & FLAG_SHALLOW_ROWS) == FLAG_SHALLOW_ROWS){
                 for(int i = 0; i < rowsize; i++){
                     VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
                     matrix.set(i, new VLListType<>((VLVTypeVariable[])targetrow.array(), targetrow.resizerCount()));
                 }
 
-            }else if(depth == DEPTH_DEEP_ROWS_SHALLOW_COLUMNS){
+            }else if((flags & FLAG_DEEP_ROWS_SHALLOW_COLUMNS) == FLAG_DEEP_ROWS_SHALLOW_COLUMNS){
                 for(int i = 0; i < rowsize; i++){
                     VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
                     VLListType<VLVTypeVariable> clonedrow = new VLListType<>(targetrow.size(), targetrow.resizerCount());
@@ -103,13 +103,13 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
                     int columnsize = targetrow.size();
 
                     for(int i2 = 0; i2 < columnsize; i2++){
-                        clonedrow.set(i2, (VLVTypeVariable)targetrow.get(i2).duplicate(DEPTH_MAX));
+                        clonedrow.set(i2, (VLVTypeVariable)targetrow.get(i2).duplicate(FLAG_DEEP_COPY));
                     }
 
                     matrix.set(i, clonedrow);
                 }
 
-            }else if(depth == DEPTH_MAX){
+            }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
                 for(int i = 0; i < rowsize; i++){
                     VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
                     VLListType<VLVTypeVariable> clonedrow = new VLListType<>(targetrow.size(), targetrow.resizerCount());
@@ -125,14 +125,14 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix> {
                 }
 
             }else{
-                throw new RuntimeException("Invalid depth : " + depth);
+                throw new RuntimeException("Invalid depth : " + flags);
             }
         }
     }
 
     @Override
-    public VLVMatrix duplicate(int depth){
-        return new VLVMatrix(this, depth);
+    public VLVMatrix duplicate(long flags){
+        return new VLVMatrix(this, flags);
     }
 
     @Override

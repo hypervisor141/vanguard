@@ -14,8 +14,8 @@ public class VLListByte extends VLList<byte[]>{
         array = data;
     }
 
-    public VLListByte(VLListByte src, int depth){
-        copy(src, depth);
+    public VLListByte(VLListByte src, long flags){
+        copy(src, flags);
     }
 
     public void add(byte item){
@@ -141,8 +141,8 @@ public class VLListByte extends VLList<byte[]>{
     }
 
     @Override
-    public VLListByte duplicate(int depth){
-        return new VLListByte(this, depth);
+    public VLListByte duplicate(long flags){
+        return new VLListByte(this, flags);
     }
 
     @Override

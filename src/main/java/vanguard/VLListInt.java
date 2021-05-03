@@ -14,8 +14,8 @@ public final class VLListInt extends VLList<int[]>{
         array = data;
     }
 
-    public VLListInt(VLListInt src, int depth){
-        copy(src, depth);
+    public VLListInt(VLListInt src, long flags){
+        copy(src, flags);
     }
 
     public void add(int item){
@@ -141,8 +141,8 @@ public final class VLListInt extends VLList<int[]>{
     }
 
     @Override
-    public VLListInt duplicate(int depth){
-        return new VLListInt(this, depth);
+    public VLListInt duplicate(long flags){
+        return new VLListInt(this, flags);
     }
 
     @Override

@@ -14,8 +14,8 @@ public final class VLListDouble extends VLList<double[]>{
         array = data;
     }
 
-    public VLListDouble(VLListDouble src, int depth){
-        copy(src, depth);
+    public VLListDouble(VLListDouble src, long flags){
+        copy(src, flags);
     }
 
     public void add(double item){
@@ -141,8 +141,8 @@ public final class VLListDouble extends VLList<double[]>{
     }
 
     @Override
-    public VLListDouble duplicate(int depth){
-        return new VLListDouble(this, depth);
+    public VLListDouble duplicate(long flags){
+        return new VLListDouble(this, flags);
     }
 
     @Override

@@ -13,8 +13,8 @@ public class VLVRangedSimple extends VLV{
         this.high = high;
     }
 
-    public VLVRangedSimple(VLVRangedSimple src, int depth){
-        copy(src, depth);
+    public VLVRangedSimple(VLVRangedSimple src, long flags){
+        copy(src, flags);
     }
 
     public VLVRangedSimple(){
@@ -28,8 +28,8 @@ public class VLVRangedSimple extends VLV{
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, int depth){
-        super.copy(src, depth);
+    public void copy(VLVTypeRunnable src, long flags){
+        super.copy(src, flags);
 
         VLVRangedSimple target = (VLVRangedSimple)src;
         low = target.low;
@@ -37,8 +37,8 @@ public class VLVRangedSimple extends VLV{
     }
 
     @Override
-    public VLVRangedSimple duplicate(int depth) {
-        return new VLVRangedSimple(this, depth);
+    public VLVRangedSimple duplicate(long flags) {
+        return new VLVRangedSimple(this, flags);
     }
 
     public void push(float amount, int cycles){

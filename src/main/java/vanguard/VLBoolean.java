@@ -8,8 +8,8 @@ public class VLBoolean implements VLPrimitive{
         field = v;
     }
 
-    public VLBoolean(VLBoolean src, int depth){
-        copy(src, depth);
+    public VLBoolean(VLBoolean src, long flags){
+        copy(src, flags);
     }
 
     public VLBoolean(){
@@ -25,13 +25,13 @@ public class VLBoolean implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLBoolean)src).field;
     }
 
     @Override
-    public VLBoolean duplicate(int depth){
-        return new VLBoolean(this, depth);
+    public VLBoolean duplicate(long flags){
+        return new VLBoolean(this, flags);
     }
 
     @Override

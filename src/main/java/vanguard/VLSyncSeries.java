@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap>>{
 
-    public static final int DEPTH_SHALLOW_ENTRIES = 1;
+    public static final long FLAG_SHALLOW_ENTRIES = 0x2L;
 
     public VLSyncSeries(int capacity, int resizer){
         super(new VLListType<>(capacity, resizer));
@@ -12,9 +12,9 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
         super(new VLListType<>(array, 0));
     }
 
-    public VLSyncSeries(VLSyncSeries<SOURCE> src, int depth){
+    public VLSyncSeries(VLSyncSeries<SOURCE> src, long flags){
         super(null);
-        copy(src, depth);
+        copy(src, flags);
     }
 
     @Override
@@ -28,17 +28,17 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
     }
 
     @Override
-    public void copy(VLSyncType<SOURCE> src, int depth){
+    public void copy(VLSyncType<SOURCE> src, long flags){
         VLSyncSeries<SOURCE> syncer = (VLSyncSeries<SOURCE>)src;
 
-        if(depth == DEPTH_MIN){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             target = syncer.target;
 
-        }else if(depth == DEPTH_SHALLOW_ENTRIES){
+        }else if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
             VLListType<VLSyncMap> entries = syncer.target;
             target = new VLListType<>((VLSyncMap[])entries.array().clone(), entries.resizerCount());
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             VLListType<VLSyncMap> entries = syncer.target;
             target = new VLListType<>(entries.realSize(), entries.resizerCount());
             target.maximizeVirtualSize();
@@ -50,12 +50,12 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
             }
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public VLSyncSeries<SOURCE> duplicate(int depth){
-        return new VLSyncSeries<>(this, depth);
+    public VLSyncSeries<SOURCE> duplicate(long flags){
+        return new VLSyncSeries<>(this, flags);
     }
 }

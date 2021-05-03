@@ -51,8 +51,8 @@ public abstract class VLVariable extends VLV{
         activate();
     }
 
-    public VLVariable(VLVariable src, int depth){
-        copy(src, depth);
+    public VLVariable(VLVariable src, long flags){
+        copy(src, flags);
     }
 
     public VLVariable(){
@@ -207,8 +207,8 @@ public abstract class VLVariable extends VLV{
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, int depth) {
-        super.copy(src, depth);
+    public void copy(VLVTypeRunnable src, long flags) {
+        super.copy(src, flags);
 
         VLVariable target = (VLVariable)src;
 
@@ -220,7 +220,7 @@ public abstract class VLVariable extends VLV{
     }
 
     @Override
-    public VLVariable duplicate(int depth){
+    public VLVariable duplicate(long flags){
         throw new RuntimeException("Can't clone this class directly");
     }
 

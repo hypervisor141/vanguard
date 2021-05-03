@@ -8,8 +8,8 @@ public class VLDouble implements VLPrimitive{
         field = v;
     }
 
-    public VLDouble(VLDouble src, int depth){
-        copy(src, depth);
+    public VLDouble(VLDouble src, long flags){
+        copy(src, flags);
     }
 
     public VLDouble(){
@@ -25,13 +25,13 @@ public class VLDouble implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLDouble)src).field;
     }
 
     @Override
-    public VLDouble duplicate(int depth){
-        return new VLDouble(this, depth);
+    public VLDouble duplicate(long flags){
+        return new VLDouble(this, flags);
     }
 
     @Override

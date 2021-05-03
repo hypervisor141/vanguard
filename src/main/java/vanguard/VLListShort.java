@@ -14,8 +14,8 @@ public final class VLListShort extends VLList<short[]>{
         array = data;
     }
 
-    public VLListShort(VLListShort src, int depth){
-        copy(src, depth);
+    public VLListShort(VLListShort src, long flags){
+        copy(src, flags);
     }
 
     public void add(short item){
@@ -141,8 +141,8 @@ public final class VLListShort extends VLList<short[]>{
     }
 
     @Override
-    public VLListShort duplicate(int depth){
-        return new VLListShort(this, depth);
+    public VLListShort duplicate(long flags){
+        return new VLListShort(this, flags);
     }
 
     @Override

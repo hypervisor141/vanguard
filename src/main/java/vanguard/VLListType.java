@@ -14,8 +14,8 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         array = data;
     }
 
-    public VLListType(VLListType<TYPE> src, int depth){
-        copy(src, depth);
+    public VLListType(VLListType<TYPE> src, long flags){
+        copy(src, flags);
     }
 
     public void add(TYPE item){
@@ -152,8 +152,8 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     }
 
     @Override
-    public VLListType<TYPE> duplicate(int depth){
-        return new VLListType<>(this, depth);
+    public VLListType<TYPE> duplicate(long flags){
+        return new VLListType<>(this, flags);
     }
 
     @Override

@@ -9,7 +9,7 @@ public class VLV implements VLVTypeVariable{
         }
 
         @Override
-        public VLV duplicate(int depth){
+        public VLV duplicate(long flags){
             return this;
         }
     };
@@ -24,8 +24,8 @@ public class VLV implements VLVTypeVariable{
         this.value = value;
     }
 
-    public VLV(VLV src, int depth){
-        copy(src, depth);
+    public VLV(VLV src, long flags){
+        copy(src, flags);
     }
 
     public VLV(){
@@ -123,13 +123,13 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, int depth){
+    public void copy(VLVTypeRunnable src, long flags){
         value = ((VLV)src).value;
     }
 
     @Override
-    public VLV duplicate(int depth){
-        return new VLV(this, depth);
+    public VLV duplicate(long flags){
+        return new VLV(this, flags);
     }
 
     @Override

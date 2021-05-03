@@ -18,8 +18,8 @@ public class VLVLinear extends VLVariable{
         super(from, to, changerate, LOOP_NONE);
     }
 
-    public VLVLinear(VLVLinear src, int depth){
-        copy(src, depth);
+    public VLVLinear(VLVLinear src, long flags){
+        copy(src, flags);
     }
 
     public VLVLinear(){
@@ -67,7 +67,7 @@ public class VLVLinear extends VLVariable{
     }
 
     @Override
-    public VLVLinear duplicate(int depth) {
-        return new VLVLinear(this, depth);
+    public VLVLinear duplicate(long flags) {
+        return new VLVLinear(this, flags);
     }
 }

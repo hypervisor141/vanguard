@@ -8,8 +8,8 @@ public class VLLong implements VLPrimitive{
         field = v;
     }
 
-    public VLLong(VLLong src, int depth){
-        copy(src, depth);
+    public VLLong(VLLong src, long flags){
+        copy(src, flags);
     }
 
     public VLLong() {
@@ -25,13 +25,13 @@ public class VLLong implements VLPrimitive{
     }
 
     @Override
-    public void copy(VLPrimitive src, int depth){
+    public void copy(VLPrimitive src, long flags){
         field = ((VLLong)src).field;
     }
 
     @Override
-    public VLLong duplicate(int depth){
-        return new VLLong(this, depth);
+    public VLLong duplicate(long flags){
+        return new VLLong(this, flags);
     }
 
     @Override

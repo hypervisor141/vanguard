@@ -12,8 +12,8 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
         super(new boolean[size]);
     }
 
-    public VLArrayBoolean(VLArrayBoolean src, int depth){
-        copy(src, depth);
+    public VLArrayBoolean(VLArrayBoolean src, long flags){
+        copy(src, flags);
     }
 
     @Override
@@ -37,21 +37,21 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
     }
 
     @Override
-    public void copy(VLArray<Boolean, boolean[]> src, int depth){
-        if(depth == DEPTH_MIN){
+    public void copy(VLArray<Boolean, boolean[]> src, long flags){
+        if((flags & FLAG_SHALLOW_COPY) == FLAG_SHALLOW_COPY){
             this.array = src.array;
 
-        }else if(depth == DEPTH_MAX){
+        }else if((flags & FLAG_DEEP_COPY) == FLAG_DEEP_COPY){
             array = src.array.clone();
 
         }else{
-            throw new RuntimeException("Invalid depth : " + depth);
+            throw new RuntimeException("Invalid depth : " + flags);
         }
     }
 
     @Override
-    public VLArrayBoolean duplicate(int depth){
-        return new VLArrayBoolean(this, depth);
+    public VLArrayBoolean duplicate(long flags){
+        return new VLArrayBoolean(this, flags);
     }
 
     @Override

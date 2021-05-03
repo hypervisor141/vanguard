@@ -32,8 +32,7 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
             target = syncer.target;
 
         }else if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-            VLListType<VLSyncType<SOURCE>> entries = syncer.target;
-            target = new VLListType<>((VLSyncType<SOURCE>[])entries.array().clone(), entries.resizerCount());
+            target = syncer.target.duplicate(FLAG_MAX_DEPTH);
 
         }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             VLListType<VLSyncType<SOURCE>> entries = syncer.target;
@@ -43,7 +42,7 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
             int size = target.size();
 
             for(int i = 0; i < size; i++){
-                target.set(i, (VLSyncType<SOURCE>)entries.get(i).duplicate(FLAG_MAX_DEPTH));
+                target.set(i, entries.get(i).duplicate(FLAG_MAX_DEPTH));
             }
 
         }else{

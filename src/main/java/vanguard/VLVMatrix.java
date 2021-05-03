@@ -77,7 +77,6 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
     @Override
     public void copy(VLVMatrix src, long flags){
         VLListType<VLListType<VLVTypeVariable>> targetmat = src.matrix;
-        int rowsize = matrix.size();
 
         if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
             matrix = src.matrix;
@@ -88,6 +87,8 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
         }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             matrix = new VLListType<>(targetmat.size(), targetmat.resizerCount());
             matrix.maximizeVirtualSize();
+
+            int rowsize = matrix.size();
 
             for(int i = 0; i < rowsize; i++){
                 VLListType<VLVTypeVariable> targetrow = targetmat.get(i);

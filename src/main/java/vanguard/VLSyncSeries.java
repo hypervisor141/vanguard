@@ -33,8 +33,7 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
             target = syncer.target;
 
         }else if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-            VLListType<VLSyncMap> entries = syncer.target;
-            target = new VLListType<>((VLSyncMap[])entries.array().clone(), entries.resizerCount());
+            target = syncer.target.duplicate(FLAG_MAX_DEPTH);
 
         }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
             VLListType<VLSyncMap> entries = syncer.target;

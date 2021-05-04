@@ -4,9 +4,8 @@ import java.util.Arrays;
 
 public final class VLListType<TYPE> extends VLList<Object[]>{
 
-    public static final long FLAG_FORCE_COPY_ENTRIES = 0x1F;
-    public static final long FLAG_FORCE_REFERENCE = 0x10F;
-    public static final long FLAG_FORCE_DUPLICATE = 0x20F;
+    public static final long FLAG_FORCE_REFERENCE_ARRAY = 0x1F;
+    public static final long FLAG_FORCE_DUPLICATE_ARRAY = 0x2F;
 
     public VLListType(int initialsize, int resizercount){
         super(resizercount, 0);
@@ -164,29 +163,22 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             System.arraycopy(src.array, 0, array, 0, realSize());
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            if((flags & FLAG_FORCE_COPY_ENTRIES) == FLAG_FORCE_COPY_ENTRIES){
-                if(!(array[0] instanceof VLCopyable)){
-                    throw new RuntimeException("List element type is not a VLCopyable type.");
-                }
+            if(!(array[0] instanceof VLCopyable)){
+                throw new RuntimeException("List element type is not a VLCopyable type.");
+            }
 
-                long targetflags = 0;
+            Object[] srcarray = src.array;
+            int size = srcarray.length;
+            array = new Object[size];
 
-                if((flags & FLAG_FORCE_REFERENCE) == FLAG_FORCE_REFERENCE){
-                    targetflags = FLAG_REFERENCE;
-
-                }else if((flags & FLAG_FORCE_DUPLICATE) == FLAG_FORCE_DUPLICATE){
-                    targetflags = FLAG_DUPLICATE;
-
-                }else{
-                    Helper.throwMissingFlag("FLAG_FORCE_COPY_ENTRIES", "FLAG_FORCE_REFERENCE", "FLAG_FORCE_DUPLICATE");
-                }
-
-                Object[] srcarray = src.array;
-                int size = srcarray.length;
-                array = new Object[size];
-
+            if((flags & FLAG_FORCE_REFERENCE_ARRAY) == FLAG_FORCE_REFERENCE_ARRAY){
                 for(int i = 0; i < size; i++){
-                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(targetflags);
+                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
+                }
+
+            }else if((flags & FLAG_FORCE_DUPLICATE_ARRAY) == FLAG_FORCE_DUPLICATE_ARRAY){
+                for(int i = 0; i < size; i++){
+                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
                 }
 
             }else{

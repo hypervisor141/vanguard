@@ -471,7 +471,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
             syncer = target.syncer.duplicate(FLAG_DUPLICATE);
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE", "FLAG_CUSTOM" });
+            Helper.throwMissingAllStandardFlags();
         }
 
         paused = target.paused;

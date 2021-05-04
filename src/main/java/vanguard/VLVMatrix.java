@@ -95,7 +95,7 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
             }
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE", "FLAG_CUSTOM" });
+            Helper.throwMissingAllStandardFlags();
         }
     }
 

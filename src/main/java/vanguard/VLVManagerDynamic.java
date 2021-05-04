@@ -55,7 +55,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
             }
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE", "FLAG_CUSTOM" });
+            Helper.throwMissingAllStandardFlags();
         }
     }
 

@@ -202,7 +202,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             }
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE", "FLAG_CUSTOM" });
+            Helper.throwMissingAllStandardFlags();
         }
 
         resizercount = src.resizercount;

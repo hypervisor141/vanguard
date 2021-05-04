@@ -4,6 +4,12 @@ import java.util.Arrays;
 
 public interface VLCopyable<TYPE>{
 
+    String[] STANDARD_BASE_FLAG_LIST = new String[]{
+            "FLAG_REFERENCE",
+            "FLAG_DUPLICATE",
+            "FLAG_CUSTOM"
+    };
+
     long FLAG_REFERENCE = 0xFFFFFFFFFFFFFFFDL;
     long FLAG_DUPLICATE = 0xFFFFFFFFFFFFFFFEL;
     long FLAG_CUSTOM = 0xFFFFFFFFFFFFFFFFL;
@@ -15,16 +21,12 @@ public interface VLCopyable<TYPE>{
 
         private Helper(){}
 
+        public static void throwMissingAllStandardFlags(){
+            throwMissingFlags(STANDARD_BASE_FLAG_LIST);
+        }
+
         public static void throwMissingFlags(String[] missing){
             throw new RuntimeException("Missing flags for copy operation, possible options".concat(Arrays.toString(missing)));
-        };
-
-        public static void throwCustomCopyNotSupported(long flags){
-            throw new RuntimeException("Custom copy not supported, given flags[".concat(String.valueOf(flags)).concat("]"));
-        };
-
-        public static void throwUnsupportedFlagForThisObject(String flag){
-            throw new RuntimeException("This instance does not support this flag[".concat(flag).concat("]"));
         };
 
         public static void throwMissingSubFlag(String mainflag, String... subflags){

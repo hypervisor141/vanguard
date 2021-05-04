@@ -49,7 +49,7 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
             }
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE", "FLAG_CUSTOM" });
+            Helper.throwMissingAllStandardFlags();
         }
     }
 

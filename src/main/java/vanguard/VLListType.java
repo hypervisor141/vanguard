@@ -174,8 +174,10 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                     }
 
                 }else if(array[0] instanceof VLCopyable){
+                    VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
+
                     for(int i = 0; i < size; i++){
-                        array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
+                        array[i] = carray[i].duplicate(FLAG_REFERENCE);
                     }
 
                 }else{
@@ -189,8 +191,10 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                     }
 
                 }else if(array[0] instanceof VLCopyable){
+                    VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
+
                     for(int i = 0; i < size; i++){
-                        array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
+                        array[i] = carray[i].duplicate(FLAG_DUPLICATE);
                     }
 
                 }else{

@@ -3,11 +3,8 @@ package vanguard;
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
-    public static final long FLAG_SHALLOW_ENTRIES = 0x2L;
-    public static final long FLAG_CUSTOM_SYNCER = 0x10L;
-    public static final long FLAG_SYNCER_SHALLOW_ENTRIES = 0x100L;
-    public static final long FLAG_SYNCER_PLACEHOLDER = 0x200L;
-    public static final long FLAG_SYNCER_MAX_DEPTH = 0x300L;
+    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
 
     private boolean paused;
     private boolean isdone;
@@ -452,48 +449,34 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     public void copy(VLVTypeRunnable src, long flags){
         VLVManager<ENTRY> target = (VLVManager<ENTRY>)src;
 
-        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
             entries = target.entries;
+            syncer = target.syncer;
 
-        }else{
-            VLListType<ENTRY> srcentries = target.entries;
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            entries = target.entries.duplicate(FLAG_DUPLICATE);
+            syncer = target.syncer.duplicate(FLAG_DUPLICATE);
 
-            if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-                entries = srcentries.duplicate(FLAG_MAX_DEPTH);
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+                entries = target.entries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_REFERENCE);
 
-            }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
-                entries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
-                entries.maximizeVirtualSize();
-
-                int size = entries.size();
-
-                for(int i = 0; i < size; i++){
-                    entries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_MAX_DEPTH));
-                }
+            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+                entries = target.entries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_DUPLICATE);
 
             }else{
-                throw new RuntimeException("Invalid depth : " + flags);
+                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
+
+            syncer = target.syncer.duplicate(FLAG_DUPLICATE);
+
+        }else{
+            Helper.throwMissingBaseFlags();
         }
 
         paused = target.paused;
         isdone = target.isdone;
         endpointindex = target.endpointindex;
-
-        if((flags & FLAG_CUSTOM_SYNCER) == FLAG_CUSTOM_SYNCER){
-            if((flags & FLAG_SYNCER_PLACEHOLDER) == FLAG_SYNCER_PLACEHOLDER){
-                syncer = target.syncer.duplicate(FLAG_MINIMAL);
-
-            }else if((flags & FLAG_SYNCER_SHALLOW_ENTRIES) == FLAG_SYNCER_SHALLOW_ENTRIES){
-                syncer = target.syncer.duplicate(VLSyncType.FLAG_SHALLOW_ENTRIES);
-
-            }else if((flags & FLAG_SYNCER_MAX_DEPTH) == FLAG_SYNCER_MAX_DEPTH){
-                syncer = target.syncer.duplicate(FLAG_MAX_DEPTH);
-            }
-
-        }else{
-            syncer = target.syncer;
-        }
     }
 
     @Override

@@ -37,28 +37,25 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
         VLVManagerDynamic<ENTRY> target = (VLVManagerDynamic<ENTRY>)src;
 
-        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
             backingentries = target.backingentries;
 
-        }else{
-            VLListType<ENTRY> srcentries = target.backingentries;
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            backingentries = target.backingentries.duplicate(FLAG_DUPLICATE);
 
-            if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-                backingentries = srcentries.duplicate(FLAG_MAX_DEPTH);
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+                backingentries = target.backingentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_REFERENCE);
 
-            }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
-                backingentries = new VLListType<>(srcentries.size(), srcentries.resizerCount());
-                backingentries.maximizeVirtualSize();
-
-                int size = backingentries.size();
-
-                for(int i = 0; i < size; i++){
-                    backingentries.set(i, (ENTRY)srcentries.get(i).duplicate(FLAG_MAX_DEPTH));
-                }
+            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+                backingentries = target.backingentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_DUPLICATE);
 
             }else{
-                throw new RuntimeException("Invalid depth : " + flags);
+                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
+
+        }else{
+            Helper.throwMissingBaseFlags();
         }
     }
 

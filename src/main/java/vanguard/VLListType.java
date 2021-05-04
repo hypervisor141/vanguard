@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 public final class VLListType<TYPE> extends VLList<Object[]>{
 
+    public static final long FLAG_FORCE_COPY_ENTRIES = 0x1F;
+    public static final long FLAG_FORCE_REFERENCE = 0x10F;
+    public static final long FLAG_FORCE_DUPLICATE = 0x20F;
+
     public VLListType(int initialsize, int resizercount){
         super(resizercount, 0);
         array = new Object[initialsize];
@@ -149,6 +153,52 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         for(; index < count; index++){
             array[index] = null;
         }
+    }
+
+    @Override
+    public void copy(VLList<Object[]> src, long flags){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
+            array = src.array;
+
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            System.arraycopy(src.array, 0, array, 0, realSize());
+
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            if((flags & FLAG_FORCE_COPY_ENTRIES) == FLAG_FORCE_COPY_ENTRIES){
+                if(!(array[0] instanceof VLCopyable)){
+                    throw new RuntimeException("List element type is not a VLCopyable type.");
+                }
+
+                long targetflags = 0;
+
+                if((flags & FLAG_FORCE_REFERENCE) == FLAG_FORCE_REFERENCE){
+                    targetflags = FLAG_REFERENCE;
+
+                }else if((flags & FLAG_FORCE_DUPLICATE) == FLAG_FORCE_DUPLICATE){
+                    targetflags = FLAG_DUPLICATE;
+
+                }else{
+                    Helper.throwMissingFlag(FLAG_FORCE_COPY_ENTRIES, FLAG_FORCE_REFERENCE, FLAG_FORCE_DUPLICATE);
+                }
+
+                Object[] srcarray = src.array;
+                int size = srcarray.length;
+                array = new Object[size];
+
+                for(int i = 0; i < size; i++){
+                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(targetflags);
+                }
+
+            }else{
+                Helper.throwMissingFlag(FLAG_CUSTOM, FLAG_FORCE_COPY_ENTRIES);
+            }
+
+        }else{
+            Helper.throwMissingBaseFlags();
+        }
+
+        resizercount = src.resizercount;
+        currentsize = src.currentsize;
     }
 
     @Override

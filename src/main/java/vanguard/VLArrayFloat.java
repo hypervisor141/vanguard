@@ -2,7 +2,7 @@ package vanguard;
 
 import java.util.Arrays;
 
-public class VLArrayFloat extends VLArray<Float, float[]> {
+public class VLArrayFloat extends VLArray<Float, float[]>{
 
     public VLArrayFloat(float[] s) {
         super(s);
@@ -38,14 +38,17 @@ public class VLArrayFloat extends VLArray<Float, float[]> {
 
     @Override
     public void copy(VLArray<Float, float[]> src, long flags){
-        if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
+            array = src.array;
+
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
             array = src.array.clone();
 
-        }else if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
-            this.array = src.array;
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            Helper.throwCustomCopyNotSupported(flags);
 
         }else{
-            throw new RuntimeException("Invalid flags : " + flags);
+            Helper.throwMissingBaseFlags();
         }
     }
 

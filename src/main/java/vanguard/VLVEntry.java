@@ -288,17 +288,22 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void copy(VLVTypeRunnable src, long flags) {
+    public void copy(VLVTypeRunnable src, long flags){
         VLVEntry entry = (VLVEntry)src;
 
-        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
             target = entry.target;
+            syncer = entry.syncer;
 
-        }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
-            target = (VLVTypeVariable)entry.target.duplicate(FLAG_MAX_DEPTH);
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            target = (VLVTypeVariable)entry.target.duplicate(FLAG_DUPLICATE);
+            syncer = entry.syncer.duplicate(FLAG_DUPLICATE);
+
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            Helper.throwCustomCopyNotSupported(flags);
 
         }else{
-            throw new RuntimeException("Invalid flags : " + flags);
+            Helper.throwMissingBaseFlags();
         }
 
         delay = entry.delay;

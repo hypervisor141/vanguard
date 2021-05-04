@@ -2,7 +2,8 @@ package vanguard;
 
 public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
 
-    public static final long FLAG_SHALLOW_COLUMNS = 0x2L;
+    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
 
     protected VLListType<VLListType<VLVTypeVariable>> matrix;
 
@@ -76,36 +77,25 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
 
     @Override
     public void copy(VLVMatrix src, long flags){
-        VLListType<VLListType<VLVTypeVariable>> targetmat = src.matrix;
-
-        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
             matrix = src.matrix;
 
-        }else if((flags & FLAG_SHALLOW_COLUMNS) == FLAG_SHALLOW_COLUMNS){
-            matrix = targetmat.duplicate(FLAG_MAX_DEPTH);
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            matrix = src.matrix.duplicate(FLAG_DUPLICATE);
 
-        }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
-            matrix = new VLListType<>(targetmat.size(), targetmat.resizerCount());
-            matrix.maximizeVirtualSize();
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+                matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_REFERENCE);
 
-            int rowsize = matrix.size();
+            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+                matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_DUPLICATE);
 
-            for(int i = 0; i < rowsize; i++){
-                VLListType<VLVTypeVariable> targetrow = targetmat.get(i);
-                VLListType<VLVTypeVariable> clonedrow = new VLListType<>(targetrow.size(), targetrow.resizerCount());
-                clonedrow.maximizeVirtualSize();
-
-                int columnsize = targetrow.size();
-
-                for(int i2 = 0; i2 < columnsize; i2++){
-                    clonedrow.set(i2, (VLVTypeVariable)targetrow.get(i2).duplicate(FLAG_MAX_DEPTH));
-                }
-
-                matrix.set(i, clonedrow);
+            }else{
+                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
         }else{
-            throw new RuntimeException("Invalid flags : " + flags);
+            Helper.throwMissingBaseFlags();
         }
     }
 

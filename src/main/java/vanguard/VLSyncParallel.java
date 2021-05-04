@@ -2,6 +2,9 @@ package vanguard;
 
 public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncType<SOURCE>>>{
 
+    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
+
     public VLSyncParallel(int capacity, int resizer){
         super(new VLListType<>(capacity, resizer));
     }
@@ -28,25 +31,25 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
     public void copy(VLSyncType<SOURCE> src, long flags){
         VLSyncParallel<SOURCE> syncer = (VLSyncParallel<SOURCE>)src;
 
-        if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
             target = syncer.target;
 
-        }else if((flags & FLAG_SHALLOW_ENTRIES) == FLAG_SHALLOW_ENTRIES){
-            target = syncer.target.duplicate(FLAG_MAX_DEPTH);
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
+            target = syncer.target.duplicate(VLListType.FLAG_DUPLICATE);
 
-        }else if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
-            VLListType<VLSyncType<SOURCE>> entries = syncer.target;
-            target = new VLListType<>(entries.realSize(), entries.resizerCount());
-            target.maximizeVirtualSize();
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+                target = syncer.target.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_REFERENCE);
 
-            int size = target.size();
+            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+                target = syncer.target.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_DUPLICATE);
 
-            for(int i = 0; i < size; i++){
-                target.set(i, entries.get(i).duplicate(FLAG_MAX_DEPTH));
+            }else{
+                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
         }else{
-            throw new RuntimeException("Invalid flags : " + flags);
+            Helper.throwMissingBaseFlags();
         }
     }
 

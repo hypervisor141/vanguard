@@ -134,7 +134,10 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     public void copy(VLBuffer<Integer, IntBuffer> src, long flags){
         IntBuffer target = src.buffer;
 
-        if((flags & FLAG_MAX_DEPTH) == FLAG_MAX_DEPTH){
+        if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
+            initialize(target);
+
+        }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
             initialize(target.capacity(), target.order());
 
             if(target.hasArray()){
@@ -150,11 +153,11 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
             buffer.position(0);
 
-        }else if((flags & FLAG_MINIMAL) == FLAG_MINIMAL){
-            initialize(target);
+        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
+            Helper.throwCustomCopyNotSupported(flags);
 
         }else{
-            throw new RuntimeException("Invalid flags : " + flags);
+            Helper.throwMissingBaseFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

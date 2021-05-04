@@ -178,7 +178,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                     targetflags = FLAG_DUPLICATE;
 
                 }else{
-                    Helper.throwMissingFlag(FLAG_FORCE_COPY_ENTRIES, "FLAG_FORCE_REFERENCE", "FLAG_FORCE_DUPLICATE");
+                    Helper.throwMissingFlag("FLAG_FORCE_COPY_ENTRIES", "FLAG_FORCE_REFERENCE", "FLAG_FORCE_DUPLICATE");
                 }
 
                 Object[] srcarray = src.array;
@@ -190,7 +190,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                 }
 
             }else{
-                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_COPY_ENTRIES");
+                Helper.throwMissingFlag("FLAG_CUSTOM", "FLAG_FORCE_COPY_ENTRIES");
             }
 
         }else{

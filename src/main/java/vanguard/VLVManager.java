@@ -465,7 +465,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
                 entries = target.entries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_COPY_ENTRIES | VLListType.FLAG_FORCE_DUPLICATE);
 
             }else{
-                Helper.throwMissingFlag(FLAG_CUSTOM, "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                Helper.throwMissingFlag("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
             syncer = target.syncer.duplicate(FLAG_DUPLICATE);

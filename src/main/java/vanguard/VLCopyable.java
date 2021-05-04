@@ -27,8 +27,8 @@ public interface VLCopyable<TYPE>{
             throw new RuntimeException("This instance does not support this flag[".concat(flag).concat("]"));
         };
 
-        public static void throwMissingFlag(long mainflag, String... options){
-            throw new RuntimeException("Missing complimentary flag for the main flag[".concat(String.valueOf(mainflag)).concat("]. possible complimentary flags").concat(Arrays.toString(options)));
+        public static void throwMissingFlag(String mainflag, String... options){
+            throw new RuntimeException("Missing complimentary flag for the main flag[".concat(mainflag).concat("]. possible complimentary flags").concat(Arrays.toString(options)));
         };
     }
 }

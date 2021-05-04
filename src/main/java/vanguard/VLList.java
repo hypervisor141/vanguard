@@ -91,7 +91,7 @@ public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYP
             System.arraycopy(src.array, 0, array, 0, realSize());
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
 
         resizercount = src.resizercount;

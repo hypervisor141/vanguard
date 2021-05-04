@@ -45,7 +45,7 @@ public class VLArrayInt extends VLArray<Integer, int[]> {
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
     }
 

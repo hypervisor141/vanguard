@@ -45,7 +45,7 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
     }
 

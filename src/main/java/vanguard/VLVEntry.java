@@ -300,7 +300,7 @@ public class VLVEntry implements VLVTypeRunner{
             syncer = entry.syncer.duplicate(FLAG_DUPLICATE);
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
 
         delay = entry.delay;

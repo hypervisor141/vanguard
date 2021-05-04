@@ -154,7 +154,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
             buffer.position(0);
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

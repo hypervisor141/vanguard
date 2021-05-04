@@ -154,7 +154,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
             buffer.position(0);
 
         }else{
-            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
+            Helper.throwMissingDefaultFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

@@ -160,25 +160,41 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             array = src.array;
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            System.arraycopy(src.array, 0, array, 0, realSize());
+            array = src.array.clone();
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            if(!(array[0] instanceof VLCopyable)){
-                throw new RuntimeException("List element type is not a VLCopyable type.");
-            }
-
             Object[] srcarray = src.array;
             int size = srcarray.length;
             array = new Object[size];
 
             if((flags & FLAG_FORCE_REFERENCE_ARRAY) == FLAG_FORCE_REFERENCE_ARRAY){
-                for(int i = 0; i < size; i++){
-                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
+                if(array[0] instanceof VLListType){
+                    for(int i = 0; i < size; i++){
+                        array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_FORCE_REFERENCE_ARRAY);
+                    }
+
+                }else if(array[0] instanceof VLCopyable){
+                    for(int i = 0; i < size; i++){
+                        array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
+                    }
+
+                }else{
+                    throw new RuntimeException("List element type is not a VLCopyable type.");
                 }
 
             }else if((flags & FLAG_FORCE_DUPLICATE_ARRAY) == FLAG_FORCE_DUPLICATE_ARRAY){
-                for(int i = 0; i < size; i++){
-                    array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
+                if(array[0] instanceof VLListType){
+                    for(int i = 0; i < size; i++){
+                        array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_FORCE_DUPLICATE_ARRAY);
+                    }
+
+                }else if(array[0] instanceof VLCopyable){
+                    for(int i = 0; i < size; i++){
+                        array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
+                    }
+
+                }else{
+                    throw new RuntimeException("List element type is not a VLCopyable type.");
                 }
 
             }else{

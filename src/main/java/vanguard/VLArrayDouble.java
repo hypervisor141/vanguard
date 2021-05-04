@@ -44,11 +44,8 @@ public class VLArrayDouble extends VLArray<Double, double[]> {
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
             array = src.array.clone();
 
-        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            Helper.throwCustomCopyNotSupported(flags);
-
         }else{
-            Helper.throwMissingBaseFlags();
+            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
         }
     }
 

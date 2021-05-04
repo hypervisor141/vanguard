@@ -90,11 +90,8 @@ public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYP
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
             System.arraycopy(src.array, 0, array, 0, realSize());
 
-        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            Helper.throwCustomCopyNotSupported(flags);
-
         }else{
-            Helper.throwMissingBaseFlags();
+            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
         }
 
         resizercount = src.resizercount;

@@ -299,11 +299,8 @@ public class VLVEntry implements VLVTypeRunner{
             target = (VLVTypeVariable)entry.target.duplicate(FLAG_DUPLICATE);
             syncer = entry.syncer.duplicate(FLAG_DUPLICATE);
 
-        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            Helper.throwCustomCopyNotSupported(flags);
-
         }else{
-            Helper.throwMissingBaseFlags();
+            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
         }
 
         delay = entry.delay;

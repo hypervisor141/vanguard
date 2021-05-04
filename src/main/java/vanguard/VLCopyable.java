@@ -15,8 +15,8 @@ public interface VLCopyable<TYPE>{
 
         private Helper(){}
 
-        public static void throwMissingBaseFlags(){
-            throw new RuntimeException("Missing base flags for copy operation, possible options[".concat("FLAG_REFERENCE, ").concat("FLAG_DUPLICATE, ").concat("FLAG_CUSTOM]"));
+        public static void throwMissingFlags(String[] missing){
+            throw new RuntimeException("Missing flags for copy operation, possible options".concat(Arrays.toString(missing)));
         };
 
         public static void throwCustomCopyNotSupported(long flags){
@@ -27,8 +27,8 @@ public interface VLCopyable<TYPE>{
             throw new RuntimeException("This instance does not support this flag[".concat(flag).concat("]"));
         };
 
-        public static void throwMissingFlag(String mainflag, String... options){
-            throw new RuntimeException("Missing complimentary flag for the main flag[".concat(mainflag).concat("]. possible complimentary flags").concat(Arrays.toString(options)));
+        public static void throwMissingSubFlag(String mainflag, String... subflags){
+            throw new RuntimeException("Missing sub-flag for the main flag[".concat(mainflag).concat("]. possible sub-flags").concat(Arrays.toString(subflags)));
         };
     }
 }

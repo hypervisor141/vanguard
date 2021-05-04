@@ -153,11 +153,8 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
 
             buffer.position(0);
 
-        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            Helper.throwCustomCopyNotSupported(flags);
-
         }else{
-            Helper.throwMissingBaseFlags();
+            Helper.throwMissingFlags(new String[]{ "FLAG_REFERENCE", "FLAG_DUPLICATE" });
         }
 
         preInitCapacity = src.preInitCapacity;

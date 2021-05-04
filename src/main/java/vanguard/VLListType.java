@@ -198,11 +198,11 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                 }
 
             }else{
-                Helper.throwMissingSubFlag("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ARRAY", "FLAG_FORCE_DUPLICATE_ARRAY");
+                Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ARRAY", "FLAG_FORCE_DUPLICATE_ARRAY");
             }
 
         }else{
-            Helper.throwMissingAllStandardFlags();
+            Helper.throwMissingAllFlags();
         }
 
         resizercount = src.resizercount;

@@ -46,11 +46,11 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
                 target = syncer.target.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
 
             }else{
-                Helper.throwMissingSubFlag("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
         }else{
-            Helper.throwMissingAllStandardFlags();
+            Helper.throwMissingAllFlags();
         }
     }
 

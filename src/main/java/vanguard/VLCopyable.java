@@ -34,6 +34,10 @@ public interface VLCopyable<TYPE>{
             throw new RuntimeException("Missing flags for copy operation, possible options".concat(Arrays.toString(missing)));
         };
 
+        public static void throwUnsupportedFlag(String flag){
+            throw new RuntimeException("Unsupported flag for this object[".concat(flag).concat("]"));
+        }
+
         public static void throwMissingSubFlags(String mainflag, String... subflags){
             throw new RuntimeException("Missing sub-flag for the main flag[".concat(mainflag).concat("]. possible sub-flags").concat(Arrays.toString(subflags)));
         };

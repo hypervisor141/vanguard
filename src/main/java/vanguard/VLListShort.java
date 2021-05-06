@@ -128,9 +128,7 @@ public final class VLListShort extends VLList<short[]>{
 
     @Override
     public void nullify(){
-        for(int i = 0; i < currentsize; i++){
-            array[i] = 0;
-        }
+        nullify(0, currentsize);
     }
 
     @Override

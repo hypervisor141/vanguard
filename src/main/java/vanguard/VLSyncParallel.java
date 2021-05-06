@@ -14,8 +14,11 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
     }
 
     public VLSyncParallel(VLSyncParallel<SOURCE> src, long flags){
-        super(null);
         copy(src, flags);
+    }
+
+    protected VLSyncParallel(){
+
     }
 
     @Override

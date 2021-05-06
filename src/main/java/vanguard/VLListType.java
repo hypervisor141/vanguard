@@ -142,9 +142,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     @Override
     public void nullify(){
-        for(int i = 0; i < currentsize; i++){
-            array[i] = null;
-        }
+        nullify(0, currentsize);
     }
 
     @Override

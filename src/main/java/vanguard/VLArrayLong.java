@@ -16,6 +16,10 @@ public class VLArrayLong extends VLArray<Long, long[]>{
         copy(src, flags);
     }
 
+    protected VLArrayLong(){
+
+    }
+
     @Override
     public void set(int index, Long element) {
         array[index] = element;

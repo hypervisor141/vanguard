@@ -14,8 +14,11 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
     }
 
     public VLSyncSeries(VLSyncSeries<SOURCE> src, long flags){
-        super(null);
         copy(src, flags);
+    }
+
+    protected VLSyncSeries(){
+
     }
 
     @Override

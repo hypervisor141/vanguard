@@ -15,6 +15,10 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
         copy(src, flags);
     }
 
+    protected VLVMatrix(){
+
+    }
+
     public void addRow(int initialcapacity, int resizercount){
         matrix.add(new VLListType<VLVTypeVariable>(initialcapacity, resizercount));
     }

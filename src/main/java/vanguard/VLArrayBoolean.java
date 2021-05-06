@@ -16,6 +16,10 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
         copy(src, flags);
     }
 
+    protected VLArrayBoolean(){
+
+    }
+
     @Override
     public void set(int index, Boolean element) {
         array[index] = element;

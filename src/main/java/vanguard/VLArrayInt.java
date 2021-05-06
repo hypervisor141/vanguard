@@ -16,6 +16,10 @@ public class VLArrayInt extends VLArray<Integer, int[]> {
         copy(src, flags);
     }
 
+    protected VLArrayInt(){
+
+    }
+
     @Override
     public void set(int index, Integer element) {
         array[index] = element;

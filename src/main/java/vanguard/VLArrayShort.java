@@ -16,6 +16,10 @@ public final class VLArrayShort extends VLArray<Short, short[]>{
         copy(src, flags);
     }
 
+    protected VLArrayShort(){
+
+    }
+
     @Override
     public void set(int index, Short element) {
         array[index] = element;

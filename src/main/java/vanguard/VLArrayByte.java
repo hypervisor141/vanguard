@@ -16,6 +16,10 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
         copy(src, flags);
     }
 
+    protected VLArrayByte(){
+
+    }
+
     @Override
     public void set(int index, Byte element) {
         array[index] = element;

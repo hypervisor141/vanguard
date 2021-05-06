@@ -27,6 +27,10 @@ public class VLVEntry implements VLVTypeRunner{
         copy(src, flags);
     }
 
+    protected VLVEntry(){
+
+    }
+
     @Override
     public void initialize(int cycles){
         target.initialize(cycles);

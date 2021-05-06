@@ -8,6 +8,10 @@ public abstract class VLSyncMap<SOURCE, TARGET> implements VLSyncType<SOURCE>{
         this.target = target;
     }
 
+    protected VLSyncMap(){
+
+    }
+
     public TARGET target(){
         return target;
     }

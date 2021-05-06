@@ -16,6 +16,10 @@ public class VLArrayFloat extends VLArray<Float, float[]>{
         copy(src, flags);
     }
 
+    protected VLArrayFloat(){
+
+    }
+
     @Override
     public void set(int index, Float element) {
         array[index] = element;

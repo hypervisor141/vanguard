@@ -16,6 +16,10 @@ public class VLArrayDouble extends VLArray<Double, double[]> {
         copy(src, flags);
     }
 
+    protected VLArrayDouble(){
+
+    }
+
     @Override
     public void set(int index, Double element) {
         array[index] = element;

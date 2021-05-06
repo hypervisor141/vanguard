@@ -18,6 +18,10 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         copy(src, flags);
     }
 
+    protected VLVManagerDynamic(){
+
+    }
+
     public int activateEntry(int index){
         add(backingentries.get(index));
         return size() - 1;
@@ -53,6 +57,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
             }else{
                 Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
+
 
         }else{
             Helper.throwMissingAllFlags();

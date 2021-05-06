@@ -9,8 +9,8 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     protected BUFFER buffer;
     protected int preInitCapacity;
 
-    public VLBuffer(){
-        preInitCapacity = 0;
+    protected VLBuffer(){
+
     }
 
     public abstract ByteBuffer initialize(int capacity, ByteOrder order);

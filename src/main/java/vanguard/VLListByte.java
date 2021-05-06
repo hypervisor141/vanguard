@@ -128,9 +128,7 @@ public class VLListByte extends VLList<byte[]>{
 
     @Override
     public void nullify(){
-        for(int i = 0; i < currentsize; i++){
-            array[i] = 0;
-        }
+        nullify(0, currentsize);
     }
 
     @Override

@@ -128,9 +128,7 @@ public final class VLListInt extends VLList<int[]>{
 
     @Override
     public void nullify(){
-        for(int i = 0; i < currentsize; i++){
-            array[i] = 0;
-        }
+        nullify(0, currentsize);
     }
 
     @Override

@@ -2,23 +2,23 @@ package vanguard;
 
 import java.util.Arrays;
 
-public final class VLListFloat extends VLList<float[]>{
+public class VLListBoolean  extends VLList<boolean[]>{
 
-    public VLListFloat(int initialsize, int resizercount){
+    public VLListBoolean(int initialsize, int resizercount){
         super(resizercount, 0);
-        array = new float[initialsize];
+        array = new boolean[initialsize];
     }
 
-    public VLListFloat(float[] data, int resizercount){
+    public VLListBoolean(boolean[] data, int resizercount){
         super(resizercount, data.length);
         array = data;
     }
 
-    public VLListFloat(VLListFloat src, long flags){
+    public VLListBoolean(VLListBoolean src, long flags){
         copy(src, flags);
     }
 
-    public void add(float item){
+    public void add(boolean item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
         }
@@ -26,7 +26,7 @@ public final class VLListFloat extends VLList<float[]>{
         array[currentsize++] = item;
     }
 
-    public void add(float[] items){
+    public void add(boolean[] items){
         int target = currentsize + items.length;
 
         if(target >= array.length){
@@ -38,7 +38,7 @@ public final class VLListFloat extends VLList<float[]>{
         }
     }
 
-    public void add(VLListFloat items){
+    public void add(VLListBoolean items){
         int target = currentsize + items.size();
 
         if(target >= array.length){
@@ -50,7 +50,7 @@ public final class VLListFloat extends VLList<float[]>{
         }
     }
 
-    public void add(int index, float item){
+    public void add(int index, boolean item){
         if(currentsize >= array.length){
             resize(array.length + resizercount);
         }
@@ -59,17 +59,17 @@ public final class VLListFloat extends VLList<float[]>{
         currentsize++;
     }
 
-    public void set(int index, float item){
+    public void set(int index, boolean item){
         checkIndex(index, 1);
         array[index] = item;
     }
 
-    public float get(int index){
+    public boolean get(int index){
         checkIndex(index, 1);
         return array[index];
     }
 
-    public int indexOf(float item){
+    public int indexOf(boolean item){
         int size = size();
 
         for(int i = 0; i < size; i++){
@@ -81,7 +81,7 @@ public final class VLListFloat extends VLList<float[]>{
         return -1;
     }
 
-    public void remove(float item){
+    public void remove(boolean item){
         int index = VLArrayUtils.indexOf(array, item);
 
         if(index != -1){
@@ -109,20 +109,20 @@ public final class VLListFloat extends VLList<float[]>{
             currentsize = size;
         }
 
-        float[] newarray = new float[size];
+        boolean[] newarray = new boolean[size];
         System.arraycopy(array, 0, newarray, 0, currentsize);
         array = newarray;
     }
 
     @Override
     public void clear(){
-        array = new float[resizercount];
+        array = new boolean[resizercount];
         currentsize = 0;
     }
 
     @Override
     public void clear(int capacity){
-        array = new float[capacity];
+        array = new boolean[capacity];
         currentsize = 0;
     }
 
@@ -134,13 +134,13 @@ public final class VLListFloat extends VLList<float[]>{
     @Override
     public void nullify(int index, int count){
         for(; index < count; index++){
-            array[index] = 0;
+            array[index] = false;
         }
     }
 
     @Override
-    public VLListFloat duplicate(long flags){
-        return new VLListFloat(this, flags);
+    public VLListBoolean duplicate(long flags){
+        return new VLListBoolean(this, flags);
     }
 
     @Override
@@ -152,3 +152,4 @@ public final class VLListFloat extends VLList<float[]>{
         src.append("]");
     }
 }
+

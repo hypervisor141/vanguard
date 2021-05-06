@@ -128,9 +128,7 @@ public final class VLListLong extends VLList<long[]>{
 
     @Override
     public void nullify(){
-        for(int i = 0; i < currentsize; i++){
-            array[i] = 0;
-        }
+        nullify(0, currentsize);
     }
 
     @Override
@@ -154,3 +152,4 @@ public final class VLListLong extends VLList<long[]>{
         src.append("]");
     }
 }
+

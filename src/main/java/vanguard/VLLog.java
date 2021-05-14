@@ -3,7 +3,7 @@ package vanguard;
 public class VLLog{
 
     private StringBuilder builder = new StringBuilder();
-    private String[] tags;
+    private final String[] tags;
 
     public VLLog(String[] tags){
         this.tags = tags;

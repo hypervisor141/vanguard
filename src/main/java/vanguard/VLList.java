@@ -91,7 +91,7 @@ public abstract class VLList<TYPE> implements VLLoggableType, VLCopyable<VLList<
             System.arraycopy(src.array, 0, array, 0, realSize());
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
         resizercount = src.resizercount;

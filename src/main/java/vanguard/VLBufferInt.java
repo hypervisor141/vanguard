@@ -154,7 +154,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             buffer.position(0);
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

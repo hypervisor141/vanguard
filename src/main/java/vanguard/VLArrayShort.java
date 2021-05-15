@@ -49,7 +49,7 @@ public final class VLArrayShort extends VLArray<Short, short[]>{
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
     }
 

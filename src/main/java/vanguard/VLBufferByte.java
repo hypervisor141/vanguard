@@ -153,7 +153,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
             buffer.position(0);
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

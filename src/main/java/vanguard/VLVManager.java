@@ -465,13 +465,13 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
                 entries = target.entries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
 
             }else{
-                Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
             syncer = target.syncer.duplicate(FLAG_DUPLICATE);
 
         }else{
-            Helper.throwMissingAllFlags();
+            VLCopyable.Helper.throwMissingAllFlags();
         }
 
         paused = target.paused;

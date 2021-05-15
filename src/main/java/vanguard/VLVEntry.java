@@ -304,7 +304,7 @@ public class VLVEntry implements VLVTypeRunner{
             syncer = entry.syncer.duplicate(FLAG_DUPLICATE);
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
         delay = entry.delay;

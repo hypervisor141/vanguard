@@ -49,7 +49,7 @@ public class VLArrayFloat extends VLArray<Float, float[]>{
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
     }
 

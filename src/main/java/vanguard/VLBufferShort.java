@@ -157,7 +157,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
             buffer.position(0);
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
         preInitCapacity = src.preInitCapacity;

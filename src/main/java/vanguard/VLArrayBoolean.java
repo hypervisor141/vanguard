@@ -49,7 +49,7 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
     }
 

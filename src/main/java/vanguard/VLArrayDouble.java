@@ -49,7 +49,7 @@ public class VLArrayDouble extends VLArray<Double, double[]> {
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
     }
 

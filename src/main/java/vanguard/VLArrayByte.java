@@ -49,7 +49,7 @@ public class VLArrayByte extends VLArray<Byte, byte[]>{
             array = src.array.clone();
 
         }else{
-            Helper.throwMissingDefaultFlags();
+            VLCopyable.Helper.throwMissingDefaultFlags();
         }
     }
 

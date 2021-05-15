@@ -55,12 +55,12 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
                 backingentries = target.backingentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
 
             }else{
-                Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
 
 
         }else{
-            Helper.throwMissingAllFlags();
+            VLCopyable.Helper.throwMissingAllFlags();
         }
     }
 

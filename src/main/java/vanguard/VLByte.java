@@ -35,9 +35,9 @@ public class VLByte implements VLPrimitive{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("byte[");
-        src.append(field);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("byte[");
+        log.append(field);
+        log.append("]");
     }
 }

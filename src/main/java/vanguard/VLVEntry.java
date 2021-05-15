@@ -317,11 +317,11 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] [");
-        target.stringify(src, hint);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] [");
+        target.log(log, data);
+        log.append("]");
     }
 }

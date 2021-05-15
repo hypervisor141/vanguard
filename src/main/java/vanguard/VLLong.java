@@ -35,9 +35,9 @@ public class VLLong implements VLPrimitive{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("long[");
-        src.append(field);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("long[");
+        log.append(field);
+        log.append("]");
     }
 }

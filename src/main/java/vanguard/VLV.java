@@ -133,11 +133,11 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] value[");
-        src.append(get());
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] value[");
+        log.append(get());
+        log.append("]");
     }
 }

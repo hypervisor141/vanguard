@@ -35,9 +35,9 @@ public class VLBoolean implements VLPrimitive{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("boolean[");
-        src.append(field);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("boolean[");
+        log.append(field);
+        log.append("]");
     }
 }

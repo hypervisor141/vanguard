@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
+public class VLVMatrix implements VLLoggableType, VLCopyable<VLVMatrix>{
 
     public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
     public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
@@ -109,17 +109,17 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        boolean verbose = hint != null && (boolean) hint;
+    public void log(VLLog log, Object data){
+        boolean verbose = data != null && (boolean) data;
 
-        src.append("type[");
-        src.append(getClass().getSimpleName());
-        src.append("] sizeRows[");
-        src.append(sizeRows());
-        src.append("] content[");
+        log.append("type[");
+        log.append(getClass().getSimpleName());
+        log.append("] sizeRows[");
+        log.append(sizeRows());
+        log.append("] content[");
 
         if(verbose){
-            src.append("\n");
+            log.append("\n");
         }
 
         int size = matrix.size();
@@ -131,23 +131,23 @@ public class VLVMatrix implements VLStringify, VLCopyable<VLVMatrix>{
             row = matrix.get(i);
             size2 = row.size();
 
-            src.append("row[");
-            src.append(i);
-            src.append("] size[");
-            src.append(size2);
-            src.append(verbose ? "] columns[\n" : "] columns[");
+            log.append("row[");
+            log.append(i);
+            log.append("] size[");
+            log.append(size2);
+            log.append(verbose ? "] columns[\n" : "] columns[");
 
             for(int i2 = 0; i2 < size2; i2++){
-                row.get(i2).stringify(src, verbose);
+                row.get(i2).log(log, verbose);
 
                 if(i2 != row.size() - 1){
-                    src.append(verbose ? ",\n" : ", ");
+                    log.append(verbose ? ",\n" : ", ");
                 }
             }
 
-            src.append(verbose ? "]\n" : "] ");
+            log.append(verbose ? "]\n" : "] ");
         }
 
-        src.append("] ");
+        log.append("] ");
     }
 }

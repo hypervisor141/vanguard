@@ -217,11 +217,11 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        super.stringify(src, hint);
+    public void log(VLLog log, Object data){
+        super.log(log, data);
 
-        src.append(" content[");
-        src.append(Arrays.toString(array));
-        src.append("]");
+        log.append(" content[");
+        log.append(Arrays.toString(array));
+        log.append("]");
     }
 }

@@ -1,6 +1,6 @@
 package vanguard;
 
-public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYPE>>{
+public abstract class VLList<TYPE> implements VLLoggableType, VLCopyable<VLList<TYPE>>{
 
     protected TYPE array;
 
@@ -102,13 +102,13 @@ public abstract class VLList<TYPE> implements VLStringify, VLCopyable<VLList<TYP
     public abstract VLList<TYPE> duplicate(long flags);
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("realSize[");
-        src.append(realSize());
-        src.append("] size[");
-        src.append(currentsize);
-        src.append("] resizer[");
-        src.append(resizercount);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("realSize[");
+        log.append(realSize());
+        log.append("] size[");
+        log.append(currentsize);
+        log.append("] resizer[");
+        log.append(resizercount);
+        log.append("]");
     }
 }

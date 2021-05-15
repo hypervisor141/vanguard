@@ -35,9 +35,9 @@ public class VLInt implements VLPrimitive{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("int[");
-        src.append(field);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("int[");
+        log.append(field);
+        log.append("]");
     }
 }

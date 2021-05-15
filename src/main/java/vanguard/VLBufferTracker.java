@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>{
+public class VLBufferTracker implements VLLoggableType, VLCopyable<VLBufferTracker>{
 
     public int offset;
     public int count;
@@ -63,25 +63,25 @@ public class VLBufferTracker implements VLStringify, VLCopyable<VLBufferTracker>
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] offset[");
-        src.append(offset);
-        src.append("] count[");
-        src.append(count);
-        src.append("] unitOffset[");
-        src.append(unitoffset);
-        src.append("] unitSize[");
-        src.append(unitsize);
-        src.append("] unitSubCount[");
-        src.append(unitsubcount);
-        src.append("] stride[");
-        src.append(stride);
-        src.append("] endPosition[");
-        src.append(endposition);
-        src.append("] typeByteSize[");
-        src.append(typebytesize);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] offset[");
+        log.append(offset);
+        log.append("] count[");
+        log.append(count);
+        log.append("] unitOffset[");
+        log.append(unitoffset);
+        log.append("] unitSize[");
+        log.append(unitsize);
+        log.append("] unitSubCount[");
+        log.append(unitsubcount);
+        log.append("] stride[");
+        log.append(stride);
+        log.append("] endPosition[");
+        log.append(endposition);
+        log.append("] typeByteSize[");
+        log.append(typebytesize);
+        log.append("]");
     }
 }

@@ -485,45 +485,45 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        boolean verbose = (boolean)hint;
+    public void log(VLLog log, Object data){
+        boolean verbose = (boolean) data;
 
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] [");
-        src.append(entries.size());
-        src.append("] paused[");
-        src.append(paused);
-        src.append("] done[");
-        src.append(isdone);
-        src.append("] endPointIndex[");
-        src.append(endpointindex);
-        src.append("] syncerType[");
-        src.append(syncer.getClass().getSimpleName());
-        src.append("] data[");
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] [");
+        log.append(entries.size());
+        log.append("] paused[");
+        log.append(paused);
+        log.append("] done[");
+        log.append(isdone);
+        log.append("] endPointIndex[");
+        log.append(endpointindex);
+        log.append("] syncerType[");
+        log.append(syncer.getClass().getSimpleName());
+        log.append("] data[");
 
         if(verbose){
-            src.append("\n");
+            log.append("\n");
         }
 
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] size[");
-        src.append(size());
-        src.append("] entries[");
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] size[");
+        log.append(size());
+        log.append("] entries[");
 
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            src.append("[");
-            src.append(i);
-            src.append("/");
-            src.append(size);
-            src.append("] ");
+            log.append("[");
+            log.append(i);
+            log.append("/");
+            log.append(size);
+            log.append("] ");
 
-            entries.get(i).stringify(src, hint);
+            entries.get(i).log(log, data);
         }
 
-        src.append("]");
+        log.append("]");
     }
 }

@@ -4,7 +4,7 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLStringify, VLCopyable<VLBuffer<ELEMENT, BUFFER>>{
+public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLLoggableType, VLCopyable<VLBuffer<ELEMENT, BUFFER>>{
 
     protected BUFFER buffer;
     protected int preInitCapacity;
@@ -788,32 +788,32 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
+    public void log(VLLog log, Object data){
         int size = size();
-        int count = hint == null ? size : (int) hint;
+        int count = data == null ? size : (int) data;
 
         if(count > size){
             count = size;
         }
 
-        src.append("[");
-        src.append(getClass().getSimpleName());
-        src.append("] capacity[");
-        src.append(size);
+        log.append("[");
+        log.append(getClass().getSimpleName());
+        log.append("] capacity[");
+        log.append(size);
 
         if(size == 0){
-            src.append("] content[NONE]");
+            log.append("] content[NONE]");
 
         }else{
-            src.append("] content[");
+            log.append("] content[");
 
             for(int i = 0; i < count - 1; i++){
-                src.append(read(i));
-                src.append(", ");
+                log.append(read(i));
+                log.append(", ");
             }
 
-            src.append(read(count - 1));
-            src.append("]");
+            log.append(read(count - 1));
+            log.append("]");
         }
     }
 }

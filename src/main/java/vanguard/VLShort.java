@@ -35,10 +35,10 @@ public class VLShort implements VLPrimitive{
     }
 
     @Override
-    public void stringify(StringBuilder src, Object hint){
-        src.append("short[");
-        src.append(field);
-        src.append("]");
+    public void log(VLLog log, Object data){
+        log.append("short[");
+        log.append(field);
+        log.append("]");
     }
 }
 

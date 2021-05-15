@@ -1,6 +1,6 @@
 package vanguard;
 
-public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggableType, VLCopyable<VLArray<TYPE, PROVIDER>>{
+public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggable, VLCopyable<VLArray<TYPE, PROVIDER>>{
     
     protected PROVIDER array;
 

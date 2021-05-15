@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLVMatrix implements VLLoggableType, VLCopyable<VLVMatrix>{
+public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix>{
 
     public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
     public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;

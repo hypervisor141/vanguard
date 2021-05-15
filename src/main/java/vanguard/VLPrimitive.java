@@ -1,5 +1,5 @@
 package vanguard;
 
-public interface VLPrimitive extends VLLoggableType, VLCopyable<VLPrimitive>{
+public interface VLPrimitive extends VLLoggable, VLCopyable<VLPrimitive>{
 
 }

@@ -1,6 +1,6 @@
 package vanguard;
 
-public abstract class VLList<TYPE> implements VLLoggableType, VLCopyable<VLList<TYPE>>{
+public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE>>{
 
     protected TYPE array;
 

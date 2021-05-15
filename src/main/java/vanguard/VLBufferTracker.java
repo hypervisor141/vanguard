@@ -1,6 +1,6 @@
 package vanguard;
 
-public class VLBufferTracker implements VLLoggableType, VLCopyable<VLBufferTracker>{
+public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
 
     public int offset;
     public int count;

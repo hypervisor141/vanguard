@@ -18,6 +18,10 @@ public class VLLog{
         this.tags = new String[tagsize];
     }
 
+    public VLLog(){
+        this.tags = new String[0];
+    }
+
     public void append(Object s){
         builder.append(s);
     }

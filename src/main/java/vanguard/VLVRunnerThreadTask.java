@@ -20,7 +20,8 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
         if(logtag != null){
             log = new VLLog(VLGlobal.LOGTAG, 3);
-            log.setTag(1, logtag);
+            log.addTag(logtag);
+            log.addTag(null);
 
         }else{
             log = null;

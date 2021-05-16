@@ -11,7 +11,7 @@ public class VLLog{
 
     public VLLog(String firsttag, int tagcapacity){
         tags = new VLListType<>(tagcapacity, tagcapacity);
-        tags.set(0, firsttag);
+        tags.add(firsttag);
     }
 
     public VLLog(int tagcapacity){
@@ -19,7 +19,7 @@ public class VLLog{
     }
 
     public VLLog(){
-        this.tags = new VLListType<>(1, 5);
+        this.tags = new VLListType<>(0, 5);
     }
 
     public void append(Object s){

@@ -19,7 +19,7 @@ public class VLLog{
     }
 
     public VLLog(){
-        this.tags = new VLListType<>(0, 5);
+        this.tags = new VLListType<>(1, 5);
     }
 
     public void append(Object s){

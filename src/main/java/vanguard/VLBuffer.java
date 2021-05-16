@@ -682,6 +682,41 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         return nextoffset;
     }
 
+    public void update(VLBufferTracker tracker, byte data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, short data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, int data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, long data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, float data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, double data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
+    public void update(VLBufferTracker tracker, VLVTypeVariable data){
+        buffer.position(tracker.offset);
+        put(data);
+    }
+
     public void update(VLBufferTracker tracker, byte[] data){
         buffer.position(tracker.offset);
         put(data, tracker.inputoffest, tracker.count, tracker.unitoffset, tracker.unitsize, tracker.unitsubcount, tracker.stride);

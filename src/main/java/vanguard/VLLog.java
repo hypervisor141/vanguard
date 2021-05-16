@@ -9,13 +9,13 @@ public class VLLog{
         this.tags = new VLListType<>(tags, tags.length);
     }
 
-    public VLLog(String firsttag, int tagsize){
-        tags = new VLListType<>(tagsize, tagsize);
+    public VLLog(String firsttag, int tagcapacity){
+        tags = new VLListType<>(tagcapacity, tagcapacity);
         tags.set(0, firsttag);
     }
 
-    public VLLog(int tagsize){
-        tags = new VLListType<>(tagsize, tagsize);
+    public VLLog(int tagcapacity){
+        tags = new VLListType<>(tagcapacity, tagcapacity);
     }
 
     public VLLog(){

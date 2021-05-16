@@ -3,23 +3,23 @@ package vanguard;
 public class VLLog{
 
     private StringBuilder builder = new StringBuilder();
-    private final String[] tags;
+    private final VLListType<String> tags;
 
     public VLLog(String[] tags){
-        this.tags = tags;
+        this.tags = new VLListType<>(tags, tags.length);
     }
 
     public VLLog(String firsttag, int tagsize){
-        tags = new String[tagsize];
-        tags[0] = firsttag;
+        tags = new VLListType<>(tagsize, tagsize);
+        tags.set(0, firsttag);
     }
 
     public VLLog(int tagsize){
-        this.tags = new String[tagsize];
+        tags = new VLListType<>(tagsize, tagsize);
     }
 
     public VLLog(){
-        this.tags = new String[0];
+        this.tags = new VLListType<>(0, 5);
     }
 
     public void append(Object s){
@@ -82,8 +82,20 @@ public class VLLog{
         builder = new StringBuilder(builder.capacity());
     }
 
-    public void tag(int index, String tag){
-        this.tags[index] = tag;
+    public void addTag(String tag){
+        tags.add(tag);
+    }
+
+    public void setTag(int index, String tag){
+        tags.set(index, tag);
+    }
+
+    public void removeTag(int index){
+        tags.remove(index);
+    }
+
+    public void removeLastTag(){
+        tags.remove(tags.size() - 1);
     }
 
     public void printInfo(){
@@ -125,10 +137,10 @@ public class VLLog{
     }
 
     public void printTags(){
-        int size = tags.length;
+        int size = tags.size();
 
         for(int i = 0; i < size; i++){
-            printTag(tags[i]);
+            printTag(tags.get(i));
             System.out.print(" ");
         }
     }
@@ -140,10 +152,10 @@ public class VLLog{
     }
 
     public void printTagsError(){
-        int size = tags.length;
+        int size = tags.size();
 
         for(int i = 0; i < size; i++){
-            printTagError(tags[i]);
+            printTagError(tags.get(i));
             System.err.print(" ");
         }
     }

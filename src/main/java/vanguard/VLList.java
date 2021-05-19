@@ -4,12 +4,12 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     protected TYPE array;
 
-    protected int resizercount;
+    protected int resizer;
     protected int currentsize;
 
-    public VLList(int resizercount, int currentsize){
+    public VLList(int resizer, int currentsize){
         this.currentsize = currentsize;
-        this.resizercount = resizercount;
+        this.resizer = resizer;
     }
 
     protected VLList(){
@@ -17,7 +17,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
     }
 
     public void resizerCount(int count){
-        resizercount = count;
+        resizer = count;
     }
 
     public void virtualSize(int size){
@@ -53,7 +53,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
     }
 
     public int resizerCount(){
-        return resizercount;
+        return resizer;
     }
 
     public int size(){
@@ -68,9 +68,14 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         return array;
     }
 
-    public abstract void clear();
+    public abstract void reinitialize(int capacity, int resizer);
 
-    public abstract void clear(int capacity);
+    public abstract void reinitialize(int capacity);
+
+    public void clear(){
+        nullify();
+        currentsize = 0;
+    }
 
     public abstract void nullify();
 
@@ -94,7 +99,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
             VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
-        resizercount = src.resizercount;
+        resizer = src.resizer;
         currentsize = src.currentsize;
     }
 
@@ -108,7 +113,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         log.append("] size[");
         log.append(currentsize);
         log.append("] resizer[");
-        log.append(resizercount);
+        log.append(resizer);
         log.append("]");
     }
 }

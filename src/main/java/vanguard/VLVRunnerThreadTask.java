@@ -11,16 +11,17 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
     private final PostReporter reporter;
 
-    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, PostReporter reporter, String logtag){
+    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, PostReporter reporter, boolean debug){
         this.root = root;
         this.freqmillis = freqmillis;
         this.freqextrananos = freqextrananos;
         this.enablecompensator = enablecompensator;
         this.reporter = reporter;
 
-        if(logtag != null){
-            log = new VLLog(VLGlobal.LOGTAG, 3);
-            log.addTag(logtag);
+        if(debug){
+            log = new VLLog(3);
+            log.addTag(VLGlobal.LOGTAG);
+            log.addTag(root.getClass().getSimpleName());
             log.addTag(null);
 
         }else{
@@ -75,6 +76,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
             }else if(log != null){
                 log.setTag(2, worker.getName());
+
                 log.append("[WARNING] [VLV processor thread falling behind pre-set frequency of ");
                 log.append(frequencynanos);
                 log.append("ns by ");

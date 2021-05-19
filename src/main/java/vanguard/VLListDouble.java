@@ -20,7 +20,7 @@ public final class VLListDouble extends VLList<double[]>{
 
     public void add(double item){
         if(currentsize >= array.length){
-            resize(array.length + resizercount);
+            resize(array.length + resizer);
         }
 
         array[currentsize++] = item;
@@ -30,7 +30,7 @@ public final class VLListDouble extends VLList<double[]>{
         int target = currentsize + items.length;
 
         if(target >= array.length){
-            resize(target + resizercount);
+            resize(target + resizer);
         }
 
         for(int i = 0; i < items.length; i++){
@@ -42,7 +42,7 @@ public final class VLListDouble extends VLList<double[]>{
         int target = currentsize + items.size();
 
         if(target >= array.length){
-            resize(target + resizercount);
+            resize(target + resizer);
         }
 
         for(int i = 0; i < items.size(); i++){
@@ -52,7 +52,7 @@ public final class VLListDouble extends VLList<double[]>{
 
     public void add(int index, double item){
         if(currentsize >= array.length){
-            resize(array.length + resizercount);
+            resize(array.length + resizer);
         }
 
         VLArrayUtils.addInPlace(index, currentsize, array, item);
@@ -114,16 +114,17 @@ public final class VLListDouble extends VLList<double[]>{
         array = newarray;
     }
 
+
     @Override
-    public void clear(){
-        array = new double[resizercount];
+    public void reinitialize(int capacity){
+        array = new double[capacity];
         currentsize = 0;
     }
 
     @Override
-    public void clear(int capacity){
-        array = new double[capacity];
-        currentsize = 0;
+    public void reinitialize(int capacity, int resizer){
+        reinitialize(capacity);
+        this.resizer = resizer;
     }
 
     @Override

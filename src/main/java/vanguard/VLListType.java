@@ -23,7 +23,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     public void add(TYPE item){
         if(currentsize >= array.length){
-            resize(array.length + resizercount);
+            resize(array.length + resizer);
         }
 
         array[currentsize++] = item;
@@ -33,7 +33,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         int target = currentsize + items.length;
 
         if(target >= array.length){
-            resize(target + resizercount);
+            resize(target + resizer);
         }
 
         for(int i = 0; i < items.length; i++){
@@ -45,7 +45,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         int target = currentsize + items.size();
 
         if(target >= array.length){
-            resize(target + resizercount);
+            resize(target + resizer);
         }
 
         for(int i = 0; i < items.size(); i++){
@@ -55,7 +55,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     public void add(int index, TYPE item){
         if(currentsize >= array.length){
-            resize(array.length + resizercount);
+            resize(array.length + resizer);
         }
 
         VLArrayUtils.addInPlace(index, currentsize, array, item);
@@ -129,15 +129,15 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     }
 
     @Override
-    public void clear(){
-        array = new Object[resizercount];
+    public void reinitialize(int capacity){
+        array = new Object[capacity];
         currentsize = 0;
     }
 
     @Override
-    public void clear(int capacity){
-        array = new Object[capacity];
-        currentsize = 0;
+    public void reinitialize(int capacity, int resizer){
+        reinitialize(capacity);
+        this.resizer = resizer;
     }
 
     @Override
@@ -207,7 +207,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             VLCopyable.Helper.throwMissingAllFlags();
         }
 
-        resizercount = src.resizercount;
+        resizer = src.resizer;
         currentsize = src.currentsize;
     }
 

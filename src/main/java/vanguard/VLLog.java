@@ -4,18 +4,26 @@ public class VLLog{
 
     private StringBuilder builder = new StringBuilder();
     private final VLListType<String> tags;
+    private int debugtagsoffset;
 
     public VLLog(String[] tags){
         this.tags = new VLListType<>(tags, tags.length);
+        debugtagsoffset = Integer.MAX_VALUE;
     }
 
-    public VLLog(String firsttag, int tagcapacity){
-        tags = new VLListType<>(tagcapacity, tagcapacity);
-        tags.add(firsttag);
+    public VLLog(String[] tags, int debugtagsoffset){
+        this.tags = new VLListType<>(tags, tags.length);
+        this.debugtagsoffset = debugtagsoffset;
     }
 
     public VLLog(int tagcapacity){
         tags = new VLListType<>(tagcapacity, tagcapacity);
+        debugtagsoffset = Integer.MAX_VALUE;
+    }
+
+    public VLLog(int tagcapacity, int debugtagsoffset){
+        tags = new VLListType<>(tagcapacity, tagcapacity);
+        this.debugtagsoffset = debugtagsoffset;
     }
 
     public VLLog(){
@@ -74,16 +82,24 @@ public class VLLog{
         builder.append(s);
     }
 
-    public StringBuilder get(){
-        return builder;
-    }
-
     public void reset(){
         builder = new StringBuilder(builder.capacity());
     }
 
+    public void setDebugTagsOffset(int offset){
+        debugtagsoffset = offset;
+    }
+
+    public void setDebugTagsOffsetHere(){
+        debugtagsoffset = tags.size() - 1;
+    }
+
     public void addTag(String tag){
         tags.add(tag);
+    }
+
+    public void addTag(int index, String tag){
+        tags.add(index, tag);
     }
 
     public void setTag(int index, String tag){
@@ -96,6 +112,33 @@ public class VLLog{
 
     public void removeLastTag(){
         tags.remove(tags.size() - 1);
+    }
+
+    public void removeTags(){
+        tags.nullify();
+        tags.virtualSize(0);
+    }
+
+    public void removeDebugTags(){
+        if(debugtagsoffset < 0){
+            tags.nullify();
+            tags.virtualSize(0);
+
+        }else{
+            tags.remove(debugtagsoffset, tags.size() - debugtagsoffset);
+        }
+    }
+
+    public StringBuilder get(){
+        return builder;
+    }
+
+    public VLListType<String> tags(){
+        return tags;
+    }
+
+    public int debugTagOffset(){
+        return debugtagsoffset;
     }
 
     public void printInfo(){
@@ -160,7 +203,7 @@ public class VLLog{
         }
     }
 
-    public void release(){
+    public void clearLogs(){
         builder = null;
     }
 }

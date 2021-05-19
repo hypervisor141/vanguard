@@ -12,7 +12,7 @@ public class VLLog{
     }
 
     public VLLog(String[] tags, int resizer, int debugtagsoffset){
-        this.tags = new VLListType<>(tags, tags.length);
+        this.tags = new VLListType<>(tags, resizer);
         this.debugtagsoffset = debugtagsoffset;
     }
 

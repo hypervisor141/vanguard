@@ -6,12 +6,12 @@ public class VLLog{
     private final VLListType<String> tags;
     private int debugtagsoffset;
 
-    public VLLog(String[] tags){
-        this.tags = new VLListType<>(tags, tags.length);
+    public VLLog(String[] tags, int resizer){
+        this.tags = new VLListType<>(tags, resizer);
         debugtagsoffset = Integer.MAX_VALUE;
     }
 
-    public VLLog(String[] tags, int debugtagsoffset){
+    public VLLog(String[] tags, int resizer, int debugtagsoffset){
         this.tags = new VLListType<>(tags, tags.length);
         this.debugtagsoffset = debugtagsoffset;
     }

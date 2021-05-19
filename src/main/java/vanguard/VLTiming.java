@@ -13,7 +13,7 @@ public class VLTiming{
 
         log = new VLLog(new String[]{
                 VLGlobal.LOGTAG, "GLOBALTIMING"
-        });
+        }, 5);
     }
 
     public static void finishAccumulateTime(String prefix){
@@ -61,7 +61,7 @@ public class VLTiming{
 
         VLLog log = new VLLog(new String[]{
                 VLGlobal.LOGTAG, "TIMING"
-        });
+        }, 5);
 
         if(enablelog && threshold != 0){
             log.printInfo("Test progress : "+ testperc + "%");

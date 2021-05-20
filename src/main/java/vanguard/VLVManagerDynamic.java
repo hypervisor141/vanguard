@@ -22,8 +22,16 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
     }
 
-    public int sizeEntries(){
-        return backingentries.size();
+    public void addEntry(ENTRY entry){
+        backingentries.add(entry);
+    }
+
+    public void addEntry(int index, ENTRY entry){
+        backingentries.add(index, entry);
+    }
+
+    public void removeEntry(int index){
+        backingentries.remove(index);
     }
 
     public int activateEntry(int index){
@@ -41,6 +49,10 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
     public VLListType<ENTRY> entries(){
         return backingentries;
+    }
+
+    public int sizeEntries(){
+        return backingentries.size();
     }
 
     @Override

@@ -22,9 +22,17 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
     }
 
+    public int sizeEntries(){
+        return backingentries.size();
+    }
+
     public int activateEntry(int index){
         add(backingentries.get(index));
         return size() - 1;
+    }
+
+    public int activateLastEntry(){
+        return activateEntry(backingentries.size() - 1);
     }
 
     public void deactivateEntry(int rootindex){

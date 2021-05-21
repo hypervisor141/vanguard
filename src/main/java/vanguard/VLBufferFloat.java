@@ -50,8 +50,20 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
     }
 
     @Override
-    public void read(float[] data, int offset, int count) {
-        buffer.get(data, offset, count);
+    public void read(float[] results, int offset, int count) {
+        buffer.get(results, offset, count);
+    }
+
+    @Override
+    public void read(VLBufferTracker tracker, float[] results, int offset){
+        int unitsubcount = tracker.unitsubcount;
+        int stride = tracker.stride;
+        int endposition = tracker.endposition;
+
+        for(int i = tracker.offset, i2 = offset; i < endposition; i += stride, i2 += unitsubcount){
+            buffer.position(i);
+            buffer.get(results, i2, unitsubcount);
+        }
     }
 
     @Override

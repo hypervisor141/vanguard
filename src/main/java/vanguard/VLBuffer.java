@@ -756,27 +756,51 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(byte[] data, int offset, int count){
+    public void read(byte[] results, int offset, int count){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(short[] data, int offset, int count){
+    public void read(short[] results, int offset, int count){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(int[] data, int offset, int count){
+    public void read(int[] results, int offset, int count){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(long[] data, int offset, int count){
+    public void read(long[] results, int offset, int count){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(float[] data, int offset, int count){
+    public void read(float[] results, int offset, int count){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    public void read(double[] data, int offset, int count){
+    public void read(double[] results, int offset, int count){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, byte[] results, int offset){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, short[] results, int offset){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, int[] results, int offset){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, long[] results, int offset){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, float[] results, int offset){
+        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+    }
+
+    public void read(VLBufferTracker tracker, double[] results, int offset){
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 

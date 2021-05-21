@@ -50,8 +50,20 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public void read(int[] data, int offset, int count){
-        buffer.get(data, offset, count);
+    public void read(int[] results, int offset, int count){
+        buffer.get(results, offset, count);
+    }
+
+    @Override
+    public void read(VLBufferTracker tracker, int[] results, int offset){
+        int unitsubcount = tracker.unitsubcount;
+        int stride = tracker.stride;
+        int endposition = tracker.endposition;
+
+        for(int i = tracker.offset, i2 = offset; i < endposition; i += stride, i2 += unitsubcount){
+            buffer.position(i);
+            buffer.get(results, i2, unitsubcount);
+        }
     }
 
     @Override

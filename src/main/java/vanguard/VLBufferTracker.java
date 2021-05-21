@@ -2,9 +2,10 @@ package vanguard;
 
 public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
 
+    public int srcoffset;
+    public int srccount;
     public int offset;
     public int count;
-    public int inputoffest;
     public int unitoffset;
     public int unitsize;
     public int unitsubcount;
@@ -12,28 +13,19 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
     public int endposition;
     public int typebytesize;
 
-    public VLBufferTracker(int offset, int count, int inputoffest, int unitoffset, int unitsize, int unitsubcount, int stride, int endposition, int typebytesize){
+    public VLBufferTracker(int srcoffset, int srccount, int offset, int count, int inputoffest, int unitoffset, int unitsize,
+                           int unitsubcount, int stride, int endposition, int typebytesize){
+
+        this.srcoffset = srcoffset;
+        this.srccount = srccount;
         this.offset = offset;
         this.count = count;
-        this.inputoffest = inputoffest;
         this.unitoffset = unitoffset;
         this.unitsize = unitsize;
         this.unitsubcount = unitsubcount;
         this.stride = stride;
         this.endposition = endposition;
         this.typebytesize = typebytesize;
-    }
-
-    public VLBufferTracker(int offset, int count, int typebytesize){
-        this.offset = offset;
-        this.count = count;
-        this.inputoffest = -1;
-        this.unitoffset = -1;
-        this.unitsize = -1;
-        this.unitsubcount = -1;
-        this.stride = -1;
-        this.typebytesize = typebytesize;
-        this.endposition = offset + count;
     }
 
     public VLBufferTracker(VLBufferTracker src, long flags){
@@ -48,7 +40,6 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
     public void copy(VLBufferTracker src, long flags){
         offset = src.offset;
         count = src.count;
-        inputoffest = src.inputoffest;
         unitoffset = src.unitoffset;
         unitsize = src.unitsize;
         unitsubcount = src.unitsubcount;
@@ -66,6 +57,10 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
     public void log(VLLog log, Object data){
         log.append("[");
         log.append(getClass().getSimpleName());
+        log.append("] srcOffset[");
+        log.append(srcoffset);
+        log.append("] srcCount[");
+        log.append(srccount);
         log.append("] offset[");
         log.append(offset);
         log.append("] count[");

@@ -22,8 +22,9 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
     }
 
-    public void addEntry(ENTRY entry){
+    public int addEntry(ENTRY entry){
         backingentries.add(entry);
+        return entry.size() - 1;
     }
 
     public void addEntry(int index, ENTRY entry){

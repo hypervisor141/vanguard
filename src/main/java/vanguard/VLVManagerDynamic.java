@@ -48,7 +48,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         remove(rootindex);
     }
 
-    public VLListType<ENTRY> entries(){
+    public void deactivateEntry(ENTRY entry){
+        get().remove(entry);
+    }
+
+    public VLListType<ENTRY> getEntries(){
         return backingentries;
     }
 

@@ -246,7 +246,7 @@ public final class VLArrayUtils{
 
     public static int indexOf(Object[] b, Object element){
         for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+            if(b[i].equals(element)){
                 return i;
             }
         }

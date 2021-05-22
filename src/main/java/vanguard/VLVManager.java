@@ -6,12 +6,12 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
     public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
 
-    private boolean paused;
-    private boolean isdone;
-    private int endpointindex;
+    protected boolean paused;
+    protected boolean isdone;
+    protected int endpointindex;
 
-    private VLListType<ENTRY> entries;
-    private VLSyncType<VLVManager<ENTRY>> syncer;
+    protected VLListType<ENTRY> entries;
+    protected VLSyncType<VLVManager<ENTRY>> syncer;
 
     public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncer){
         entries = new VLListType<>(capacity, resizer);

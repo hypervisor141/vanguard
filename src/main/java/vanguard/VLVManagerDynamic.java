@@ -2,16 +2,16 @@ package vanguard;
 
 public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManager<ENTRY>{
 
-    protected VLListType<ENTRY> backingentries;
+    protected VLListType<ENTRY> dynamicentries;
 
     public VLVManagerDynamic(int capacity, int resizer, int entrysize){
         super(capacity, resizer);
-        backingentries = new VLListType<>(entrysize, 0);
+        dynamicentries = new VLListType<>(entrysize, 0);
     }
 
     public VLVManagerDynamic(int capacity, int resizer, int entrysize, VLSyncType<VLVManager<ENTRY>> syncer){
         super(capacity, resizer, syncer);
-        backingentries = new VLListType<>(entrysize, 0);
+        dynamicentries = new VLListType<>(entrysize, 0);
     }
 
     public VLVManagerDynamic(VLVManagerDynamic<ENTRY> src, long flags){
@@ -23,25 +23,25 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     }
 
     public int addEntry(ENTRY entry){
-        backingentries.add(entry);
+        dynamicentries.add(entry);
         return entry.size() - 1;
     }
 
     public void addEntry(int index, ENTRY entry){
-        backingentries.add(index, entry);
+        dynamicentries.add(index, entry);
     }
 
     public void removeEntry(int index){
-        backingentries.remove(index);
+        dynamicentries.remove(index);
     }
 
     public int activateEntry(int index){
-        add(backingentries.get(index));
+        add(dynamicentries.get(index));
         return size() - 1;
     }
 
     public int activateLastEntry(){
-        return activateEntry(backingentries.size() - 1);
+        return activateEntry(dynamicentries.size() - 1);
     }
 
     public void deactivateEntry(int rootindex){
@@ -53,11 +53,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     }
 
     public VLListType<ENTRY> getEntries(){
-        return backingentries;
+        return dynamicentries;
     }
 
     public int sizeEntries(){
-        return backingentries.size();
+        return dynamicentries.size();
     }
 
     @Override
@@ -67,17 +67,17 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         VLVManagerDynamic<ENTRY> target = (VLVManagerDynamic<ENTRY>)src;
 
         if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
-            backingentries = target.backingentries;
+            dynamicentries = target.dynamicentries;
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            backingentries = target.backingentries.duplicate(FLAG_DUPLICATE);
+            dynamicentries = target.dynamicentries.duplicate(FLAG_DUPLICATE);
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
             if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
-                backingentries = target.backingentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_REFERENCE_ARRAY);
+                dynamicentries = target.dynamicentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_REFERENCE_ARRAY);
 
             }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
-                backingentries = target.backingentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
+                dynamicentries = target.dynamicentries.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
 
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");

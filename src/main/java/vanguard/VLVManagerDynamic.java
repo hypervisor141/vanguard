@@ -31,6 +31,10 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         dynamicentries.add(index, entry);
     }
 
+    public ENTRY getEntry(int index){
+        return dynamicentries.get(index);
+    }
+
     public void removeEntry(int index){
         dynamicentries.remove(index);
     }

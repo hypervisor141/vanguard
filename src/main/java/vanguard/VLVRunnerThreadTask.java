@@ -2,14 +2,14 @@ package vanguard;
 
 public class VLVRunnerThreadTask implements VLThreadTaskType{
 
-    public final VLVTypeRunner root;
-    public final VLLog log;
+    public VLVTypeRunner root;
+    public VLLog log;
 
-    private final long freqmillis;
-    private final int freqextrananos;
-    private final boolean enablecompensator;
+    protected long freqmillis;
+    protected int freqextrananos;
+    protected boolean enablecompensator;
 
-    private final PostReporter reporter;
+    protected PostReporter reporter;
 
     public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, PostReporter reporter, boolean debug){
         this.root = root;
@@ -20,13 +20,17 @@ public class VLVRunnerThreadTask implements VLThreadTaskType{
 
         if(debug){
             log = new VLLog(3);
-            log.addTag(VLGlobal.LOGTAG);
+            log.addTag(VLLog.LOGTAG);
             log.addTag(root.getClass().getSimpleName());
             log.addTag(null);
 
         }else{
             log = null;
         }
+    }
+
+    protected VLVRunnerThreadTask(){
+
     }
 
     @Override

@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLLong implements VLPrimitive{
 
-    private long field;
+    protected long field;
 
     public VLLong(int v) {
         field = v;
@@ -12,7 +12,7 @@ public class VLLong implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLLong() {
+    protected VLLong(){
 
     }
 

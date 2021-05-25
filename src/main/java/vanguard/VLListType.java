@@ -21,6 +21,10 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         copy(src, flags);
     }
 
+    protected VLListType(){
+
+    }
+
     public void add(TYPE item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

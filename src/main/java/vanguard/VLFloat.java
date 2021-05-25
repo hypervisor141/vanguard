@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLFloat implements VLPrimitive{
 
-    private float field;
+    protected float field;
 
     public VLFloat(float v){
         field = v;
@@ -12,7 +12,7 @@ public class VLFloat implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLFloat(){
+    protected VLFloat(){
 
     }
 

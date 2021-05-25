@@ -2,22 +2,26 @@ package vanguard;
 
 public class VLThreadManager{
 
-    private final Object masterlock;
-    private VLListType<VLThread> workers;
+    protected Object mainlock;
+    protected VLListType<VLThread> workers;
 
     public VLThreadManager(int capacity){
-        masterlock = new Object();
+        mainlock = new Object();
         workers = new VLListType<>(capacity, capacity);
     }
 
+    protected VLThreadManager(){
+
+    }
+
     public void enable(int index){
-        synchronized (masterlock){
+        synchronized(mainlock){
             workers.get(index).start();
         }
     }
 
     public void enableAll(){
-        synchronized (masterlock){
+        synchronized(mainlock){
             int size = workers.size();
 
             for(int i = 0; i < size; i++){
@@ -27,7 +31,7 @@ public class VLThreadManager{
     }
 
     public void add(VLThread worker){
-        synchronized (masterlock){
+        synchronized(mainlock){
             workers.add(worker);
         }
     }
@@ -37,16 +41,16 @@ public class VLThreadManager{
     }
 
     public Object masterLock(){
-        return masterlock;
+        return mainlock;
     }
 
     public VLThread waitForFreeWorker(long waittime){
         VLThread free;
 
-        synchronized (masterlock){
+        synchronized(mainlock){
             while((free = checkForFreeWorker()) == null){
                 try{
-                    masterlock.wait(waittime);
+                    mainlock.wait(waittime);
 
                 }catch(InterruptedException ex){
 
@@ -58,7 +62,7 @@ public class VLThreadManager{
     }
 
     public VLThread checkForFreeWorker(){
-        synchronized(masterlock){
+        synchronized(mainlock){
             int size = workers.size();
 
             for(int i = 0; i < size; i++){

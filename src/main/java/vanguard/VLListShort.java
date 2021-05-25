@@ -18,6 +18,10 @@ public final class VLListShort extends VLList<short[]>{
         copy(src, flags);
     }
 
+    protected VLListShort(){
+
+    }
+
     public void add(short item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

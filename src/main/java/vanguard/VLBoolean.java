@@ -12,7 +12,7 @@ public class VLBoolean implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLBoolean(){
+    protected VLBoolean(){
 
     }
 

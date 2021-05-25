@@ -18,6 +18,10 @@ public final class VLListFloat extends VLList<float[]>{
         copy(src, flags);
     }
 
+    protected VLListFloat(){
+
+    }
+
     public void add(float item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

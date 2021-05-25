@@ -10,7 +10,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferInt(){
+    protected VLBufferInt(){
 
     }
 

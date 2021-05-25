@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLInt implements VLPrimitive{
 
-    private int field;
+    protected int field;
 
     public VLInt(int v){
         field = v;
@@ -12,7 +12,7 @@ public class VLInt implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLInt(){
+    protected VLInt(){
 
     }
 

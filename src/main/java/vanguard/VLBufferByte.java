@@ -9,7 +9,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferByte(){
+    protected VLBufferByte(){
 
     }
 

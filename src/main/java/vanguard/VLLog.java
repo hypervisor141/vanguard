@@ -2,32 +2,38 @@ package vanguard;
 
 public class VLLog{
 
-    private StringBuilder builder = new StringBuilder();
-    private final VLListType<String> tags;
-    private int debugtagsoffset;
+    public static final String LOGTAG = "VANGUARD";
+
+    protected StringBuilder builder;
+    protected VLListType<String> tags;
+    protected int debugtagsoffset;
 
     public VLLog(String[] tags, int resizer){
+        builder = new StringBuilder();
         this.tags = new VLListType<>(tags, resizer);
         debugtagsoffset = Integer.MAX_VALUE;
     }
 
     public VLLog(String[] tags, int resizer, int debugtagsoffset){
+        builder = new StringBuilder();
         this.tags = new VLListType<>(tags, resizer);
         this.debugtagsoffset = debugtagsoffset;
     }
 
     public VLLog(int tagcapacity){
+        builder = new StringBuilder();
         tags = new VLListType<>(tagcapacity, tagcapacity);
         debugtagsoffset = Integer.MAX_VALUE;
     }
 
     public VLLog(int tagcapacity, int debugtagsoffset){
+        builder = new StringBuilder();
         tags = new VLListType<>(tagcapacity, tagcapacity);
         this.debugtagsoffset = debugtagsoffset;
     }
 
-    public VLLog(){
-        this.tags = new VLListType<>(0, 5);
+    protected VLLog(){
+
     }
 
     public void append(Object s){

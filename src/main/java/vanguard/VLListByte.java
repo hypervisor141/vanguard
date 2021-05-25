@@ -18,6 +18,10 @@ public class VLListByte extends VLList<byte[]>{
         copy(src, flags);
     }
 
+    protected VLListByte(){
+
+    }
+
     public void add(byte item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

@@ -10,7 +10,7 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferDouble(){
+    protected VLBufferDouble(){
 
     }
 

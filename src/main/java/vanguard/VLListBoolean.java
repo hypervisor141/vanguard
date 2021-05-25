@@ -18,6 +18,10 @@ public class VLListBoolean  extends VLList<boolean[]>{
         copy(src, flags);
     }
 
+    protected VLListBoolean(){
+
+    }
+
     public void add(boolean item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

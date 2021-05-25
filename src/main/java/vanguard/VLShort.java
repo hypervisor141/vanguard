@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLShort implements VLPrimitive{
 
-    private short field;
+    protected short field;
 
     public VLShort(short v){
         field = v;
@@ -12,7 +12,7 @@ public class VLShort implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLShort(){
+    protected VLShort(){
 
     }
 

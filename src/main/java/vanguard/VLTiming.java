@@ -12,7 +12,7 @@ public class VLTiming{
         NANOTIME = System.nanoTime();
 
         log = new VLLog(new String[]{
-                VLGlobal.LOGTAG, "GLOBALTIMING"
+                VLLog.LOGTAG, "GLOBALTIMING"
         }, 5);
     }
 
@@ -60,7 +60,7 @@ public class VLTiming{
         long threshold = reportpercetile == 0 ? 0 : (long)(testcount * (reportpercetile / 100f));
 
         VLLog log = new VLLog(new String[]{
-                VLGlobal.LOGTAG, "TIMING"
+                VLLog.LOGTAG, "TIMING"
         }, 5);
 
         if(enablelog && threshold != 0){

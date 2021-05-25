@@ -2,15 +2,15 @@ package vanguard;
 
 public class VLThread extends Thread{
 
-    private final VLListType<VLThreadTaskType> tasks;
-    private final VLListType<VLThreadTaskType> active;
+    protected VLListType<VLThreadTaskType> tasks;
+    protected VLListType<VLThreadTaskType> active;
 
-    private final Object mainlock;
-    public final Object internallock;
+    protected Object mainlock;
+    public Object internallock;
 
-    private boolean running;
-    private boolean lockdown;
-    private volatile boolean waiting;
+    protected boolean running;
+    protected boolean lockdown;
+    protected volatile boolean waiting;
 
     public VLThread(int resizer){
         tasks = new VLListType<>(resizer, resizer);
@@ -22,6 +22,10 @@ public class VLThread extends Thread{
         running = false;
         lockdown = false;
         waiting = false;
+    }
+
+    protected VLThread(){
+
     }
 
     @Override

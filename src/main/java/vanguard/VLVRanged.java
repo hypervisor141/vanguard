@@ -4,10 +4,12 @@ public final class VLVRanged extends VLVCurved{
 
     private static final float[] CACHE = new float[2];
 
-    private Listener listener;
+    protected Listener listener;
 
-    private float high, low, rangedvalue;
-    private int wrapcounts;
+    protected float high;
+    protected float low;
+    protected float rangedvalue;
+    protected int wrapcounts;
 
     public VLVRanged(float from, float to, int cycles, float low, float high, Loop loop, Curve curve, Listener listener){
         super(from, to, cycles, loop, curve);
@@ -45,7 +47,7 @@ public final class VLVRanged extends VLVCurved{
         copy(src, flags);
     }
 
-    public VLVRanged(){
+    protected VLVRanged(){
         
     }
 

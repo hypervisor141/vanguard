@@ -10,7 +10,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferShort(){
+    protected VLBufferShort(){
 
     }
 

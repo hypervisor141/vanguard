@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLByte implements VLPrimitive{
 
-    private byte field;
+    protected byte field;
 
     public VLByte(byte v){
         field = v;
@@ -12,7 +12,7 @@ public class VLByte implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLByte(){
+    protected VLByte(){
 
     }
 

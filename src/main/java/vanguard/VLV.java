@@ -28,7 +28,7 @@ public class VLV implements VLVTypeVariable{
         copy(src, flags);
     }
 
-    public VLV(){
+    protected VLV(){
 
     }
 

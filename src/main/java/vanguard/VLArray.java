@@ -12,7 +12,7 @@ public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggable
 
     }
 
-    public void transform(int index, VLVMatrix obj, boolean replace){
+    public void transform(int index, VLVMatrix matrix, boolean replace){
 
     }
 

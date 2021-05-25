@@ -55,7 +55,7 @@ public abstract class VLVariable extends VLV{
         copy(src, flags);
     }
 
-    public VLVariable(){
+    protected VLVariable(){
 
     }
 

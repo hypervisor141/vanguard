@@ -10,7 +10,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferFloat(){
+    protected VLBufferFloat(){
 
     }
 

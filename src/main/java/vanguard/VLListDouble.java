@@ -18,6 +18,10 @@ public final class VLListDouble extends VLList<double[]>{
         copy(src, flags);
     }
 
+    protected VLListDouble(){
+
+    }
+
     public void add(double item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

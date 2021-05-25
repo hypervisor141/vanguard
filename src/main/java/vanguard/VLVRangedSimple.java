@@ -17,7 +17,7 @@ public class VLVRangedSimple extends VLV{
         copy(src, flags);
     }
 
-    public VLVRangedSimple(){
+    protected VLVRangedSimple(){
 
     }
 

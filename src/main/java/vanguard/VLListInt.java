@@ -18,6 +18,10 @@ public final class VLListInt extends VLList<int[]>{
         copy(src, flags);
     }
 
+    protected VLListInt(){
+
+    }
+
     public void add(int item){
         if(currentsize >= array.length){
             resize(array.length + resizer);

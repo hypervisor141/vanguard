@@ -32,7 +32,7 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
         copy(src, flags);
     }
 
-    public VLBufferTracker(){
+    protected VLBufferTracker(){
 
     }
 

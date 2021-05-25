@@ -2,7 +2,7 @@ package vanguard;
 
 public class VLDouble implements VLPrimitive{
 
-    private double field;
+    protected double field;
 
     public VLDouble(double v){
         field = v;
@@ -12,7 +12,7 @@ public class VLDouble implements VLPrimitive{
         copy(src, flags);
     }
 
-    public VLDouble(){
+    protected VLDouble(){
 
     }
 

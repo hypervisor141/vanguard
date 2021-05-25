@@ -10,7 +10,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
         copy(src, flags);
     }
 
-    public VLBufferLong(){
+    protected VLBufferLong(){
 
     }
 

@@ -178,7 +178,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
             super(src, flags);
         }
 
-        protected Normal(){
+        public Normal(){
 
         }
 
@@ -202,7 +202,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
             super(src, flags);
         }
 
-        protected Direct(){
+        public Direct(){
 
         }
 

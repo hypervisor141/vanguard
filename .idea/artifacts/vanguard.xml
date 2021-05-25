@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="vanguard">
+    <output-path>$PROJECT_DIR$/out/artifacts/vanguard</output-path>
+    <root id="archive" name="vanguard.jar">
+      <element id="module-output" name="vanguard.main" />
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+      <element id="module-source" name="vanguard.main" />
+    </root>
+  </artifact>
+</component>

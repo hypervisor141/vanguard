@@ -14,7 +14,7 @@ public class VLVControl extends VLVLinear{
         copy(src, flags);
     }
 
-    protected VLVControl(){
+    public VLVControl(){
 
     }
 

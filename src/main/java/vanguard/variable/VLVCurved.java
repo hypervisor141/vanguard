@@ -40,7 +40,7 @@ public class VLVCurved extends VLVariable{
         copy(src, flags);
     }
 
-    protected VLVCurved(){
+    public VLVCurved(){
 
     }
 

@@ -22,7 +22,7 @@ public class VLVLinear extends VLVariable{
         copy(src, flags);
     }
 
-    protected VLVLinear(){
+    public VLVLinear(){
 
     }
 

@@ -2,7 +2,6 @@ package vanguard.array;
 
 import vanguard.utils.VLCopyable;
 import vanguard.utils.VLLog;
-import vanguard.annotations.VLANTModConstructor;
 
 import java.util.Arrays;
 
@@ -20,7 +19,6 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
         copy(src, flags);
     }
 
-    @VLANTModConstructor
     protected VLArrayBoolean(){
 
     }
@@ -28,8 +26,6 @@ public class VLArrayBoolean extends VLArray<Boolean, boolean[]>{
     @Override
     public void set(int index, Boolean element){
         array[index] = element;
-
-        new VLArrayBoolean();
     }
 
     @Override

@@ -178,7 +178,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
             super(src, flags);
         }
 
-        public Normal(){
+        protected Normal(){
 
         }
 
@@ -202,7 +202,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
             super(src, flags);
         }
 
-        public Direct(){
+        protected Direct(){
 
         }
 

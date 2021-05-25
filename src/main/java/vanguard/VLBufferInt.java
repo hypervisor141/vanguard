@@ -178,7 +178,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             super(src, flags);
         }
 
-        public Normal(){
+        protected Normal(){
 
         }
 
@@ -202,7 +202,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             super(src, flags);
         }
 
-        public Direct(){
+        protected Direct(){
 
         }
 

@@ -177,7 +177,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
             super(src, flags);
         }
 
-        public Normal(){
+        protected Normal(){
 
         }
 
@@ -202,7 +202,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
             super(src, flags);
         }
 
-        public Direct(){
+        protected Direct(){
 
         }
 

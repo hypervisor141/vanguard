@@ -181,7 +181,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
             super(src, flags);
         }
 
-        public Normal(){
+        protected Normal(){
 
         }
 
@@ -205,7 +205,7 @@ public abstract class VLBufferShort extends VLBuffer<Short, ShortBuffer>{
             super(src, flags);
         }
 
-        public Direct(){
+        protected Direct(){
 
         }
 

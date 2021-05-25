@@ -12,9 +12,9 @@ public class VLThread extends Thread{
     protected boolean lockdown;
     protected volatile boolean waiting;
 
-    public VLThread(int resizer){
-        tasks = new VLListType<>(resizer, resizer);
-        active = new VLListType<>(resizer, resizer);
+    public VLThread(int capacity){
+        tasks = new VLListType<>(capacity, capacity);
+        active = new VLListType<>(capacity, capacity);
 
         mainlock = new Object();
         internallock = new Object();

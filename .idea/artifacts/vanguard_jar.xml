@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/vanguard_jar</output-path>
     <root id="archive" name="vanguard.jar">
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="vanguard.main" />
       <element id="module-source" name="vanguard.main" />

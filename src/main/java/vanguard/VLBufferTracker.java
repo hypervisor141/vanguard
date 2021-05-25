@@ -13,27 +13,12 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker>{
     public int endposition;
     public int typebytesize;
 
-    public VLBufferTracker(int srcoffset, int srccount, int offset, int count, int inputoffest, int unitoffset, int unitsize,
-                           int unitsubcount, int stride, int endposition, int typebytesize){
+    public VLBufferTracker(){
 
-        this.srcoffset = srcoffset;
-        this.srccount = srccount;
-        this.offset = offset;
-        this.count = count;
-        this.unitoffset = unitoffset;
-        this.unitsize = unitsize;
-        this.unitsubcount = unitsubcount;
-        this.stride = stride;
-        this.endposition = endposition;
-        this.typebytesize = typebytesize;
     }
 
     public VLBufferTracker(VLBufferTracker src, long flags){
         copy(src, flags);
-    }
-
-    protected VLBufferTracker(){
-
     }
 
     @Override

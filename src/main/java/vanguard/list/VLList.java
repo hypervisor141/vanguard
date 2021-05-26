@@ -4,7 +4,7 @@ import vanguard.utils.VLCopyable;
 import vanguard.utils.VLLog;
 import vanguard.utils.VLLoggable;
 
-public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE>> {
+public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE>>{
 
     protected TYPE array;
 

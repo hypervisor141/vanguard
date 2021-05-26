@@ -1,6 +1,5 @@
 package vanguard.list;
 
-import sentinel.SLRestrictedConstructor;
 import vanguard.array.VLArrayUtils;
 import vanguard.utils.VLCopyable;
 import vanguard.utils.VLLog;
@@ -26,7 +25,6 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         copy(src, flags);
     }
 
-    @SLRestrictedConstructor
     protected VLListType(){
 
     }

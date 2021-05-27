@@ -1,6 +1,5 @@
 package hypervisor.vanguard.array;
 
-import hypervisor.sentinel.SLRestrictedConstructor;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.utils.VLLoggable;

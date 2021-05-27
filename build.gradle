@@ -1,18 +1,23 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 group 'hypervisor'
 version '9.2.5'
 
 repositories {
+    mavenLocal(){
+        content{
+            includeGroup "hypervisor"
+        }
+    }
     mavenCentral()
 }
 
 dependencies {
-
-    implementation project(":sentinel")
-    annotationProcessor project(":sentinel")
+    implementation "hypervisor:sentinel:1.1.0"
+    annotationProcessor "hypervisor:sentinel:1.1.0"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
@@ -20,4 +25,38 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+afterEvaluate{
+    publishing{
+        publications{
+            main(MavenPublication){
+                artifact file("out/artifacts/${project.name}/${project.name}.jar")
+
+                pom{
+                    name = "${project.name}"
+                    description = "A low level toolset with control, flexibility and performance in mind"
+
+                    licenses{
+                        license{
+                            name = "The GNU General Public License, Version 3.0"
+                            url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
+                        }
+                    }
+                    developers{
+                        developer{
+                            id = "hypervisor"
+                            name = "Shayan Aria"
+                            email = "hypervisor141@gmail.com"
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

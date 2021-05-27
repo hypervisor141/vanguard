@@ -1,6 +1,1 @@
-include ':vanguard'
-include ':sentinel'
-
-project(":sentinel").projectDir = new File("/home/shayan/data/projects/sources/java/sentinel/")
-
 rootProject.name = 'vanguard'

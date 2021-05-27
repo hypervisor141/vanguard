@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group 'hypervisor'
+version '9.2.5'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation project(":sentinel")
+    annotationProcessor project(":sentinel")
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+test {
+    useJUnitPlatform()
+}

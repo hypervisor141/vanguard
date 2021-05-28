@@ -35,7 +35,7 @@ java {
 afterEvaluate{
     publishing{
         publications{
-            main(MavenPublication){
+            release(MavenPublication){
                 artifact file("out/artifacts/${project.name}/${project.name}.jar")
 
                 pom{

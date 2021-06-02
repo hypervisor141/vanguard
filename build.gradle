@@ -32,28 +32,26 @@ java {
     withSourcesJar()
 }
 
-afterEvaluate{
-    publishing{
-        publications{
-            release(MavenPublication){
-                artifact file("out/artifacts/${project.name}/${project.name}.jar")
+publishing{
+    publications{
+        release(MavenPublication){
+            artifact file("out/artifacts/${project.name}/${project.name}.jar")
 
-                pom{
-                    name = "${project.name}"
-                    description = "A low level toolset with control, flexibility and performance in mind"
+            pom{
+                name = "${project.name}"
+                description = "A low level toolset with control, flexibility and performance in mind"
 
-                    licenses{
-                        license{
-                            name = "The GNU General Public License, Version 3.0"
-                            url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
-                        }
+                licenses{
+                    license{
+                        name = "The GNU General Public License, Version 3.0"
+                        url = "https://www.gnu.org/licenses/gpl-3.0.en.html"
                     }
-                    developers{
-                        developer{
-                            id = "hypervisor"
-                            name = "Shayan Aria"
-                            email = "hypervisor141@gmail.com"
-                        }
+                }
+                developers{
+                    developer{
+                        id = "hypervisor"
+                        name = "Shayan Aria"
+                        email = "hypervisor141@gmail.com"
                     }
                 }
             }

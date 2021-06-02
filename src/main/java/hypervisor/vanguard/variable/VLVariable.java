@@ -130,10 +130,8 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void fastForward(int count){
-        int changes = 0;
-
         for(int i = 0; i < count; i++){
-            changes += next();
+            next();
         }
     }
 

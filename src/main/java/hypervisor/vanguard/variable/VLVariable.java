@@ -93,23 +93,16 @@ public abstract class VLVariable extends VLV{
         this.loop = loop;
     }
 
-    public void setFrom(float from){
-        if(from > to){
-            this.from = to;
-            this.to = from;
-
-        }else{
+    public void setRange(float from, float to){
+        if(from <= to){
             this.from = from;
-        }
-    }
-
-    public void setTo(float to){
-        if(to < from){
-            this.to = from;
-            this.from = to;
+            this.to = to;
 
         }else{
-            this.to = to;
+            this.from = to;
+            this.to = from;
+
+            change = -Math.abs(change);
         }
     }
 

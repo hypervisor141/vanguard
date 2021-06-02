@@ -45,23 +45,15 @@ public class VLVCurved extends VLVariable{
     }
 
     @Override
-    public void initialize(int cycles){
-        super.initialize(cycles);
-
-        change = 1F / cycles;
+    public void initialize(float from, float to, int cycles){
+        super.initialize(from, to, 1F / cycles);
         initializeTracker();
-
-        loop.reseted(this);
     }
 
     @Override
-    public void initialize(float changerate){
-        super.initialize(changerate);
-
-        change = changerate;
+    public void initialize(float from, float to, float changerate){
+        super.initialize(from, to, changerate);
         initializeTracker();
-
-        loop.reseted(this);
     }
 
     private void initializeTracker(){

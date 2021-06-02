@@ -5,10 +5,8 @@ import hypervisor.vanguard.utils.VLLoggable;
 
 public interface VLVTypeRunnable extends VLLoggable, VLCopyable<VLVTypeRunnable> {
 
-    void initialize(int cycles);
-    void initialize(float changerate);
-    void initializeFixedDirection(int cycles);
-    void initializeFixedDirection(float changerate);
+    void initialize(float from, float to, int cycles);
+    void initialize(float from, float to, float changerate);
     void activate();
     void deactivate();
     int next();

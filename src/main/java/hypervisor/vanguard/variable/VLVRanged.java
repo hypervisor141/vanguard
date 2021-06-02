@@ -54,20 +54,20 @@ public final class VLVRanged extends VLVCurved{
     }
 
     @Override
-    public void initialize(int cycles){
-        super.initialize(cycles);
+    public void initialize(float from, float to, int cycles){
+        super.initialize(from, to, cycles);
         wrapValue();
     }
 
     @Override
-    public void initialize(float changerate){
-        super.initialize(changerate);
+    public void initialize(float from, float to, float changerate){
+        super.initialize(from, to, changerate);
         wrapValue();
     }
 
     @Override
-    public void set(float s){
-        super.set(s);
+    public void set(float value){
+        super.set(value);
         wrapValue();
     }
 

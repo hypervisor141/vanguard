@@ -1,9 +1,9 @@
 package hypervisor.vanguard.variable;
 
+import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.sync.VLSyncType;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
-import hypervisor.vanguard.sync.VLSyncType;
-import hypervisor.vanguard.list.VLListType;
 
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
@@ -42,47 +42,21 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void initialize(int cycles){
+    public void initialize(float from, float to, int cycles){
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            entries.get(i).initialize(cycles);
+            entries.get(i).initialize(from, to, cycles);
         }
-
-        sync();
     }
 
     @Override
-    public void initialize(float changerate){
+    public void initialize(float from, float to, float changerate){
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            entries.get(i).initialize(changerate);
+            entries.get(i).initialize(from, to, changerate);
         }
-
-        sync();
-    }
-
-    @Override
-    public void initializeFixedDirection(int cycles){
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).initializeFixedDirection(cycles);
-        }
-
-        sync();
-    }
-
-    @Override
-    public void initializeFixedDirection(float changerate){
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).initializeFixedDirection(changerate);
-        }
-
-        sync();
     }
 
     @Override
@@ -173,8 +147,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).syncAll();
         }
-
-        sync();
     }
 
     @Override
@@ -191,8 +163,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).chain(cycles, to);
         }
-
-        sync();
     }
 
     @Override
@@ -211,8 +181,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).reset();
         }
-
-        sync();
     }
 
     @Override
@@ -222,8 +190,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).finish();
         }
-
-        sync();
     }
 
     @Override
@@ -251,39 +217,6 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).resetDelayTrackers();
         }
-    }
-
-    @Override
-    public void randomizeCycles(int cyclesmin, int cyclesmax, boolean maintaindirection, boolean excludeinactive){
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).randomizeCycles(cyclesmin, cyclesmax, maintaindirection, excludeinactive);
-        }
-
-        sync();
-    }
-
-    @Override
-    public void randomizeChangeRates(float ratemin, float ratemax, boolean maintaindirection, boolean excludeinactive){
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).randomizeChangeRates(ratemin, ratemax, maintaindirection, excludeinactive);
-        }
-
-        sync();
-    }
-
-    @Override
-    public void randomizeDelays(int delaymin, int delaymax, boolean offsetdelay, boolean excludeinactive){
-        int size = entries.size();
-
-        for(int i = 0; i < size; i++){
-            entries.get(i).randomizeDelays(delaymin, delaymax, offsetdelay, excludeinactive);
-        }
-
-        sync();
     }
 
     @Override

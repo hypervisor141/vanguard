@@ -1,9 +1,8 @@
 package hypervisor.vanguard.variable;
 
+import hypervisor.vanguard.sync.VLSyncType;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
-import hypervisor.vanguard.math.VLMath;
-import hypervisor.vanguard.sync.VLSyncType;
 
 public class VLVEntry implements VLVTypeRunner{
 
@@ -37,27 +36,13 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void initialize(int cycles){
-        target.initialize(cycles);
-        sync();
+    public void initialize(float from, float to, int cycles){
+        target.initialize(from, to, cycles);
     }
 
     @Override
-    public void initialize(float changerate){
-        target.initialize(changerate);
-        sync();
-    }
-
-    @Override
-    public void initializeFixedDirection(int cycles){
-        target.initializeFixedDirection(cycles);
-        sync();
-    }
-
-    @Override
-    public void initializeFixedDirection(float changerate){
-        target.initializeFixedDirection(changerate);
-        sync();
+    public void initialize(float from, float to, float changerate){
+        target.initialize(from, to, changerate);
     }
 
     @Override
@@ -80,7 +65,6 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void chain(int cycles, float to){
         target.chain(cycles, to);
-        sync();
     }
 
     @Override
@@ -92,13 +76,11 @@ public class VLVEntry implements VLVTypeRunner{
     public void reset(){
         target.reset();
         resetDelayTrackers();
-        sync();
     }
 
     @Override
     public void finish(){
         target.finish();
-        sync();
     }
 
     @Override
@@ -235,65 +217,6 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public int endPointIndex(){
         return 0;
-    }
-
-    @Override
-    public void randomizeCycles(int cyclesmin, int cyclesmax, boolean maintaindirection, boolean excludeinactive){
-        if(excludeinactive && !active()){
-            return;
-        }
-
-        RANDOM.setSeed(System.currentTimeMillis());
-        int cycles = cyclesmin + RANDOM.nextInt(cyclesmax - cyclesmin);
-
-        if(!maintaindirection){
-            target.initialize(cycles);
-
-        }else{
-            target.initializeFixedDirection(cycles);
-        }
-
-        sync();
-        activate();
-    }
-
-    @Override
-    public void randomizeChangeRates(float ratemin, float ratemax, boolean maintaindirection, boolean excludeinactive){
-        if(excludeinactive && !active()){
-            return;
-        }
-
-        VLVManager.RANDOM.setSeed(System.currentTimeMillis());
-        float changerate = VLMath.range(VLVManager.RANDOM.nextFloat(), ratemin, ratemax);
-
-        if(!maintaindirection){
-            target.initialize(changerate);
-
-        }else{
-            target.initializeFixedDirection(changerate);
-        }
-
-        sync();
-        activate();
-    }
-
-    @Override
-    public void randomizeDelays(int delaymin, int delaymax, boolean offsetdelay, boolean excludeinactive){
-        if(excludeinactive && !active()){
-            return;
-        }
-
-        VLVManager.RANDOM.setSeed(System.currentTimeMillis());
-
-        if(!offsetdelay){
-            delay(delaymin + VLVManager.RANDOM.nextInt(delaymax - delaymin));
-
-        }else{
-            delayBy(delaymin + VLVManager.RANDOM.nextInt(delaymax - delaymin));
-        }
-
-        sync();
-        activate();
     }
 
     @Override

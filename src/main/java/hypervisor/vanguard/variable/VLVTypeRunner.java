@@ -2,7 +2,7 @@ package hypervisor.vanguard.variable;
 
 import hypervisor.vanguard.sync.VLSyncType;
 
-public interface VLVTypeRunner extends VLVTypeRunnable, VLVTypeRunnerUtils{
+public interface VLVTypeRunner extends VLVTypeRunnable{
 
     void start();
     void pause();

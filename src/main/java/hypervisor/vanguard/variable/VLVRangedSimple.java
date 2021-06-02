@@ -24,9 +24,9 @@ public class VLVRangedSimple extends VLV{
     }
 
     @Override
-    public void set(float s){
-        VLMath.wrapOverRange(CACHE, 0, s, low, high);
-        value = CACHE[0];
+    public void set(float value){
+        VLMath.wrapOverRange(CACHE, 0, value, low, high);
+        this.value = CACHE[0];
     }
 
     @Override

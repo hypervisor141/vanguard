@@ -16,38 +16,16 @@ public abstract class VLVariable extends VLV{
     protected Loop loop;
 
     public VLVariable(float from, float to, int cycles, Loop loop){
-        if(from <= to){
-            this.from = from;
-            this.to = to;
-
-        }else{
-            this.from = to;
-            this.to = from;
-
-            cycles = -cycles;
-        }
-
         this.loop = loop;
 
-        initialize(cycles);
+        initialize(from, to, cycles);
         activate();
     }
 
     public VLVariable(float from, float to, float changerate, Loop loop){
-        if(from <= to){
-            this.from = from;
-            this.to = to;
-
-        }else{
-            this.from = to;
-            this.to = from;
-
-            changerate = -changerate;
-        }
-
         this.loop = loop;
 
-        initialize(changerate);
+        initialize(from, to, changerate);
         activate();
     }
 
@@ -60,23 +38,15 @@ public abstract class VLVariable extends VLV{
     }
 
     @Override
-    public void initialize(int cycles){
+    public void initialize(float from, float to, int cycles){
         loop.initialized(this);
     }
 
     @Override
-    public void initialize(float changerate){
+    public void initialize(float from, float to, float changerate){
+        change = changerate;
+        setRange(from, to);
         loop.initialized(this);
-    }
-
-    @Override
-    public void initializeFixedDirection(int cycles){
-        initialize(change > 0 ? Math.abs(cycles) : -Math.abs(cycles));
-    }
-
-    @Override
-    public void initializeFixedDirection(float changerate){
-        initialize(change > 0 ? Math.abs(changerate) : -Math.abs(changerate));
     }
 
     @Override
@@ -156,10 +126,7 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void chain(int cycles, float to){
-        this.from = value;
-        this.to = to;
-
-        initialize(cycles);
+        initialize(value, to, cycles);
     }
 
     public Loop getLoop(){
@@ -304,18 +271,18 @@ public abstract class VLVariable extends VLV{
 
         @Override
         public void initialized(VLVariable var){
-            reseted(var);
+            var.reverse();
+            var.setLoop(LOOP_RETURN_ONCE);
         }
 
         @Override
         public void process(VLVariable var){
-            reseted(var);
+            initialized(var);
         }
 
         @Override
         public void reseted(VLVariable var){
-            var.reverse();
-            var.setLoop(LOOP_RETURN_ONCE);
+            initialized(var);
         }
     }
 }

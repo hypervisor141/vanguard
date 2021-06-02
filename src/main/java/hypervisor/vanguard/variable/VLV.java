@@ -35,8 +35,8 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
-    public void set(float s){
-        value = s;
+    public void set(float value){
+        this.value = value;
     }
 
     @Override
@@ -50,22 +50,12 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
-    public void initialize(int cycles){
+    public void initialize(float from, float to, int cycles){
 
     }
 
     @Override
-    public void initialize(float changerate){
-
-    }
-
-    @Override
-    public void initializeFixedDirection(int cycles){
-
-    }
-
-    @Override
-    public void initializeFixedDirection(float changerate){
+    public void initialize(float from, float to, float changerate){
 
     }
 

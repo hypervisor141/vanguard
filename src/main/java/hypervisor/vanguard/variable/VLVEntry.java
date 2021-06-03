@@ -136,12 +136,10 @@ public class VLVEntry implements VLVTypeRunner{
 
             if(advancement == 0){
                 resetDelayTrackers();
-                sync();
                 pause();
-
-            }else{
-                sync();
             }
+
+            sync();
         }
 
         return advancement;

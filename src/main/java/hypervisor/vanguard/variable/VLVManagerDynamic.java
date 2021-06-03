@@ -43,6 +43,19 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         dynamicentries.remove(index);
     }
 
+    public int activateEntry(ENTRY entry){
+        int size = dynamicentries.size();
+
+        for(int i = 0; i < size; i++){
+            if(dynamicentries.get(i).entry.equals(entry)){
+                activateEntry(i);
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public int activateEntry(int index){
         Entry<ENTRY> target = dynamicentries.get(index);
 
@@ -99,7 +112,6 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
             }
-
 
         }else{
             VLCopyable.Helper.throwMissingAllFlags();

@@ -1,8 +1,8 @@
 package hypervisor.vanguard.variable;
 
-import hypervisor.vanguard.utils.VLCopyable;
-import hypervisor.vanguard.sync.VLSyncType;
 import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.sync.VLSyncType;
+import hypervisor.vanguard.utils.VLCopyable;
 
 public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<ENTRY>{
 
@@ -43,12 +43,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
         dynamicentries.remove(index);
     }
 
-    public int activateEntry(VLVTypeRunner entry){
+    public int indexOf(VLVTypeRunner target){
         int size = dynamicentries.size();
 
         for(int i = 0; i < size; i++){
-            if(dynamicentries.get(i).entry.equals(entry)){
-                activateEntry(i);
+            if(dynamicentries.get(i).entry.equals(target)){
                 return i;
             }
         }
@@ -74,12 +73,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
         return activateEntry(dynamicentries.size() - 1);
     }
 
-    public void deactivateEntry(int rootindex){
-        remove(rootindex);
-    }
+    public void deactivateEntry(int index){
+        Entry<ENTRY> target = dynamicentries.get(index);
+        target.inactive = true;
 
-    public void deactivateEntry(VLVTypeRunner entry){
-        get().remove(entry);
+        get().remove(target.entry);
     }
 
     public VLListType<Entry<ENTRY>> getEntries(){

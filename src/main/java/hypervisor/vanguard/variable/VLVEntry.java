@@ -11,14 +11,12 @@ public class VLVEntry implements VLVTypeRunner{
 
     protected int delay;
     protected int delaytracker;
-    protected boolean paused;
 
     public VLVEntry(VLVTypeVariable target, int delay){
         this.target = target;
         this.delay = delay;
 
         delaytracker = 0;
-        paused = true;
     }
 
     public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncer){
@@ -27,7 +25,6 @@ public class VLVEntry implements VLVTypeRunner{
         this.delay = delay;
 
         delaytracker = 0;
-        paused = true;
     }
 
     public VLVEntry(VLVEntry src, long flags){
@@ -113,13 +110,11 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void start(){
-        paused = false;
         target.activate();
     }
 
     @Override
     public void pause(){
-        paused = true;
         target.deactivate();
     }
 
@@ -127,19 +122,18 @@ public class VLVEntry implements VLVTypeRunner{
     public int next(){
         int advancement = 0;
 
-        if(delaytracker < delay){
-            delaytracker++;
-            advancement = 1;
+        if(target.active()){
+            if(delaytracker < delay){
+                delaytracker++;
+                advancement = 1;
 
-        }else if(target.active()){
-            advancement = target.next();
-
-            if(advancement == 0){
-                resetDelayTrackers();
-                pause();
+            }else{
+                advancement = target.next();
+                sync();
             }
 
-            sync();
+        }else{
+            resetDelayTrackers();
         }
 
         return advancement;
@@ -192,7 +186,7 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public boolean paused(){
-        return paused;
+        return target.active();
     }
 
     @Override
@@ -243,7 +237,6 @@ public class VLVEntry implements VLVTypeRunner{
 
         delay = entry.delay;
         delaytracker = entry.delaytracker;
-        paused = entry.paused;
     }
 
     @Override

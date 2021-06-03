@@ -186,7 +186,7 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public boolean paused(){
-        return target.active();
+        return !target.active();
     }
 
     @Override

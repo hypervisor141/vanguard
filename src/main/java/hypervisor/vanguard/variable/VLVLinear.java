@@ -28,8 +28,7 @@ public class VLVLinear extends VLVariable{
 
     @Override
     public void initialize(float from, float to, int cycles){
-        super.initialize(from, to, (this.to - this.from) / cycles);
-        value = cycles >= 0 ? this.from : this.to;
+        initialize(from, to, (this.to - this.from) / cycles);
     }
 
     @Override

@@ -16,6 +16,8 @@ public class VLVEntry implements VLVTypeRunner{
         this.target = target;
         this.delay = delay;
 
+
+
         delaytracker = 0;
     }
 
@@ -110,7 +112,7 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void start(){
-        target.activate();
+
     }
 
     @Override

@@ -23,6 +23,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         this.syncer = syncer;
 
         paused = true;
+        isdone = false;
         endpointindex = -1;
     }
 
@@ -30,6 +31,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         entries = new VLListType<>(capacity, resizer);
 
         paused = true;
+        isdone = false;
         endpointindex = -1;
     }
 

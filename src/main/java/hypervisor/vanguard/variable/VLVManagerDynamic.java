@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.sync.VLSyncType;
 import hypervisor.vanguard.list.VLListType;
 
-public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManager<ENTRY>{
+public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<ENTRY>{
 
     protected VLListType<Entry<ENTRY>> dynamicentries;
 
@@ -28,7 +28,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
 
     public int addEntry(ENTRY entry){
         dynamicentries.add(new Entry<>(entry));
-        return entry.size() - 1;
+        return entries.size() - 1;
     }
 
     public void addEntry(int index, ENTRY entry){
@@ -43,7 +43,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         dynamicentries.remove(index);
     }
 
-    public int activateEntry(VLVTypeManager<?> entry){
+    public int activateEntry(VLVTypeRunner entry){
         int size = dynamicentries.size();
 
         for(int i = 0; i < size; i++){
@@ -78,7 +78,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         remove(rootindex);
     }
 
-    public void deactivateEntry(VLVTypeManager<?> entry){
+    public void deactivateEntry(VLVTypeRunner entry){
         get().remove(entry);
     }
 
@@ -123,7 +123,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         return new VLVManagerDynamic<>(this, flags);
     }
 
-    public static final class Entry<TYPE extends VLVTypeManager<?>>{
+    public static final class Entry<TYPE extends VLVTypeRunner>{
 
         public TYPE entry;
         public boolean inactive;

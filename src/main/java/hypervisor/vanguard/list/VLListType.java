@@ -92,7 +92,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         return -1;
     }
 
-    public void remove(TYPE item){
+    public void remove(Object item){
         int index = VLArrayUtils.indexOf(array, item);
 
         if(index != -1){

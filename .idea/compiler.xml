@@ -5,11 +5,11 @@
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$USER_HOME$/.m2/repository/hypervisor/sentinel/1.1.0/sentinel-1.1.0.jar" />
+          <entry name="$MAVEN_REPOSITORY$/hypervisor/sentinel/1.1.0/sentinel-1.1.0.jar" />
         </processorPath>
         <module name="vanguard" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="8" />
   </component>
 </project>

@@ -43,7 +43,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         dynamicentries.remove(index);
     }
 
-    public int activateEntry(ENTRY entry){
+    public int activateEntry(VLVTypeManager<?> entry){
         int size = dynamicentries.size();
 
         for(int i = 0; i < size; i++){
@@ -78,7 +78,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         remove(rootindex);
     }
 
-    public void deactivateEntry(ENTRY entry){
+    public void deactivateEntry(VLVTypeManager<?> entry){
         get().remove(entry);
     }
 

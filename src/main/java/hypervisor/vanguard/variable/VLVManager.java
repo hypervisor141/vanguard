@@ -90,10 +90,13 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
             if(count == 0){
                 isdone = true;
-                pause();
-            }
 
-            sync();
+                sync();
+                pause();
+
+            }else{
+                sync();
+            }
 
             return count;
 

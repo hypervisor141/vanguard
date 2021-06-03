@@ -6,7 +6,7 @@ import hypervisor.vanguard.list.VLListType;
 
 public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManager<ENTRY>{
 
-    protected VLListType<ENTRY> dynamicentries;
+    protected VLListType<Entry<ENTRY>> dynamicentries;
 
     public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer){
         super(capacity, resizer);
@@ -27,16 +27,16 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     }
 
     public int addEntry(ENTRY entry){
-        dynamicentries.add(entry);
+        dynamicentries.add(new Entry<>(entry));
         return entry.size() - 1;
     }
 
     public void addEntry(int index, ENTRY entry){
-        dynamicentries.add(index, entry);
+        dynamicentries.add(index, new Entry<>(entry));
     }
 
     public ENTRY getEntry(int index){
-        return dynamicentries.get(index);
+        return dynamicentries.get(index).entry;
     }
 
     public void removeEntry(int index){
@@ -44,8 +44,17 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     }
 
     public int activateEntry(int index){
-        add(dynamicentries.get(index));
-        return size() - 1;
+        Entry<ENTRY> target = dynamicentries.get(index);
+
+        if(target.inactive){
+            add(target.entry);
+            target.inactive = false;
+
+            return size() - 1;
+
+        }else{
+            return -1;
+        }
     }
 
     public int activateLastEntry(){
@@ -60,7 +69,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
         get().remove(entry);
     }
 
-    public VLListType<ENTRY> getEntries(){
+    public VLListType<Entry<ENTRY>> getEntries(){
         return dynamicentries;
     }
 
@@ -100,5 +109,16 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeManager<?>> extends VLVManag
     @Override
     public VLVManagerDynamic<ENTRY> duplicate(long flags){
         return new VLVManagerDynamic<>(this, flags);
+    }
+
+    public static final class Entry<TYPE extends VLVTypeManager<?>>{
+
+        public TYPE entry;
+        public boolean inactive;
+
+        protected Entry(TYPE entry){
+            this.entry = entry;
+            inactive = true;
+        }
     }
 }

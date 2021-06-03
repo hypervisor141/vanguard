@@ -19,14 +19,14 @@ public abstract class VLVariable extends VLV{
         this.loop = loop;
 
         initialize(from, to, cycles);
-        activate();
+        active = false;
     }
 
     public VLVariable(float from, float to, float changerate, Loop loop){
         this.loop = loop;
 
         initialize(from, to, changerate);
-        activate();
+        active = false;
     }
 
     public VLVariable(VLVariable src, long flags){

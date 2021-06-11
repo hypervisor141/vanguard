@@ -1,11 +1,12 @@
 package hypervisor.vanguard.utils;
 
-public interface VLUpdater<TYPE> {
+public interface VLUpdater<TYPE>{
 
-    VLUpdater UPDATE_NOTHING = new VLUpdater<Object>() {
+    VLUpdater UPDATE_NOTHING = new VLUpdater<Object>(){
 
         @Override
-        public void update(Object target) {
+        public void update(Object target){
+
         }
     };
 

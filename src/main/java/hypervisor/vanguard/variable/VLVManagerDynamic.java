@@ -58,9 +58,9 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
     public int activateEntry(int index){
         Entry<ENTRY> target = dynamicentries.get(index);
 
-        if(target.inactive){
+        if(!target.active){
             add(target.entry);
-            target.inactive = false;
+            target.active = true;
 
             return size() - 1;
 
@@ -75,9 +75,15 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
 
     public void deactivateEntry(int index){
         Entry<ENTRY> target = dynamicentries.get(index);
-        target.inactive = true;
 
-        get().remove(target.entry);
+        if(target.active){
+            target.active = false;
+            get().remove(target.entry);
+        }
+    }
+
+    public boolean isEntryActive(int index){
+        return dynamicentries.get(index).active;
     }
 
     public VLListType<Entry<ENTRY>> getEntries(){
@@ -124,11 +130,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
     public static final class Entry<TYPE extends VLVTypeRunner>{
 
         public TYPE entry;
-        public boolean inactive;
+        public boolean active;
 
         protected Entry(TYPE entry){
             this.entry = entry;
-            inactive = true;
+            active = false;
         }
     }
 }

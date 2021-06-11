@@ -43,7 +43,7 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
         dynamicentries.remove(index);
     }
 
-    public int indexOf(VLVTypeRunner target){
+    public int indexOfEntry(VLVTypeRunner target){
         int size = dynamicentries.size();
 
         for(int i = 0; i < size; i++){

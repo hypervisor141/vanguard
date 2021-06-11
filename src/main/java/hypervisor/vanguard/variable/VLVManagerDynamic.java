@@ -75,11 +75,8 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
 
     public void deactivateEntry(int index){
         Entry<ENTRY> target = dynamicentries.get(index);
-
-        if(target.active){
-            target.active = false;
-            get().remove(target.entry);
-        }
+        target.active = false;
+        get().remove(target.entry);
     }
 
     public boolean isEntryActive(int index){

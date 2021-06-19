@@ -27,33 +27,25 @@ public class VLVLinear extends VLVariable{
     }
 
     @Override
-    public void initialize(float from, float to, int cycles){
-        initialize(from, to, (this.to - this.from) / cycles);
+    public float convertCyclesToChangeRate(float from, float to, int cycles){
+        return (to - from) / cycles;
     }
 
     @Override
-    public void initialize(float from, float to, float changerate){
-        super.initialize(from, to, changerate);
-        value = change >= 0 ? this.from : this.to;
-    }
-
-    @Override
-    protected int advance(){
+    public int advance(){
+        value *= director;
         value += change;
 
-        if(change >= 0){
-            if(value > to){
-                value = to;
-                deactivate();
-            }
+        if(value > to){
+            value = to;
+            deactivate();
 
-        }else{
-            if(value < from){
-                value = from;
-                deactivate();
-            }
+        }else if(value < from){
+            value = from;
+            deactivate();
         }
 
+        value *= director;
         return 1;
     }
 

@@ -35,21 +35,6 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
-    public void set(float value){
-        this.value = value;
-    }
-
-    @Override
-    public float get(){
-        return value;
-    }
-
-    @Override
-    public void changeRate(float s){
-
-    }
-
-    @Override
     public void initialize(float from, float to, int cycles){
 
     }
@@ -57,6 +42,11 @@ public class VLV implements VLVTypeVariable{
     @Override
     public void initialize(float from, float to, float changerate){
 
+    }
+
+    @Override
+    public float convertCyclesToChangeRate(float from, float to, int cycles) {
+        return 0;
     }
 
     @Override
@@ -71,6 +61,11 @@ public class VLV implements VLVTypeVariable{
 
     @Override
     public int next(){
+        return 0;
+    }
+
+    @Override
+    public int advance(){
         return 0;
     }
 
@@ -100,8 +95,23 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
+    public void set(float value){
+        this.value = value;
+    }
+
+    @Override
+    public void changeRate(float changerate){
+
+    }
+
+    @Override
     public float changeRate(){
         return 0F;
+    }
+
+    @Override
+    public float get(){
+        return value;
     }
 
     @Override
@@ -111,6 +121,16 @@ public class VLV implements VLVTypeVariable{
 
     @Override
     public boolean active(){
+        return false;
+    }
+
+    @Override
+    public boolean isIncreasing(){
+        return false;
+    }
+
+    @Override
+    public boolean reversed(){
         return false;
     }
 

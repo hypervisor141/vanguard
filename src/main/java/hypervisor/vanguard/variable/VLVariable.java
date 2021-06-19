@@ -11,20 +11,19 @@ public abstract class VLVariable extends VLV{
     protected float from;
     protected float to;
     protected float change;
+    protected float director;
     protected boolean active;
 
     protected Loop loop;
 
     public VLVariable(float from, float to, int cycles, Loop loop){
         this.loop = loop;
-
         initialize(from, to, cycles);
         active = false;
     }
 
     public VLVariable(float from, float to, float changerate, Loop loop){
         this.loop = loop;
-
         initialize(from, to, changerate);
         active = false;
     }
@@ -39,15 +38,30 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void initialize(float from, float to, int cycles){
-        loop.initialized(this);
+        initialize(from, to, convertCyclesToChangeRate(from, to, cycles));
     }
 
     @Override
     public void initialize(float from, float to, float changerate){
+        if(from > to){
+            this.from = -from;
+            this.to = -to;
+            director = -1;
+
+        }else{
+            this.from = from;
+            this.to = to;
+            director = 1;
+        }
+
         change = changerate;
-        setRange(from, to);
+        value = (changerate >= 0 ? from : to) * director;
+
         loop.initialized(this);
     }
+
+    @Override
+    public abstract float convertCyclesToChangeRate(float from, float to, int cycles);
 
     @Override
     public void activate(){
@@ -63,22 +77,9 @@ public abstract class VLVariable extends VLV{
         this.loop = loop;
     }
 
-    public void setRange(float from, float to){
-        if(from <= to){
-            this.from = from;
-            this.to = to;
-
-        }else{
-            this.from = to;
-            this.to = from;
-
-            change = -Math.abs(change);
-        }
-    }
-
     @Override
-    public void changeRate(float s){
-        change = s;
+    public void changeRate(float changerate){
+        change = changerate;
     }
 
     @Override
@@ -96,8 +97,6 @@ public abstract class VLVariable extends VLV{
         return 0;
     }
 
-    protected abstract int advance();
-
     @Override
     public void fastForward(int count){
         for(int i = 0; i < count; i++){
@@ -107,9 +106,7 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void finish(){
-        value = getTargetValue();
-        loop = LOOP_NONE;
-
+        value = (change >= 0 ? to : from) * director;
         deactivate();
     }
 
@@ -121,7 +118,7 @@ public abstract class VLVariable extends VLV{
     @Override
     public void reset(){
         loop.reseted(this);
-        value = change >= 0 ? from : to;
+        value = (change >= 0 ? from : to) * director;
     }
 
     @Override
@@ -129,16 +126,20 @@ public abstract class VLVariable extends VLV{
         initialize(value, to, cycles);
     }
 
-    public Loop getLoop(){
+    public Loop loop(){
         return loop;
     }
 
-    public float getFrom(){
+    public float from(){
         return from;
     }
 
-    public float getTo(){
+    public float to(){
         return to;
+    }
+
+    public float director(){
+        return director;
     }
 
     @Override
@@ -151,12 +152,14 @@ public abstract class VLVariable extends VLV{
         return Math.abs(change / (to - from));
     }
 
-    public float getTargetValue(){
-        return change > 0 ? to : from;
-    }
-
+    @Override
     public boolean isIncreasing(){
         return change > 0;
+    }
+
+    @Override
+    public boolean reversed(){
+        return director >= 0 ? change < 0 : change > 0;
     }
 
     @Override

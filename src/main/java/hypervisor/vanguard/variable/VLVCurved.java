@@ -45,29 +45,18 @@ public class VLVCurved extends VLVariable{
     }
 
     @Override
-    public void initialize(float from, float to, int cycles){
-        initialize(from, to, 1F / cycles);
+    public float convertCyclesToChangeRate(float from, float to, int cycles){
+        return 1F / cycles;
     }
 
     @Override
     public void initialize(float from, float to, float changerate){
         super.initialize(from, to, changerate);
-        initializeTracker();
-    }
-
-    private void initializeTracker(){
-        if(change >= 0){
-            value = from;
-            tracker = 0F;
-
-        }else{
-            value = to;
-            tracker = 1F;
-        }
+        tracker = change >= 0 ? 0F : 1F;
     }
 
     @Override
-    protected int advance(){
+    public int advance(){
         tracker += change;
         value = VLMath.range((float)curve.process(tracker), from, to);
 
@@ -84,6 +73,7 @@ public class VLVCurved extends VLVariable{
             deactivate();
         }
 
+        value *= director;
         return 1;
     }
 

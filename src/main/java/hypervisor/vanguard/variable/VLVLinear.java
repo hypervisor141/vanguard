@@ -36,11 +36,11 @@ public class VLVLinear extends VLVariable{
         value *= director;
         value += change;
 
-        if(value > to){
+        if(value >= to){
             value = to;
             deactivate();
 
-        }else if(value < from){
+        }else if(value <= from){
             value = from;
             deactivate();
         }

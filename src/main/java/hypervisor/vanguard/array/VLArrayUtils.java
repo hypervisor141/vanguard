@@ -43,56 +43,56 @@ public final class VLArrayUtils{
     }
 
     public static boolean[] slice(boolean[] array, int from, int to){
-        boolean[] sliced = new boolean[from - to];
+        boolean[] sliced = new boolean[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static byte[] slice(byte[] array, int from, int to){
-        byte[] sliced = new byte[from - to];
+        byte[] sliced = new byte[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static short[] slice(short[] array, int from, int to){
-        short[] sliced = new short[from - to];
+        short[] sliced = new short[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static int[] slice(int[] array, int from, int to){
-        int[] sliced = new int[from - to];
+        int[] sliced = new int[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static long[] slice(long[] array, int from, int to){
-        long[] sliced = new long[from - to];
+        long[] sliced = new long[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static float[] slice(float[] array, int from, int to){
-        float[] sliced = new float[from - to];
+        float[] sliced = new float[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static double[] slice(double[] array, int from, int to){
-        double[] sliced = new double[from - to];
+        double[] sliced = new double[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;
     }
 
     public static Object[] slice(Object[] array, int from, int to){
-        Object[] sliced = new Object[from - to];
+        Object[] sliced = new Object[to - from];
         System.arraycopy(array, from, sliced, 0, sliced.length);
 
         return sliced;

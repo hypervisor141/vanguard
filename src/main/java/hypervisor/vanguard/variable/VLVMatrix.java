@@ -117,9 +117,9 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
     public void log(VLLog log, Object data){
         boolean verbose = data != null && (boolean) data;
 
-        log.append("type[");
+        log.append("[");
         log.append(getClass().getSimpleName());
-        log.append("] sizeRows[");
+        log.append("] countRows[");
         log.append(sizeRows());
         log.append("] content[");
 
@@ -128,13 +128,10 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
         }
 
         int size = matrix.size();
-        int size2 = 0;
-
-        VLListType<VLVTypeVariable> row;
 
         for(int i = 0; i < size; i++){
-            row = matrix.get(i);
-            size2 = row.size();
+            VLListType<VLVTypeVariable> row = matrix.get(i);
+            int size2 = row.size();
 
             log.append("row[");
             log.append(i);
@@ -143,7 +140,7 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
             log.append(verbose ? "] columns[\n" : "] columns[");
 
             for(int i2 = 0; i2 < size2; i2++){
-                row.get(i2).log(log, verbose);
+                row.get(i2).log(log, data);
 
                 if(i2 != row.size() - 1){
                     log.append(verbose ? ",\n" : ", ");
@@ -153,6 +150,6 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
             log.append(verbose ? "]\n" : "] ");
         }
 
-        log.append("] ");
+        log.append("]");
     }
 }

@@ -78,6 +78,18 @@ public class VLMath{
         return Math.min(Math.max(value, max), min);
     }
 
+    public static float limit(float value, float min, float max){
+        if(value < min){
+            return min;
+
+        }else if(value > min){
+            return max;
+
+        }else{
+            return value;
+        }
+    }
+
     public static int cantor(int a, int b){
         return ((a + b) * (a + b + 1) / 2) + a;
     }

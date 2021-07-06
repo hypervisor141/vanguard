@@ -4,10 +4,10 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLDouble implements VLPrimitive{
 
-    public double field;
+    public double value;
 
     public VLDouble(double v){
-        field = v;
+        value = v;
     }
 
     public VLDouble(VLDouble src, long flags){
@@ -20,7 +20,7 @@ public class VLDouble implements VLPrimitive{
 
     @Override
     public void copy(VLPrimitive src, long flags){
-        field = ((VLDouble)src).field;
+        value = ((VLDouble)src).value;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VLDouble implements VLPrimitive{
     @Override
     public void log(VLLog log, Object data){
         log.append("double[");
-        log.append(field);
+        log.append(value);
         log.append("]");
     }
 }

@@ -4,10 +4,10 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLByte implements VLPrimitive{
 
-    public byte field;
+    public byte value;
 
     public VLByte(byte v){
-        field = v;
+        value = v;
     }
 
     public VLByte(VLByte src, long flags){
@@ -20,7 +20,7 @@ public class VLByte implements VLPrimitive{
 
     @Override
     public void copy(VLPrimitive src, long flags){
-        field = ((VLByte)src).field;
+        value = ((VLByte)src).value;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VLByte implements VLPrimitive{
     @Override
     public void log(VLLog log, Object data){
         log.append("byte[");
-        log.append(field);
+        log.append(value);
         log.append("]");
     }
 }

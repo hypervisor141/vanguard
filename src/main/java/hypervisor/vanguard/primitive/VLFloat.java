@@ -4,10 +4,10 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLFloat implements VLPrimitive{
 
-    public float field;
+    public float value;
 
     public VLFloat(float v){
-        field = v;
+        value = v;
     }
 
     public VLFloat(VLFloat src, long flags){
@@ -20,7 +20,7 @@ public class VLFloat implements VLPrimitive{
 
     @Override
     public void copy(VLPrimitive src, long flags){
-        field = ((VLFloat)src).field;
+        value = ((VLFloat)src).value;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VLFloat implements VLPrimitive{
     @Override
     public void log(VLLog log, Object data){
         log.append("float[");
-        log.append(field);
+        log.append(value);
         log.append("]");
     }
 }

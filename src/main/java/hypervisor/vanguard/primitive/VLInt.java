@@ -4,10 +4,10 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLInt implements VLPrimitive{
 
-    public int field;
+    public int value;
 
     public VLInt(int v){
-        field = v;
+        value = v;
     }
 
     public VLInt(VLInt src, long flags){
@@ -20,7 +20,7 @@ public class VLInt implements VLPrimitive{
 
     @Override
     public void copy(VLPrimitive src, long flags){
-        field = ((VLInt)src).field;
+        value = ((VLInt)src).value;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VLInt implements VLPrimitive{
     @Override
     public void log(VLLog log, Object data){
         log.append("int[");
-        log.append(field);
+        log.append(value);
         log.append("]");
     }
 }

@@ -4,10 +4,10 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLBoolean implements VLPrimitive{
 
-    public boolean field;
+    public boolean value;
 
     public VLBoolean(boolean v){
-        field = v;
+        value = v;
     }
 
     public VLBoolean(VLBoolean src, long flags){
@@ -20,7 +20,7 @@ public class VLBoolean implements VLPrimitive{
 
     @Override
     public void copy(VLPrimitive src, long flags){
-        field = ((VLBoolean)src).field;
+        value = ((VLBoolean)src).value;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class VLBoolean implements VLPrimitive{
     @Override
     public void log(VLLog log, Object data){
         log.append("boolean[");
-        log.append(field);
+        log.append(value);
         log.append("]");
     }
 }

@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public final class VLListType<TYPE> extends VLList<Object[]>{
 
-    public static final long FLAG_FORCE_REFERENCE_ARRAY = 0x1L;
-    public static final long FLAG_FORCE_DUPLICATE_ARRAY = 0x2L;
+    public static final long FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS = 0x1L;
+    public static final long FLAG_DUPLICATE_ARRAY_FULLY = 0x2L;
 
     public VLListType(int initialsize, int resizercount){
         super(resizercount, 0);
@@ -169,46 +169,48 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             array = src.array.clone();
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            Object[] srcarray = src.array;
-            int size = srcarray.length;
-            array = new Object[size];
+            if(currentsize > 0){
+                Object[] srcarray = src.array;
+                int size = srcarray.length;
+                array = new Object[size];
 
-            if((flags & FLAG_FORCE_REFERENCE_ARRAY) == FLAG_FORCE_REFERENCE_ARRAY){
-                if(array[0] instanceof VLListType){
-                    for(int i = 0; i < size; i++){
-                        array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_FORCE_REFERENCE_ARRAY);
+                if((flags & FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS) == FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS){
+                    if(array[0] instanceof VLListType){
+                        for(int i = 0; i < size; i++){
+                            array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                        }
+
+                    }else if(array[0] instanceof VLCopyable){
+                        VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
+
+                        for(int i = 0; i < size; i++){
+                            array[i] = carray[i].duplicate(FLAG_REFERENCE);
+                        }
+
+                    }else{
+                        throw new RuntimeException("List elements are not VLCopyable nor VLListType.");
                     }
 
-                }else if(array[0] instanceof VLCopyable){
-                    VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
+                }else if((flags & FLAG_DUPLICATE_ARRAY_FULLY) == FLAG_DUPLICATE_ARRAY_FULLY){
+                    if(array[0] instanceof VLListType){
+                        for(int i = 0; i < size; i++){
+                            array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_FULLY);
+                        }
 
-                    for(int i = 0; i < size; i++){
-                        array[i] = carray[i].duplicate(FLAG_REFERENCE);
+                    }else if(array[0] instanceof VLCopyable){
+                        VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
+
+                        for(int i = 0; i < size; i++){
+                            array[i] = carray[i].duplicate(FLAG_DUPLICATE);
+                        }
+
+                    }else{
+                        throw new RuntimeException("List element type is not a VLCopyable type [" + array[0].getClass().getSimpleName() + "]");
                     }
 
                 }else{
-                    throw new RuntimeException("List element type is not a VLCopyable type.");
+                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ARRAY", "FLAG_FORCE_DUPLICATE_ARRAY");
                 }
-
-            }else if((flags & FLAG_FORCE_DUPLICATE_ARRAY) == FLAG_FORCE_DUPLICATE_ARRAY){
-                if(array[0] instanceof VLListType){
-                    for(int i = 0; i < size; i++){
-                        array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_FORCE_DUPLICATE_ARRAY);
-                    }
-
-                }else if(array[0] instanceof VLCopyable){
-                    VLCopyable<?>[] carray = (VLCopyable<?>[])srcarray;
-
-                    for(int i = 0; i < size; i++){
-                        array[i] = carray[i].duplicate(FLAG_DUPLICATE);
-                    }
-
-                }else{
-                    throw new RuntimeException("List element type is not a VLCopyable type.");
-                }
-
-            }else{
-                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ARRAY", "FLAG_FORCE_DUPLICATE_ARRAY");
             }
 
         }else{

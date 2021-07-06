@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLFloat implements VLPrimitive{
 
-    protected float field;
+    public float field;
 
     public VLFloat(float v){
         field = v;
@@ -16,14 +16,6 @@ public class VLFloat implements VLPrimitive{
 
     protected VLFloat(){
 
-    }
-
-    public void set(float field){
-        this.field = field;
-    }
-
-    public float get(){
-        return field;
     }
 
     @Override

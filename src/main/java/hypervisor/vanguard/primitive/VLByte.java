@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLByte implements VLPrimitive{
 
-    protected byte field;
+    public byte field;
 
     public VLByte(byte v){
         field = v;
@@ -16,14 +16,6 @@ public class VLByte implements VLPrimitive{
 
     protected VLByte(){
 
-    }
-
-    public void set(byte field){
-        this.field = field;
-    }
-
-    public byte get(){
-        return field;
     }
 
     @Override

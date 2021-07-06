@@ -12,7 +12,7 @@ import java.nio.ByteOrder;
 
 public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLLoggable, VLCopyable<VLBuffer<ELEMENT, BUFFER>> {
 
-    protected BUFFER buffer;
+    public BUFFER buffer;
     protected int preInitCapacity;
 
     protected VLBuffer(){
@@ -842,10 +842,6 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public abstract void removeInterleaved(int offset, int unitsize, int stride, int size);
 
-    public void provider(BUFFER p){
-        buffer = p;
-    }
-
     public void position(int pos){
         buffer.position(pos);
     }
@@ -854,10 +850,6 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public void adjustPreInitCapacity(int amount){
         preInitCapacity += amount;
-    }
-
-    public BUFFER provider(){
-        return buffer;
     }
 
     public int position(){

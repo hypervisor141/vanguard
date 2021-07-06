@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLDouble implements VLPrimitive{
 
-    protected double field;
+    public double field;
 
     public VLDouble(double v){
         field = v;
@@ -16,14 +16,6 @@ public class VLDouble implements VLPrimitive{
 
     protected VLDouble(){
 
-    }
-
-    public void set(double field){
-        this.field = field;
-    }
-
-    public double get(){
-        return field;
     }
 
     @Override

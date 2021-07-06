@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLLong implements VLPrimitive{
 
-    protected long field;
+    public long field;
 
     public VLLong(int v) {
         field = v;
@@ -16,14 +16,6 @@ public class VLLong implements VLPrimitive{
 
     protected VLLong(){
 
-    }
-
-    public void set(long field) {
-        this.field = field;
-    }
-
-    public long get() {
-        return field;
     }
 
     @Override

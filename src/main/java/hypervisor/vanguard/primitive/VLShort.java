@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLShort implements VLPrimitive{
 
-    protected short field;
+    public short field;
 
     public VLShort(short v){
         field = v;
@@ -16,14 +16,6 @@ public class VLShort implements VLPrimitive{
 
     protected VLShort(){
 
-    }
-
-    public void set(short field){
-        this.field = field;
-    }
-
-    public short get(){
-        return field;
     }
 
     @Override

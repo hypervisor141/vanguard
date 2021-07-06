@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLInt implements VLPrimitive{
 
-    protected int field;
+    public int field;
 
     public VLInt(int v){
         field = v;
@@ -16,14 +16,6 @@ public class VLInt implements VLPrimitive{
 
     protected VLInt(){
 
-    }
-
-    public void set(int field){
-        this.field = field;
-    }
-
-    public int get(){
-        return field;
     }
 
     @Override

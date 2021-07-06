@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLBoolean implements VLPrimitive{
 
-    private boolean field;
+    public boolean field;
 
     public VLBoolean(boolean v){
         field = v;
@@ -16,14 +16,6 @@ public class VLBoolean implements VLPrimitive{
 
     protected VLBoolean(){
 
-    }
-
-    public void set(boolean field){
-        this.field = field;
-    }
-
-    public boolean get(){
-        return field;
     }
 
     @Override

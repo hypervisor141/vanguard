@@ -23,10 +23,6 @@ public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggable
 
     public abstract void set(int index, TYPE obj);
 
-    public void provider(PROVIDER array) {
-        this.array = array;
-    }
-
     public abstract TYPE get(int index);
 
     @Override

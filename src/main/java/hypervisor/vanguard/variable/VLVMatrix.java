@@ -7,8 +7,8 @@ import hypervisor.vanguard.list.VLListType;
 
 public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
 
-    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
-    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
+    public static final long FLAG_REFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_DUPLICATE_ENTRIES = 0x2L;
 
     protected VLListType<VLListType<VLVTypeVariable>> matrix;
 
@@ -93,10 +93,10 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
             matrix = src.matrix.duplicate(FLAG_DUPLICATE);
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+            if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
                 matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_REFERENCE_ARRAY);
 
-            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+            }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
                 matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_FORCE_DUPLICATE_ARRAY);
 
             }else{

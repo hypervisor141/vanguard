@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public interface VLCopyable<TYPE>{
 
-    long FLAG_REFERENCE = 0xFFFFFFFFFFFFFFFDL;
-    long FLAG_DUPLICATE = 0xFFFFFFFFFFFFFFFEL;
-    long FLAG_CUSTOM = 0xFFFFFFFFFFFFFFFFL;
+    long FLAG_REFERENCE = 0x1000000000000000L;
+    long FLAG_DUPLICATE = 0x2000000000000000L;
+    long FLAG_CUSTOM = 0x4000000000000000L;
 
     void copy(TYPE src, long flags);
     TYPE duplicate(long flags);

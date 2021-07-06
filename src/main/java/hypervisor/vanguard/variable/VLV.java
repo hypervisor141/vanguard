@@ -4,9 +4,9 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLV implements VLVTypeVariable{
 
-    private static final class VLVSTATIC extends VLV{
+    private static final class Static extends VLV{
 
-        private VLVSTATIC(int value){
+        private Static(int value){
             super(value);
         }
 
@@ -16,9 +16,9 @@ public class VLV implements VLVTypeVariable{
         }
     };
 
-    public static final VLV ZERO = new VLVSTATIC(0);
-    public static final VLV ONE = new VLVSTATIC(1);
-    public static final VLV NEGATIVE_ONE = new VLVSTATIC(-1);
+    public static final VLV ZERO = new Static(0);
+    public static final VLV ONE = new Static(1);
+    public static final VLV NEGATIVE_ONE = new Static(-1);
 
     protected float value;
 

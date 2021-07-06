@@ -7,7 +7,7 @@ import hypervisor.vanguard.variable.VLVMatrix;
 
 public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggable, VLCopyable<VLArray<TYPE, PROVIDER>> {
     
-    protected PROVIDER array;
+    public PROVIDER array;
 
     public VLArray(PROVIDER array) {
         this.array = array;
@@ -28,11 +28,6 @@ public abstract class VLArray<TYPE, PROVIDER> implements VLArrayType, VLLoggable
     }
 
     public abstract TYPE get(int index);
-
-    @Override
-    public PROVIDER provider(){
-        return array;
-    }
 
     @Override
     public void log(VLLog log, Object data){

@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 public final class VLListType<TYPE> extends VLList<Object[]>{
 
-    public static final long FLAG_FORCE_REFERENCE_ARRAY = 0x1F;
-    public static final long FLAG_FORCE_DUPLICATE_ARRAY = 0x2F;
+    public static final long FLAG_FORCE_REFERENCE_ARRAY = 0x1L;
+    public static final long FLAG_FORCE_DUPLICATE_ARRAY = 0x2L;
 
     public VLListType(int initialsize, int resizercount){
         super(resizercount, 0);

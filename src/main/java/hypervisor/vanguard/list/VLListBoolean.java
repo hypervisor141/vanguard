@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public class VLListBoolean  extends VLList<boolean[]>{
 
-    public VLListBoolean(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new boolean[initialsize];
+    public VLListBoolean(int capacity, int resizer){
+        super(resizer, 0);
+        array = new boolean[capacity];
     }
 
-    public VLListBoolean(boolean[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListBoolean(boolean[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 

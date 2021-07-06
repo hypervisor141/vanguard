@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public class VLListByte extends VLList<byte[]>{
 
-    public VLListByte(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new byte[initialsize];
+    public VLListByte(int capacity, int resizer){
+        super(resizer, 0);
+        array = new byte[capacity];
     }
 
-    public VLListByte(byte[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListByte(byte[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 

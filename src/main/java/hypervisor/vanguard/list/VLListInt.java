@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public final class VLListInt extends VLList<int[]>{
 
-    public VLListInt(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new int[initialsize];
+    public VLListInt(int capacity, int resizer){
+        super(resizer, 0);
+        array = new int[capacity];
     }
 
-    public VLListInt(int[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListInt(int[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 

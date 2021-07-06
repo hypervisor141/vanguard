@@ -20,7 +20,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     }
 
-    public void resizerCount(int count){
+    public void resizer(int count){
         resizer = count;
     }
 
@@ -56,7 +56,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         virtualSize(realSize());
     }
 
-    public int resizerCount(){
+    public int resizer(){
         return resizer;
     }
 

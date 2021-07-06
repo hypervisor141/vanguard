@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public final class VLListDouble extends VLList<double[]>{
 
-    public VLListDouble(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new double[initialsize];
+    public VLListDouble(int capacity, int resizer){
+        super(resizer, 0);
+        array = new double[capacity];
     }
 
-    public VLListDouble(double[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListDouble(double[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 

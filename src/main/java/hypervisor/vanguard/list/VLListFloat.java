@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public final class VLListFloat extends VLList<float[]>{
 
-    public VLListFloat(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new float[initialsize];
+    public VLListFloat(int capacity, int resizer){
+        super(resizer, 0);
+        array = new float[capacity];
     }
 
-    public VLListFloat(float[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListFloat(float[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 

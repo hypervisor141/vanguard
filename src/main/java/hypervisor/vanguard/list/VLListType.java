@@ -11,13 +11,13 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     public static final long FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS = 0x1L;
     public static final long FLAG_DUPLICATE_ARRAY_FULLY = 0x2L;
 
-    public VLListType(int initialsize, int resizercount){
-        super(resizercount, 0);
-        array = new Object[initialsize];
+    public VLListType(int capacity, int resizer){
+        super(resizer, 0);
+        array = new Object[capacity];
     }
 
-    public VLListType(TYPE[] data, int resizercount){
-        super(resizercount, data.length);
+    public VLListType(TYPE[] data, int resizer){
+        super(resizer, data.length);
         array = data;
     }
 
@@ -169,7 +169,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             array = src.array.clone();
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            if(currentsize > 0){
+            if(src.currentsize > 0){
                 Object[] srcarray = src.array;
                 int size = srcarray.length;
                 array = new Object[size];

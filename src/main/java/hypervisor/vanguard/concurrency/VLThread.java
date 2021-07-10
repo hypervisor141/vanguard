@@ -7,8 +7,8 @@ public class VLThread extends Thread{
     protected VLListType<VLThreadTaskType> tasks;
     protected VLListType<VLThreadTaskType> active;
 
-    protected Object mainlock;
-    public Object internallock;
+    protected final Object mainlock;
+    public final Object internallock;
 
     protected boolean running;
     protected boolean lockdown;
@@ -27,7 +27,8 @@ public class VLThread extends Thread{
     }
 
     protected VLThread(){
-
+        mainlock = new Object();
+        internallock = new Object();
     }
 
     @Override

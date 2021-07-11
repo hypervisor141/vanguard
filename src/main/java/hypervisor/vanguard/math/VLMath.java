@@ -82,7 +82,7 @@ public class VLMath{
         if(value < min){
             return min;
 
-        }else if(value > min){
+        }else if(value > max){
             return max;
 
         }else{

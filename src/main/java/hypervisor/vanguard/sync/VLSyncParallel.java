@@ -5,8 +5,8 @@ import hypervisor.vanguard.list.VLListType;
 
 public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncType<SOURCE>>>{
 
-    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
-    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
+    public static final long FLAG_resizerREFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_resizerDUPLICATE_ENTRIES = 0x2L;
 
     public VLSyncParallel(int capacity, int resizer){
         super(new VLListType<>(capacity, resizer));
@@ -44,14 +44,14 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
             target = syncer.target.duplicate(VLListType.FLAG_DUPLICATE);
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
-            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+            if((flags & FLAG_resizerREFERENCE_ENTRIES) == FLAG_resizerREFERENCE_ENTRIES){
                 target = syncer.target.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
 
-            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+            }else if((flags & FLAG_resizerDUPLICATE_ENTRIES) == FLAG_resizerDUPLICATE_ENTRIES){
                 target = syncer.target.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
 
             }else{
-                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_resizerREFERENCE_ENTRIES", "FLAG_resizerDUPLICATE_ENTRIES");
             }
 
         }else{

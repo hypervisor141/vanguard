@@ -8,8 +8,9 @@ import hypervisor.vanguard.utils.VLLog;
 @SuppressWarnings("unused")
 public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<ENTRY>{
 
-    public static final long FLAG_FORCE_REFERENCE_ENTRIES = 0x1L;
-    public static final long FLAG_FORCE_DUPLICATE_ENTRIES = 0x2L;
+    public static final long FLAG_REFERENCE_ENTRIES = 0x1L;
+    public static final long FLAG_DUPLICATE_ENTRIES = 0x2L;
+    public static final long FLAG_DUPLICATE_SYNCER = 0x4L;
 
     protected boolean paused;
     protected boolean isdone;
@@ -395,20 +396,24 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
         }else if((flags & VLCopyable.FLAG_DUPLICATE) == VLCopyable.FLAG_DUPLICATE){
             entries = target.entries.duplicate(VLCopyable.FLAG_DUPLICATE);
-            syncer = target.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+
+            if(syncer != null){
+                syncer = target.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+            }
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
-            if((flags & FLAG_FORCE_REFERENCE_ENTRIES) == FLAG_FORCE_REFERENCE_ENTRIES){
+            if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
                 entries = target.entries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
 
-            }else if((flags & FLAG_FORCE_DUPLICATE_ENTRIES) == FLAG_FORCE_DUPLICATE_ENTRIES){
+            }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
                 entries = target.entries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
 
             }else{
-                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ENTRIES", "FLAG_FORCE_DUPLICATE_ENTRIES");
+                VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");
             }
-
-            syncer = target.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncer != null && (flags & FLAG_DUPLICATE_SYNCER) == FLAG_DUPLICATE_SYNCER){
+                syncer = target.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+            }
 
         }else{
             VLCopyable.Helper.throwMissingAllFlags();

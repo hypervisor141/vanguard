@@ -16,8 +16,6 @@ public class VLVEntry implements VLVTypeRunner{
         this.target = target;
         this.delay = delay;
 
-
-
         delaytracker = 0;
     }
 
@@ -231,7 +229,10 @@ public class VLVEntry implements VLVTypeRunner{
 
         }else if((flags & VLCopyable.FLAG_DUPLICATE) == VLCopyable.FLAG_DUPLICATE){
             target = (VLVTypeVariable)entry.target.duplicate(VLCopyable.FLAG_DUPLICATE);
-            syncer = entry.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+
+            if(syncer != null){
+                syncer = entry.syncer.duplicate(VLCopyable.FLAG_DUPLICATE);
+            }
 
         }else{
             VLCopyable.Helper.throwMissingDefaultFlags();

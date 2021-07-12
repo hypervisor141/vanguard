@@ -206,7 +206,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                     }
 
                 }else{
-                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_FORCE_REFERENCE_ARRAY", "FLAG_FORCE_DUPLICATE_ARRAY");
+                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_resizerREFERENCE_ARRAY", "FLAG_resizerDUPLICATE_ARRAY");
                 }
 
             }else{

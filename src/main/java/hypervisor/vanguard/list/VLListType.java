@@ -82,7 +82,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     public int indexOf(Object target){
         int size = size();
-
+        
         for(int i = 0; i < size; i++){
             if(array[i].equals(target)){
                 return i;

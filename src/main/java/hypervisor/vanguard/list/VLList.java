@@ -39,8 +39,11 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
             nullify(index, count);
 
         }else{
+            int endpoint = index + count;
+
             TYPE array = array();
-            System.arraycopy(array, index + count, array, index, count);
+            System.arraycopy(array, endpoint, array, index, currentsize - endpoint);
+            nullify(currentsize - count, currentsize);
         }
 
         currentsize -= count;

@@ -150,6 +150,10 @@ public class VLLog{
     }
 
     public void printInfo(){
+        if(builder.length() == 0){
+            return;
+        }
+
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 
@@ -161,6 +165,10 @@ public class VLLog{
     }
 
     public void printError(){
+        if(builder.length() == 0){
+            return;
+        }
+
         String[] lines = builder.toString().split("\n");
         int size = lines.length;
 

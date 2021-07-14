@@ -15,7 +15,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
 
     protected PostReporter reporter;
 
-    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, PostReporter reporter, boolean debug){
+    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, boolean debug, PostReporter reporter){
         this.root = root;
         this.freqmillis = freqmillis;
         this.freqextrananos = freqextrananos;

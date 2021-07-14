@@ -56,7 +56,10 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
 
             synchronized(worker.internallock){
                 changes = root.next();
-                reporter.completed(changes);
+
+                if(reporter != null){
+                    reporter.iterated(changes);
+                }
 
                 if(changes == 0){
                     try{
@@ -99,7 +102,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
         while(worker.running() && !worker.locked()){
             synchronized(worker.internallock){
                 int changes = root.next();
-                reporter.completed(changes);
+                reporter.iterated(changes);
 
                 if(changes == 0){
                     try{
@@ -123,6 +126,6 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
 
     public interface PostReporter{
 
-        void completed(int changes);
+        void iterated(int changes);
     }
 }

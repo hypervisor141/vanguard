@@ -80,6 +80,11 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
+    public void chain(float changerate, float to){
+
+    }
+
+    @Override
     public void reverse(){
 
     }

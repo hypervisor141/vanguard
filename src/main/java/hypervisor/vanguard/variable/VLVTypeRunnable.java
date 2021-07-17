@@ -12,6 +12,7 @@ public interface VLVTypeRunnable extends VLLoggable, VLCopyable<VLVTypeRunnable>
     int next();
     void fastForward(int count);
     void chain(int cycles, float to);
+    void chain(float changerate, float to);
     void reverse();
     void reset();
     void finish();

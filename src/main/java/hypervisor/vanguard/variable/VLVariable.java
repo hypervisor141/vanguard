@@ -126,6 +126,11 @@ public abstract class VLVariable extends VLV{
         initialize(value, to, cycles);
     }
 
+    @Override
+    public void chain(float changerate, float to){
+        initialize(value, to, changerate);
+    }
+
     public Loop loop(){
         return loop;
     }

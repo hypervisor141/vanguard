@@ -169,6 +169,15 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
+    public void chain(float changerate, float to){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).chain(changerate, to);
+        }
+    }
+
+    @Override
     public void reverse(){
         int size = entries.size();
 

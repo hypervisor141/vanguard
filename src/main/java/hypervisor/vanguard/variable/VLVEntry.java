@@ -68,6 +68,11 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
+    public void chain(float changerate, float to){
+        target.chain(changerate, to);
+    }
+
+    @Override
     public void reverse(){
         target.reverse();
     }

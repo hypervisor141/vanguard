@@ -55,7 +55,7 @@ public abstract class VLVariable extends VLV{
         }
 
         change = changerate;
-        value = (changerate >= 0 ? from : to) * director;
+        value = (changerate >= 0 ? from : to);
 
         loop.initialized(this);
     }

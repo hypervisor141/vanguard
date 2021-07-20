@@ -10,7 +10,7 @@ public final class VLVWrapped extends VLVCurved{
     protected float high;
     protected float low;
     protected float wrappedvalue;
-    protected int wrapcounts;
+    protected int wrapscount;
 
     public VLVWrapped(float from, float to, float low, float high, int cycles, Loop loop, Curve curve, Listener listener){
         super(from, to, cycles, loop, curve);
@@ -52,22 +52,26 @@ public final class VLVWrapped extends VLVCurved{
     public int next(){
         int changes = super.next();
 
-        if(listener != null){
-            if(wrapcounts > listener.prevwrapcount){
-                listener.crossed(this);
-            }
-
-            listener.prevwrapcount = wrapcounts;
+        if(changes > 0){
+            checkValue();
         }
 
         return changes;
     }
 
-    private void updateValue(){
+    private void checkValue(){
         VLMath.wrapOverRange(CACHE, 0, get(), low, high);
 
         wrappedvalue = CACHE[0];
-        wrapcounts = (int)CACHE[1];
+        wrapscount = (int)CACHE[1];
+
+        if(listener != null){
+            if(wrapscount > listener.prevwrapscount){
+                listener.wrapped(this);
+            }
+
+            listener.prevwrapscount = wrapscount;
+        }
     }
 
     private void changeRange(float low, float high){
@@ -84,7 +88,7 @@ public final class VLVWrapped extends VLVCurved{
     @Override
     public void set(float value){
         super.set(value);
-        updateValue();
+        checkValue();
     }
 
     @Override
@@ -113,7 +117,7 @@ public final class VLVWrapped extends VLVCurved{
     }
 
     public int wrapsCount(){
-        return wrapcounts;
+        return wrapscount;
     }
 
     @Override
@@ -125,7 +129,7 @@ public final class VLVWrapped extends VLVCurved{
         high = target.high;
         low = target.low;
         wrappedvalue = target.wrappedvalue;
-        wrapcounts = target.wrapcounts;
+        wrapscount = target.wrapscount;
         listener = target.listener;
     }
 
@@ -136,12 +140,12 @@ public final class VLVWrapped extends VLVCurved{
 
     public static class Listener{
 
-        private float prevwrapcount = 0;
+        private float prevwrapscount = 0;
 
         public Listener(){
             
         }
 
-        public void crossed(VLVWrapped v){ }
+        public void wrapped(VLVWrapped v){ }
     }
 }

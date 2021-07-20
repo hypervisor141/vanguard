@@ -33,18 +33,16 @@ public class VLVLinear extends VLVariable{
 
     @Override
     public int advance(){
-        float value = get() + change;
+        value *= director;
+        value += change;
 
         if(value >= to){
-            set(to);
+            value = to;
             deactivate();
 
         }else if(value <= from){
-            set(from);
+            value = from;
             deactivate();
-
-        }else{
-            set(value);
         }
 
         return 1;

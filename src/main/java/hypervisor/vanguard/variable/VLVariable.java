@@ -117,8 +117,8 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void reset(){
-        loop.reseted(this);
         value = (change >= 0 ? from : to) * director;
+        loop.reseted(this);
     }
 
     @Override

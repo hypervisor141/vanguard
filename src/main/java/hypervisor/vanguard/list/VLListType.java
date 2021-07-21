@@ -43,7 +43,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         }
     }
 
-    public void add(VLListType items){
+    public void add(VLListType<TYPE> items){
         int size = items.size();
         expandIfNeeded(size);
 
@@ -67,7 +67,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         currentsize++;
     }
 
-    public void add(int index, VLListType items, int offset, int count){
+    public void add(int index, VLListType<TYPE> items, int offset, int count){
         expandIfNeeded(count);
         VLArrayUtils.spaceOut(array, index, count);
 
@@ -84,7 +84,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         System.arraycopy(items, offset, array, index, count);
     }
 
-    public void set(int index, VLListType items, int offset, int count){
+    public void set(int index, VLListType<TYPE> items, int offset, int count){
         checkOperableRange(index, 1);
         int endpoint = offset + count;
 

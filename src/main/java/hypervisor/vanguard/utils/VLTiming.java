@@ -4,23 +4,20 @@ public class VLTiming{
 
     private static long NANOTIME;
     private static long ACCUMULATETIME;
-    private static String TARGET;
     private static VLLog log;
 
-    public static void startTiming(String target){
-        TARGET = target;
-        NANOTIME = System.nanoTime();
+    public static void startTiming(String tag){
+        log = new VLLog(1);
+        log.addTag(tag);
 
-        log = new VLLog(new String[]{
-                VLLog.LOGTAG, "GLOBALTIMING"
-        }, 5);
+        NANOTIME = System.nanoTime();
     }
 
     public static void finishAccumulateTime(String prefix){
-        log.append("(");
+        log.append("[");
         log.append(prefix);
-        log.append(")");
-        log.append("ACCUMULATE(");
+        log.append("]");
+        log.append("ACCUMULATE[");
         log.append(ACCUMULATETIME);
         log.append("ns, ");
         log.append((long)Math.floor(ACCUMULATETIME / 1000000f));
@@ -34,11 +31,9 @@ public class VLTiming{
         long time = System.nanoTime();
         long diff = time - NANOTIME;
 
-        log.append("(");
+        log.append("[");
         log.append(prefix);
-        log.append(")");
-        log.append(TARGET);
-        log.append("(");
+        log.append("]");
         log.append(diff);
         log.append("ns, ");
         log.append((long)Math.floor(diff / 1000000f));
@@ -50,24 +45,27 @@ public class VLTiming{
         }
     }
 
-    public static long timeFunction(Runnable task, int testcount, int reportpercetile, boolean enablelog){
+    public static long timeFunction(String tag, Runnable task, int testcount, float reportpercetile){
+        if(reportpercetile <= 0){
+            throw new RuntimeException("Report percentile should be larger than 0.");
+        }
+        if(testcount <= 0){
+            throw new RuntimeException("Test count should be larger than 0.");
+        }
+
         long time;
         long diff;
         long avg = 0;
         long max = -Long.MAX_VALUE;
         long min = Long.MAX_VALUE;
-        long testperc = 0;
-        long threshold = reportpercetile == 0 ? 0 : (long)(testcount * (reportpercetile / 100f));
+        long progress = 0;
+        long threshold = (long)(testcount * (reportpercetile / 100F));
 
-        VLLog log = new VLLog(new String[]{
-                VLLog.LOGTAG, "TIMING"
-        }, 5);
+        VLLog log = new VLLog(1);
+        log.addTag(tag);
+        log.printInfo("Test progress : "+ progress + "%");
 
-        if(enablelog && threshold != 0){
-            log.printInfo("Test progress : "+ testperc + "%");
-        }
-
-        for(int e = 0; e < testcount; e++){
+        for(int i = 0; i < testcount; i++){
             time = System.nanoTime();
             task.run();
             diff = System.nanoTime() - time;
@@ -75,28 +73,30 @@ public class VLTiming{
             if(max < diff){
                 max = diff;
             }
-
             if(min > diff){
                 min = diff;
             }
-
-            if(e == 0){
+            if(i == 0){
                 avg = diff;
 
             }else{
                 avg = (avg + diff) / 2;
             }
 
-            if(enablelog && threshold != 0 && e != 0 && e % threshold == 0){
-                testperc += reportpercetile;
-                log.printInfo("Test progress : " + testperc + "%");
+            if(i % threshold == 0){
+                progress += reportpercetile;
+
+                log.append("[ ");
+                log.append(progress);
+                log.append("% ]");
+
+                log.printInfo();
             }
         }
 
-        if(enablelog){
-            log.printInfo("Test progress : 100%");
-            log.printInfo("Avg : " + avg + "ns (" + (avg / 1000000f) + "ms)" + " Max : " + max + "ns (" + (max / 1000000f) + "ms)" + " Min : " + min + "ns (" + (min / 1000000f) + "ms)");
-        }
+        log.printInfo("[Average] [" + avg + "ns] [" + (avg / 1000000f) + "ms]");
+        log.printInfo("[Maximum] [" + max + "ns] [" + (max / 1000000f) + "ms]");
+        log.printInfo("[Minimum] [" + min + "ns] [" + (min / 1000000f) + "ms]");
 
         return avg;
     }

@@ -5,7 +5,7 @@ import hypervisor.vanguard.array.VLArrayUtils;
 
 import java.util.Arrays;
 
-public class VLListBoolean  extends VLList<boolean[]>{
+public class VLListBoolean extends VLList<boolean[]>{
 
     public VLListBoolean(int capacity, int resizer){
         super(resizer, 0);

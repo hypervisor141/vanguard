@@ -21,10 +21,21 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
     }
 
     public void resizer(int count){
+        if(count < 0){
+            throw new RuntimeException("Invalid resizer[" + count + "]");
+        }
+
         resizer = count;
     }
 
     public void virtualSize(int size){
+        if(currentsize < 0){
+            throw new RuntimeException("Invalid virtualSize[" + size + "]");
+
+        }else if(currentsize > realSize()){
+            resize(currentsize + resizer);
+        }
+
         currentsize = size;
     }
 
@@ -33,7 +44,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
     }
 
     public void remove(int index, int count){
-        checkIndex(index, count);
+        checkOperableRange(index, count);
 
         if(index + count == currentsize){
             nullify(index, count);
@@ -51,11 +62,11 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     public abstract void resize(int size);
 
-    public void restrictSize(){
+    public void fitIntoVirtualSize(){
         resize(currentsize);
     }
 
-    public void maximizeVirtualSize(){
+    public void exposeRealSize(){
         virtualSize(realSize());
     }
 
@@ -88,9 +99,18 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     public abstract void nullify(int index, int count);
 
-    protected final void checkIndex(int index, int count){
-        if(index < 0 || index + count > currentsize){
-            throw new IndexOutOfBoundsException("Index[" + index + "] out of bounds, size[" + currentsize + "]");
+    protected final void checkOperableRange(int index, int count){
+        if(index < 0 || count < 0 || (index + count > currentsize)){
+            throw new IndexOutOfBoundsException("Invalid values for operation : requestedIndex[" + index + "], requestedCount["
+                    + count + "], virtualSize[" + currentsize + "], realSize[" + realSize() + "]");
+        }
+    }
+
+    protected final void expandIfNeeded(int expansionsize){
+        int newsize = currentsize + expansionsize;
+
+        if(newsize >= realSize()){
+            resize(newsize + resizer);
         }
     }
 

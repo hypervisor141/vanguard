@@ -1,45 +1,86 @@
 package hypervisor.vanguard.array;
 
+@SuppressWarnings("unused")
 public final class VLArrayUtils{
 
-    public static void addInPlace(int index, int dynamicsize, boolean[] b, boolean b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, boolean[] array, boolean target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, byte[] b, byte b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, byte[] array, byte target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, short[] b, short b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, short[] array, short target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, int[] b, int b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, int[] array, int target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, long[] b, long b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, long[] array, long target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, float[] b, float b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, float[] array, float target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, double[] b, double b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, double[] array, double target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
     }
 
-    public static void addInPlace(int index, int dynamicsize, Object[] b, Object b2){
-        spaceOutInPlace(b, dynamicsize, index, 1);
-        b[index] = b2;
+    public static void addInPlace(int index, int virtualsize, Object[] array, Object target){
+        spaceOutInPlace(array, virtualsize, index, 1);
+        array[index] = target;
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, boolean[] array, boolean[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, byte[] array, byte[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, short[] array, short[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, int[] array, int[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, long[] array, long[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, float[] array, float[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, double[] array, double[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
+    }
+
+    public static void addInPlace(int arrayoffset, int targetoffset, int virtualsize, Object[] array, Object[] target, int count){
+        spaceOutInPlace(array, virtualsize, arrayoffset, count);
+        System.arraycopy(target, targetoffset, array, arrayoffset, count);
     }
 
     public static boolean[] slice(boolean[] array, int from, int to){
@@ -98,85 +139,87 @@ public final class VLArrayUtils{
         return sliced;
     }
 
-    public static boolean[] spaceOut(boolean[] b, int index, int count){
-        boolean[] newarray = new boolean[b.length + count];
+    public static boolean[] spaceOut(boolean[] array, int index, int count){
+        boolean[] newarray = new boolean[array.length + count];
 
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
-
-        return newarray;
-    }
-
-    public static byte[] spaceOut(byte[] b, int index, int count){
-        byte[] newarray = new byte[b.length + count];
-
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
 
         return newarray;
     }
 
-    public static short[] spaceOut(short[] b, int index, int count){
-        short[] newarray = new short[b.length + count];
+    public static byte[] spaceOut(byte[] array, int index, int count){
+        byte[] newarray = new byte[array.length + count];
 
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
-
-        return newarray;
-    }
-
-    public static int[] spaceOut(int[] b, int index, int count){
-        int[] newarray = new int[b.length + count];
-
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
 
         return newarray;
     }
 
-    public static long[] spaceOut(long[] b, int index, int count){
-        long[] newarray = new long[b.length + count];
+    public static short[] spaceOut(short[] array, int index, int count){
+        short[] newarray = new short[array.length + count];
 
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
-
-        return newarray;
-    }
-
-    public static float[] spaceOut(float[] b, int index, int count){
-        float[] newarray = new float[b.length + count];
-
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
 
         return newarray;
     }
 
-    public static double[] spaceOut(double[] b, int index, int count){
-        double[] newarray = new double[b.length + count];
+    public static int[] spaceOut(int[] array, int index, int count){
+        int[] newarray = new int[array.length + count];
 
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
-
-        return newarray;
-    }
-
-    public static Object[] spaceOut(Object[] b, int index, int count){
-        Object[] newarray = new Object[b.length + count];
-
-        System.arraycopy(b, 0, newarray, 0, index);
-        System.arraycopy(b, index, newarray, index + count, b.length - index);
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
 
         return newarray;
     }
 
-    public static void spaceOutInPlace(Object b, int dynamicsize, int index, int count){
-        System.arraycopy(b, index, b, index + count, dynamicsize - index);
+    public static long[] spaceOut(long[] array, int index, int count){
+        long[] newarray = new long[array.length + count];
+
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
+
+        return newarray;
     }
 
-    public static int indexOf(boolean[] b, boolean element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static float[] spaceOut(float[] array, int index, int count){
+        float[] newarray = new float[array.length + count];
+
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
+
+        return newarray;
+    }
+
+    public static double[] spaceOut(double[] array, int index, int count){
+        double[] newarray = new double[array.length + count];
+
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
+
+        return newarray;
+    }
+
+    public static Object[] spaceOut(Object[] array, int index, int count){
+        Object[] newarray = new Object[array.length + count];
+
+        System.arraycopy(array, 0, newarray, 0, index);
+        System.arraycopy(array, index, newarray, index + count, array.length - index);
+
+        return newarray;
+    }
+
+    public static void spaceOutInPlace(Object array, int dynamicsize, int index, int count){
+        System.arraycopy(array, index, array, index + count, dynamicsize - index);
+    }
+
+    public static int indexOf(boolean[] array, boolean element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -184,9 +227,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(byte[] b, byte element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(byte[] array, byte element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -194,9 +239,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(short[] b, short element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(short[] array, short element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -204,9 +251,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(int[] b, int element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(int[] array, int element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -214,9 +263,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(long[] b, long element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(long[] array, long element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -224,9 +275,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(float[] b, float element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(float[] array, float element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -234,9 +287,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(double[] b, double element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i] == element){
+    public static int indexOf(double[] array, double element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i] == element){
                 return i;
             }
         }
@@ -244,9 +299,11 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(Object[] b, Object element){
-        for(int i = 0; i < b.length; i++){
-            if(b[i].equals(element)){
+    public static int indexOf(Object[] array, Object element){
+        int size = array.length;
+
+        for(int i = 0; i < size; i++){
+            if(array[i].equals(element)){
                 return i;
             }
         }
@@ -254,235 +311,235 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static boolean[] remove(boolean[] b, int index, int count){
-        boolean[] array = new boolean[b.length - count];
-        int lastindex = b.length - 1;
+    public static boolean[] remove(boolean[] array, int index, int count){
+        boolean[] newarray = new boolean[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static byte[] remove(byte[] b, int index, int count){
-        byte[] array = new byte[b.length - count];
-        int lastindex = b.length - 1;
+    public static byte[] remove(byte[] array, int index, int count){
+        byte[] newarray = new byte[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static short[] remove(short[] b, int index, int count){
-        short[] array = new short[b.length - count];
-        int lastindex = b.length - 1;
+    public static short[] remove(short[] array, int index, int count){
+        short[] newarray = new short[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static int[] remove(int[] b, int index, int count){
-        int[] array = new int[b.length - count];
-        int lastindex = b.length - 1;
+    public static int[] remove(int[] array, int index, int count){
+        int[] newarray = new int[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static long[] remove(long[] b, int index, int count){
-        long[] array = new long[b.length - count];
-        int lastindex = b.length - 1;
+    public static long[] remove(long[] array, int index, int count){
+        long[] newarray = new long[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static float[] remove(float[] b, int index, int count){
-        float[] array = new float[b.length - count];
-        int lastindex = b.length - 1;
+    public static float[] remove(float[] array, int index, int count){
+        float[] newarray = new float[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static double[] remove(double[] b, int index, int count){
-        double[] array = new double[b.length - count];
-        int lastindex = b.length - 1;
+    public static double[] remove(double[] array, int index, int count){
+        double[] newarray = new double[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static Object[] remove(Object[] b, int index, int count){
-        Object[] array = new Object[b.length - count];
-        int lastindex = b.length - 1;
+    public static Object[] remove(Object[] array, int index, int count){
+        Object[] newarray = new Object[array.length - count];
+        int lastindex = array.length - 1;
 
         if(index < lastindex && index > 0){
-            System.arraycopy(b, 0, array, 0, index);
-            System.arraycopy(b, index + count, array, index, array.length - index);
+            System.arraycopy(array, 0, newarray, 0, index);
+            System.arraycopy(array, index + count, newarray, index, newarray.length - index);
 
         }else if(index == lastindex){
-            System.arraycopy(b, 0, array, 0, array.length);
+            System.arraycopy(array, 0, newarray, 0, newarray.length);
 
         }else{
-            System.arraycopy(b, count, array, 0, array.length);
+            System.arraycopy(array, count, newarray, 0, newarray.length);
         }
 
-        return array;
+        return newarray;
     }
 
-    public static boolean[] remove(boolean[] b, boolean element){
-        int index = indexOf(b, element);
+    public static boolean[] remove(boolean[] array, boolean element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
-        }
-    }
-
-    public static byte[] remove(byte[] b, byte element){
-        int index = indexOf(b, element);
-
-        if(index != -1){
-            return remove(b, index, 1);
-
-        }else{
-            return b;
+            return array;
         }
     }
 
-    public static short[] remove(short[] b, short element){
-        int index = indexOf(b, element);
+    public static byte[] remove(byte[] array, byte element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
         }
     }
 
-    public static int[] remove(int[] b, Integer element){
-        int index = indexOf(b, element);
+    public static short[] remove(short[] array, short element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
         }
     }
 
-    public static long[] remove(long[] b, long element){
-        int index = indexOf(b, element);
+    public static int[] remove(int[] array, Integer element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
         }
     }
 
-    public static float[] remove(float[] b, float element){
-        int index = indexOf(b, element);
+    public static long[] remove(long[] array, long element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
         }
     }
 
-    public static double[] remove(double[] b, double element){
-        int index = indexOf(b, element);
+    public static float[] remove(float[] array, float element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
         }
     }
 
-    public static Object[] remove(Object[] b, Object element){
-        int index = indexOf(b, element);
+    public static double[] remove(double[] array, double element){
+        int index = indexOf(array, element);
 
         if(index != -1){
-            return remove(b, index, 1);
+            return remove(array, index, 1);
 
         }else{
-            return b;
+            return array;
+        }
+    }
+
+    public static Object[] remove(Object[] array, Object element){
+        int index = indexOf(array, element);
+
+        if(index != -1){
+            return remove(array, index, 1);
+
+        }else{
+            return array;
         }
     }
 

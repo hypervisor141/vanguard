@@ -109,8 +109,6 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
     protected final void expandIfNeeded(int expansionsize){
         int newsize = currentsize + expansionsize;
 
-        System.out.println("RAN : " + newsize + "  " + realSize() + "  " + currentsize + "  " + expansionsize);
-
         if(newsize >= realSize()){
             resize(newsize + resizer);
         }

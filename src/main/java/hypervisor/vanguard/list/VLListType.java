@@ -29,12 +29,12 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     }
 
-    public void add(Object item){
+    public void add(TYPE item){
         expandIfNeeded(1);
         array[currentsize++] = item;
     }
 
-    public void add(Object[] items){
+    public void add(TYPE[] items){
         int size = items.length;
         expandIfNeeded(size);
 
@@ -54,13 +54,13 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         }
     }
 
-    public void add(int index, Object item){
+    public void add(int index, TYPE item){
         expandIfNeeded(1);
         VLArrayUtils.addInPlace(index, currentsize, array, item);
         currentsize++;
     }
 
-    public void add(int index, Object[] items, int offset, int count){
+    public void add(int index, TYPE[] items, int offset, int count){
         expandIfNeeded(count);
 
         VLArrayUtils.addInPlace(index, offset, currentsize, array, items, count);
@@ -74,12 +74,12 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         set(index, items, offset, count);
     }
 
-    public void set(int index, Object item){
+    public void set(int index, TYPE item){
         checkOperableRange(index, 1);
         array[index] = item;
     }
 
-    public void set(int index, Object[] items, int offset, int count){
+    public void set(int index, TYPE[] items, int offset, int count){
         checkOperableRange(index, 1);
         System.arraycopy(items, offset, array, index, count);
     }
@@ -110,7 +110,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         return -1;
     }
 
-    public void remove(Object item){
+    public void remove(TYPE item){
         int index = VLArrayUtils.indexOf(array, item);
 
         if(index != -1){

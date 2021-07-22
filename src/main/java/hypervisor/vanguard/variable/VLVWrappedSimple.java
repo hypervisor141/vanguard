@@ -2,29 +2,31 @@ package hypervisor.vanguard.variable;
 
 import hypervisor.vanguard.math.VLMath;
 
-public class VLVRangedSimple extends VLV{
+public class VLVWrappedSimple extends VLV{
 
-    private static final float[] CACHE = new float[2];
+    private final float[] CACHE = new float[2];
+    protected float low;
+    protected float high;
 
-    protected float low, high;
-
-    public VLVRangedSimple(float value, float low, float high){
+    public VLVWrappedSimple(float value, float low, float high){
         super(value);
 
         this.low = low;
         this.high = high;
     }
 
-    public VLVRangedSimple(VLVRangedSimple src, long flags){
+    public VLVWrappedSimple(VLVWrappedSimple src, long flags){
         copy(src, flags);
     }
 
-    protected VLVRangedSimple(){
+    protected VLVWrappedSimple(){
 
     }
 
     @Override
     public void set(float value){
+        super.set(value);
+
         VLMath.wrapOverRange(CACHE, 0, value, low, high);
         this.value = CACHE[0];
     }
@@ -33,22 +35,14 @@ public class VLVRangedSimple extends VLV{
     public void copy(VLVTypeRunnable src, long flags){
         super.copy(src, flags);
 
-        VLVRangedSimple target = (VLVRangedSimple)src;
+        VLVWrappedSimple target = (VLVWrappedSimple)src;
         low = target.low;
         high = target.high;
     }
 
     @Override
-    public VLVRangedSimple duplicate(long flags) {
-        return new VLVRangedSimple(this, flags);
-    }
-
-    public void push(float amount, int cycles){
-        push(amount);
-    }
-
-    public void push(float amount){
-        set(value + amount);
+    public VLVWrappedSimple duplicate(long flags) {
+        return new VLVWrappedSimple(this, flags);
     }
 
     public float getLow(){

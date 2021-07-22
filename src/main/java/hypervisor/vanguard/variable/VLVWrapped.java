@@ -15,32 +15,28 @@ public final class VLVWrapped extends VLVCurved{
     public VLVWrapped(float from, float to, int cycles, float low, float high, Loop loop, Curve curve, Listener listener){
         super(from, to, cycles, loop, curve);
 
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
         this.listener = listener;
     }
 
     public VLVWrapped(float from, float to, int cycles, float low, float high, Curve curve, Listener listener){
         super(from, to, cycles, curve);
 
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
         this.listener = listener;
     }
 
     public VLVWrapped(float from, float to, float changerate, float low, float high, Loop loop, Curve curve, Listener listener){
         super(from, to, changerate, loop, curve);
 
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
         this.listener = listener;
     }
 
     public VLVWrapped(float from, float to, float changerate, float low, float high, Curve curve, Listener listener){
         super(from, to, changerate, curve);
 
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
         this.listener = listener;
     }
 
@@ -88,6 +84,17 @@ public final class VLVWrapped extends VLVCurved{
         return changes;
     }
 
+    private void changeRange(float low, float high){
+        if(low < high){
+            this.low = low;
+            this.high = high;
+
+        }else{
+            this.low = high;
+            this.high = low;
+        }
+    }
+
     private void updateValue(){
         VLMath.wrapOverRange(CACHE, 0, value, low, high);
 
@@ -96,11 +103,11 @@ public final class VLVWrapped extends VLVCurved{
     }
 
     public void setLow(float low){
-        this.low = low;
+        changeRange(low, high);
     }
 
     public void setHigh(float high){
-        this.high = high;
+        changeRange(low, high);
     }
 
     public float getLow(){

@@ -10,30 +10,22 @@ public class VLVLimited extends VLVCurved{
 
     public VLVLimited(float from, float to, int cycles, float low, float high, Loop loop, Curve curve){
         super(from, to, cycles, loop, curve);
-
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
     }
 
     public VLVLimited(float from, float to, int cycles, float low, float high, Curve curve){
         super(from, to, cycles, curve);
-
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
     }
 
     public VLVLimited(float from, float to, float changerate, float low, float high, Loop loop, Curve curve){
         super(from, to, changerate, loop, curve);
-
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
     }
 
     public VLVLimited(float from, float to, float changerate, float low, float high, Curve curve){
         super(from, to, changerate, curve);
-
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
     }
 
     public VLVLimited(VLVLimited src, long flags){
@@ -69,16 +61,27 @@ public class VLVLimited extends VLVCurved{
         return changes;
     }
 
+    private void changeRange(float low, float high){
+        if(low < high){
+            this.low = low;
+            this.high = high;
+
+        }else{
+            this.low = high;
+            this.high = low;
+        }
+    }
+
     private void updateValue(){
         limitedvalue = VLMath.limit(value, low, high);
     }
 
     public void setLow(float low){
-        this.low = low;
+        changeRange(low, high);
     }
 
     public void setHigh(float high){
-        this.high = high;
+        changeRange(low, high);
     }
 
     public float getLow(){

@@ -8,9 +8,7 @@ public class VLVLimitedSimple extends VLV{
 
     public VLVLimitedSimple(float value, float low, float high){
         super(value);
-
-        this.low = low;
-        this.high = high;
+        changeRange(low, high);
     }
 
     public VLVLimitedSimple(VLVLimitedSimple src, long flags){
@@ -25,6 +23,25 @@ public class VLVLimitedSimple extends VLV{
     public void set(float value){
         super.set(value);
         this.value = VLMath.limit(value, low, high);
+    }
+
+    private void changeRange(float low, float high){
+        if(low < high){
+            this.low = low;
+            this.high = high;
+
+        }else{
+            this.low = high;
+            this.high = low;
+        }
+    }
+
+    public void setLow(float low){
+        changeRange(low, high);
+    }
+
+    public void setHigh(float high){
+        changeRange(low, high);
     }
 
     public float getLow(){

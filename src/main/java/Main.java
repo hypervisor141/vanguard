@@ -1,18 +1,14 @@
-import hypervisor.vanguard.utils.VLLog;
-import hypervisor.vanguard.variable.VLV;
-import hypervisor.vanguard.variable.VLVManager;
-import hypervisor.vanguard.variable.VLVMatrix;
+import hypervisor.vanguard.variable.*;
 
 public class Main {
 
     public static void main(String[] args){
-        VLVMatrix mat = new VLVMatrix(5, 0);
+        VLVLimited limited = new VLVLimited(-100, 100, 50, 0, 5, VLVariable.LOOP_RETURN_ONCE, VLVCurved.CURVE_LINEAR);
+        limited.activate();
 
-        mat.addRow(3, 0);
-        mat.addColumn(0, VLV.ZERO);
-        mat.addColumn(0, VLV.ONE);
-        mat.addColumn(0, VLV.NEGATIVE_ONE);
-
-        System.out.println(mat.getRow(0).get(1).get() + " ");
+        while(limited.active()){
+            limited.next();
+            System.out.println(limited.get() + "  ");
+        }
     }
 }

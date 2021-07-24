@@ -12,28 +12,28 @@ public final class VLVWrapped extends VLVCurved{
     protected float wrappedvalue;
     protected int wrapcounts;
 
-    public VLVWrapped(float from, float to, int cycles, float low, float high, Loop loop, Curve curve, Listener listener){
+    public VLVWrapped(float from, float to, float low, float high, int cycles, Loop loop, Curve curve, Listener listener){
         super(from, to, cycles, loop, curve);
 
         changeRange(low, high);
         this.listener = listener;
     }
 
-    public VLVWrapped(float from, float to, int cycles, float low, float high, Curve curve, Listener listener){
+    public VLVWrapped(float from, float to, float low, float high, int cycles, Curve curve, Listener listener){
         super(from, to, cycles, curve);
 
         changeRange(low, high);
         this.listener = listener;
     }
 
-    public VLVWrapped(float from, float to, float changerate, float low, float high, Loop loop, Curve curve, Listener listener){
+    public VLVWrapped(float from, float to, float low, float high, float changerate, Loop loop, Curve curve, Listener listener){
         super(from, to, changerate, loop, curve);
 
         changeRange(low, high);
         this.listener = listener;
     }
 
-    public VLVWrapped(float from, float to, float changerate, float low, float high, Curve curve, Listener listener){
+    public VLVWrapped(float from, float to, float low, float high, float changerate, Curve curve, Listener listener){
         super(from, to, changerate, curve);
 
         changeRange(low, high);

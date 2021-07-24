@@ -8,22 +8,22 @@ public class VLVLimited extends VLVCurved{
     protected float high;
     protected float limitedvalue;
 
-    public VLVLimited(float from, float to, int cycles, float low, float high, Loop loop, Curve curve){
+    public VLVLimited(float from, float to, float low, float high, int cycles, Loop loop, Curve curve){
         super(from, to, cycles, loop, curve);
         changeRange(low, high);
     }
 
-    public VLVLimited(float from, float to, int cycles, float low, float high, Curve curve){
+    public VLVLimited(float from, float to, float low, float high, int cycles, Curve curve){
         super(from, to, cycles, curve);
         changeRange(low, high);
     }
 
-    public VLVLimited(float from, float to, float changerate, float low, float high, Loop loop, Curve curve){
+    public VLVLimited(float from, float to, float low, float high, float changerate, Loop loop, Curve curve){
         super(from, to, changerate, loop, curve);
         changeRange(low, high);
     }
 
-    public VLVLimited(float from, float to, float changerate, float low, float high, Curve curve){
+    public VLVLimited(float from, float to, float low, float high, float changerate, Curve curve){
         super(from, to, changerate, curve);
         changeRange(low, high);
     }

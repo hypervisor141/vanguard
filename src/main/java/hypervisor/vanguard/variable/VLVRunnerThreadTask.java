@@ -4,7 +4,7 @@ import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.concurrency.VLThread;
 import hypervisor.vanguard.concurrency.VLThreadTaskType;
 
-public class VLVRunnerThreadTask implements VLThreadTaskType {
+public class VLVRunnerThreadTask implements VLThreadTaskType{
 
     public VLVTypeRunner root;
     public VLLog log;
@@ -13,14 +13,16 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
     protected int freqextrananos;
     protected boolean enablecompensator;
 
-    protected PostReporter reporter;
+    protected Checkpoint prerun;
+    protected Checkpoint postrun;
 
-    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, boolean debug, PostReporter reporter){
+    public VLVRunnerThreadTask(VLVTypeRunner root, long freqmillis, int freqextrananos, boolean enablecompensator, boolean debug, Checkpoint prerun, Checkpoint postrun){
         this.root = root;
         this.freqmillis = freqmillis;
         this.freqextrananos = freqextrananos;
         this.enablecompensator = enablecompensator;
-        this.reporter = reporter;
+        this.prerun = prerun;
+        this.postrun = postrun;
 
         if(debug){
             log = new VLLog(3);
@@ -52,13 +54,17 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
 
         while(worker.running() && !worker.locked()){
             long offsettime = System.nanoTime();
-            int changes;
+            int changes = 0;
+
+            if(prerun != null){
+                prerun.process(changes);
+            }
 
             synchronized(worker.internallock){
                 changes = root.next();
 
-                if(reporter != null){
-                    reporter.iterated(changes);
+                if(postrun != null){
+                    postrun.process(changes);
                 }
 
                 if(changes == 0){
@@ -102,7 +108,7 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
         while(worker.running() && !worker.locked()){
             synchronized(worker.internallock){
                 int changes = root.next();
-                reporter.iterated(changes);
+                postrun.process(changes);
 
                 if(changes == 0){
                     try{
@@ -124,8 +130,8 @@ public class VLVRunnerThreadTask implements VLThreadTaskType {
         }
     }
 
-    public interface PostReporter{
+    public interface Checkpoint{
 
-        void iterated(int changes);
+        void process(int localchanges);
     }
 }

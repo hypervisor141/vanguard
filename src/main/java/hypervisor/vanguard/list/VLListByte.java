@@ -2,6 +2,7 @@ package hypervisor.vanguard.list;
 
 import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.array.VLArrayUtils;
+import sun.security.util.ArrayUtil;
 
 import java.util.Arrays;
 
@@ -94,19 +95,24 @@ public class VLListByte extends VLList<byte[]>{
     }
 
     public int indexOf(byte item){
-        int size = size();
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
+    }
 
-        for(int i = 0; i < size; i++){
-            if(array[i] == item){
-                return i;
-            }
-        }
-
-        return -1;
+    public int indexOf(byte item, int searchoffset, int searchcount){
+        checkOperableRange(searchoffset, searchcount);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
     }
 
     public void remove(byte item){
-        int index = VLArrayUtils.indexOf(array, item);
+        int index = indexOf(item);
+
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+    public void remove(byte item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

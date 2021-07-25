@@ -98,20 +98,25 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         return (TYPE)array[index];
     }
 
-    public int indexOf(Object target){
-        int size = size();
-        
-        for(int i = 0; i < size; i++){
-            if(array[i].equals(target)){
-                return i;
-            }
-        }
-
-        return -1;
+    public int indexOf(Object item){
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
     }
 
-    public void remove(TYPE item){
-        int index = VLArrayUtils.indexOf(array, item);
+    public int indexOf(Object item, int searchoffset, int searchcount){
+        checkOperableRange(searchoffset, searchcount);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
+    }
+
+    public void remove(Object item){
+        int index = indexOf(item);
+
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+    public void remove(Object item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

@@ -95,19 +95,24 @@ public final class VLListInt extends VLList<int[]>{
     }
 
     public int indexOf(int item){
-        int size = size();
-
-        for(int i = 0; i < size; i++){
-            if(array[i] == item){
-                return i;
-            }
-        }
-
-        return -1;
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
     }
 
-    public void remove(Integer item){
-        int index = VLArrayUtils.indexOf(array, item);
+    public int indexOf(int item, int searchoffset, int searchcount){
+        checkOperableRange(searchoffset, searchcount);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
+    }
+
+    public void remove(int item){
+        int index = indexOf(item);
+
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+    public void remove(int item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

@@ -94,20 +94,25 @@ public final class VLListShort extends VLList<short[]>{
         return array[index];
     }
 
-    public int indexOf(short target){
-        int size = size();
+    public int indexOf(short item){
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
+    }
 
-        for(int i = 0; i < size; i++){
-            if(array[i] == target){
-                return i;
-            }
-        }
-
-        return -1;
+    public int indexOf(short item, int searchoffset, int searchcount){
+        checkOperableRange(searchoffset, searchcount);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
     }
 
     public void remove(short item){
-        int index = VLArrayUtils.indexOf(array, item);
+        int index = indexOf(item);
+
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+    public void remove(short item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

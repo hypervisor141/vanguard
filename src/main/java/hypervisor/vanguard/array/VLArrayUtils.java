@@ -215,10 +215,10 @@ public final class VLArrayUtils{
         System.arraycopy(array, index, array, index + count, dynamicsize - index);
     }
 
-    public static int indexOf(boolean[] array, boolean element){
-        int size = array.length;
+    public static int indexOf(boolean[] array, int offset, int count, boolean element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -227,10 +227,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(byte[] array, byte element){
-        int size = array.length;
+    public static int indexOf(byte[] array, int offset, int count, byte element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -239,10 +239,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(short[] array, short element){
-        int size = array.length;
+    public static int indexOf(short[] array, int offset, int count, short element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -251,10 +251,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(int[] array, int element){
-        int size = array.length;
+    public static int indexOf(int[] array, int offset, int count, int element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -263,10 +263,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(long[] array, long element){
-        int size = array.length;
+    public static int indexOf(long[] array, int offset, int count, long element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -275,10 +275,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(float[] array, float element){
-        int size = array.length;
+    public static int indexOf(float[] array, int offset, int count, float element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -287,10 +287,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(double[] array, double element){
-        int size = array.length;
+    public static int indexOf(double[] array, int offset, int count, double element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i] == element){
                 return i;
             }
@@ -299,10 +299,10 @@ public final class VLArrayUtils{
         return -1;
     }
 
-    public static int indexOf(Object[] array, Object element){
-        int size = array.length;
+    public static int indexOf(Object[] array, int offset, int count, Object element){
+        int endpoint = offset + count;
 
-        for(int i = 0; i < size; i++){
+        for(int i = offset; i < endpoint; i++){
             if(array[i].equals(element)){
                 return i;
             }
@@ -455,8 +455,8 @@ public final class VLArrayUtils{
         return newarray;
     }
 
-    public static boolean[] remove(boolean[] array, boolean element){
-        int index = indexOf(array, element);
+    public static boolean[] remove(boolean[] array, int offset, int count, boolean element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -466,8 +466,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static byte[] remove(byte[] array, byte element){
-        int index = indexOf(array, element);
+    public static byte[] remove(byte[] array, int offset, int count, byte element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -477,8 +477,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static short[] remove(short[] array, short element){
-        int index = indexOf(array, element);
+    public static short[] remove(short[] array, int offset, int count, short element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -488,8 +488,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static int[] remove(int[] array, Integer element){
-        int index = indexOf(array, element);
+    public static int[] remove(int[] array, int offset, int count, Integer element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -499,8 +499,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static long[] remove(long[] array, long element){
-        int index = indexOf(array, element);
+    public static long[] remove(long[] array, int offset, int count, long element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -510,8 +510,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static float[] remove(float[] array, float element){
-        int index = indexOf(array, element);
+    public static float[] remove(float[] array, int offset, int count, float element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -521,8 +521,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static double[] remove(double[] array, double element){
-        int index = indexOf(array, element);
+    public static double[] remove(double[] array, int offset, int count, double element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);
@@ -532,8 +532,8 @@ public final class VLArrayUtils{
         }
     }
 
-    public static Object[] remove(Object[] array, Object element){
-        int index = indexOf(array, element);
+    public static Object[] remove(Object[] array, int offset, int count, Object element){
+        int index = indexOf(array, offset, count, element);
 
         if(index != -1){
             return remove(array, index, 1);

@@ -95,19 +95,24 @@ public class VLListBoolean extends VLList<boolean[]>{
     }
 
     public int indexOf(boolean item){
-        int size = size();
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
+    }
 
-        for(int i = 0; i < size; i++){
-            if(array[i] == item){
-                return i;
-            }
-        }
-
-        return -1;
+    public int indexOf(boolean item, int searchoffset, int searchcount){
+        checkOperableRange(searchoffset, searchcount);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
     }
 
     public void remove(boolean item){
-        int index = VLArrayUtils.indexOf(array, item);
+        int index = indexOf(item);
+
+        if(index != -1){
+            remove(index);
+        }
+    }
+
+    public void remove(boolean item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

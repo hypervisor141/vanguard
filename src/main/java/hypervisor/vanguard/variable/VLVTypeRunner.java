@@ -6,15 +6,23 @@ public interface VLVTypeRunner extends VLVTypeRunnable{
 
     void start();
     void pause();
-    void sync();
+    void syncStart();
+    void syncChange();
+    void syncDone();
     void startAll();
     void pauseAll();
-    void syncAll();
+    void syncStartAll();
+    void syncChangeAll();
+    void syncDoneAll();
     void delay(int delay);
     void delayBy(int amount);
-    void syncer(VLSyncType<? extends VLVTypeRunner> syncer);
+    void syncerStart(VLSyncType<? extends VLVTypeRunner> syncer);
+    void syncerChange(VLSyncType<? extends VLVTypeRunner> syncer);
+    void syncerDone(VLSyncType<? extends VLVTypeRunner> syncer);
     void resetDelayTrackers();
-    VLSyncType<? extends VLVTypeRunner> syncer();
+    VLSyncType<? extends VLVTypeRunner> syncerStart();
+    VLSyncType<? extends VLVTypeRunner> syncerChange();
+    VLSyncType<? extends VLVTypeRunner> syncerDone();
     void length(Length results);
     int delay();
     boolean paused();

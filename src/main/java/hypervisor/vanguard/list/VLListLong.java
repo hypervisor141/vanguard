@@ -94,25 +94,25 @@ public final class VLListLong extends VLList<long[]>{
         return array[index];
     }
 
-    public int long(byte item){
-        return VLArrayUtils.long(array, 0, currentsize, item);
+    public int indexOf(long item){
+        return VLArrayUtils.indexOf(array, 0, currentsize, item);
     }
 
-    public int long(byte item, int searchoffset, int searchcount){
+    public int indexOf(long item, int searchoffset, int searchcount){
         checkOperableRange(searchoffset, searchcount);
-        return VLArrayUtils.long(array, searchoffset, searchcount, item);
+        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
     }
 
-    public void remove(byte item){
-        int index = long(item);
+    public void remove(long item){
+        int index = indexOf(item);
 
         if(index != -1){
             remove(index);
         }
     }
 
-    public void remove(byte item, int searchoffset, int searchcount){
-        int index = long(item, searchoffset, searchcount);
+    public void remove(long item, int searchoffset, int searchcount){
+        int index = indexOf(item, searchoffset, searchcount);
 
         if(index != -1){
             remove(index);

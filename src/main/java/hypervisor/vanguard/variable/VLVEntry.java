@@ -9,13 +9,16 @@ public class VLVEntry implements VLVTypeRunner{
     public static final long FLAG_DUPLICATE_TARGET = 0x1L;
     public static final long FLAG_DUPLICATE_SYNCER_START = 0x2L;
     public static final long FLAG_DUPLICATE_SYNCER_CHANGE = 0x4L;
-    public static final long FLAG_DUPLICATE_SYNCER_DONE = 0x8L;
+    public static final long FLAG_DUPLICATE_SYNCER_PAUSE = 0x8L;
+    public static final long FLAG_DUPLICATE_SYNCER_DONE = 0x10L;
 
     public VLVTypeVariable target;
 
-    protected VLSyncType<VLVEntry> syncerStart;
-    protected VLSyncType<VLVEntry> syncerChange;
-    protected VLSyncType<VLVEntry> syncerDone;
+    protected VLSyncType<VLVEntry> syncerOnStart;
+    protected VLSyncType<VLVEntry> syncerOnChange;
+    protected VLSyncType<VLVEntry> syncerOnPause;
+    protected VLSyncType<VLVEntry> syncerOnDone;
+
     protected int delay;
     protected int delaytracker;
 
@@ -26,19 +29,20 @@ public class VLVEntry implements VLVTypeRunner{
         delaytracker = 0;
     }
 
-    public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerChange){
+    public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerOnChange){
         this.target = target;
-        this.syncerChange = syncerChange;
+        this.syncerOnChange = syncerOnChange;
         this.delay = delay;
 
         delaytracker = 0;
     }
 
-    public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerStart, VLSyncType<VLVEntry> syncerChange, VLSyncType<VLVEntry> syncerDone){
+    public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerOnStart, VLSyncType<VLVEntry> syncerOnChange, VLSyncType<VLVEntry> syncerOnPause, VLSyncType<VLVEntry> syncerOnDone){
         this.target = target;
-        this.syncerStart = syncerStart;
-        this.syncerChange = syncerChange;
-        this.syncerDone = syncerDone;
+        this.syncerOnStart = syncerOnStart;
+        this.syncerOnChange = syncerOnChange;
+        this.syncerOnPause = syncerOnPause;
+        this.syncerOnDone = syncerOnDone;
         this.delay = delay;
 
         delaytracker = 0;
@@ -103,38 +107,48 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void finish(){
         target.finish();
-        syncChange();
+        syncOnChange();
         syncDone();
     }
 
     @Override
-    public void syncerStart(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerStart = (VLSyncType<VLVEntry>)syncer;
+    public void syncerOnStart(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnStart = (VLSyncType<VLVEntry>)syncer;
     }
 
     @Override
-    public void syncerChange(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerChange = (VLSyncType<VLVEntry>)syncer;
+    public void syncerOnChange(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnChange = (VLSyncType<VLVEntry>)syncer;
     }
 
     @Override
-    public void syncerDone(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerDone = (VLSyncType<VLVEntry>)syncer;
+    public void syncerOnPause(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnPause = (VLSyncType<VLVEntry>)syncer;
     }
 
     @Override
-    public VLSyncType<VLVEntry> syncerStart(){
-        return syncerStart;
+    public void syncerOnDone(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnDone = (VLSyncType<VLVEntry>)syncer;
     }
 
     @Override
-    public VLSyncType<VLVEntry> syncerChange(){
-        return syncerChange;
+    public VLSyncType<VLVEntry> syncerOnStart(){
+        return syncerOnStart;
     }
 
     @Override
-    public VLSyncType<VLVEntry> syncerDone(){
-        return syncerDone;
+    public VLSyncType<VLVEntry> syncerOnChange(){
+        return syncerOnChange;
+    }
+
+    @Override
+    public VLSyncType<VLVEntry> syncerOnPause(){
+        return syncerOnPause;
+    }
+
+    @Override
+    public VLSyncType<VLVEntry> syncerOnDone(){
+        return syncerOnDone;
     }
 
     @Override
@@ -154,13 +168,14 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void start(){
-        syncStart();
+        syncOnStart();
         activate();
     }
 
     @Override
     public void pause(){
         target.deactivate();
+        syncOnPause();
     }
 
     @Override
@@ -174,10 +189,12 @@ public class VLVEntry implements VLVTypeRunner{
 
             }else{
                 advancement = target.next();
-                syncChange();
+                syncOnChange();
 
                 if(!target.active()){
+                    syncOnPause();
                     syncDone();
+
                     resetDelayTrackers();
                 }
             }
@@ -187,23 +204,30 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void syncStart(){
-        if(syncerStart != null){
-            syncerStart.sync(this);
+    public void syncOnStart(){
+        if(syncerOnStart != null){
+            syncerOnStart.sync(this);
         }
     }
 
     @Override
-    public void syncChange(){
-        if(syncerChange != null){
-            syncerChange.sync(this);
+    public void syncOnChange(){
+        if(syncerOnChange != null){
+            syncerOnChange.sync(this);
+        }
+    }
+
+    @Override
+    public void syncOnPause(){
+        if(syncerOnPause != null){
+            syncerOnPause.sync(this);
         }
     }
 
     @Override
     public void syncDone(){
-        if(syncerDone != null){
-            syncerDone.sync(this);
+        if(syncerOnDone != null){
+            syncerOnDone.sync(this);
         }
     }
 
@@ -218,17 +242,22 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void syncStartAll(){
-        syncStart();
+    public void syncOnStartAll(){
+        syncOnStart();
     }
 
     @Override
-    public void syncChangeAll(){
-        syncChange();
+    public void syncOnChangeAll(){
+        syncOnChange();
     }
 
     @Override
-    public void syncDoneAll(){
+    public void syncOnPauseAll(){
+        syncOnPause();
+    }
+
+    @Override
+    public void syncOnDoneAll(){
         syncDone();
     }
 
@@ -296,21 +325,25 @@ public class VLVEntry implements VLVTypeRunner{
 
         if((flags & VLCopyable.FLAG_REFERENCE) == VLCopyable.FLAG_REFERENCE){
             target = entry.target;
-            syncerStart = entry.syncerStart;
-            syncerChange = entry.syncerChange;
-            syncerDone = entry.syncerDone;
+            syncerOnStart = entry.syncerOnStart;
+            syncerOnChange = entry.syncerOnChange;
+            syncerOnPause = entry.syncerOnPause;
+            syncerOnDone = entry.syncerOnDone;
 
         }else if((flags & VLCopyable.FLAG_DUPLICATE) == VLCopyable.FLAG_DUPLICATE){
             target = (VLVTypeVariable)entry.target.duplicate(VLCopyable.FLAG_DUPLICATE);
 
-            if(syncerStart != null){
-                syncerStart = entry.syncerStart.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnStart != null){
+                syncerOnStart = entry.syncerOnStart.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
-            if(syncerChange != null){
-                syncerChange = entry.syncerChange.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnChange != null){
+                syncerOnChange = entry.syncerOnChange.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
-            if(syncerDone != null){
-                syncerDone = entry.syncerDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnPause != null){
+                syncerOnPause = entry.syncerOnPause.duplicate(VLCopyable.FLAG_DUPLICATE);
+            }
+            if(syncerOnDone != null){
+                syncerOnDone = entry.syncerOnDone.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
@@ -320,28 +353,36 @@ public class VLVEntry implements VLVTypeRunner{
             }else{
                 target = entry.target;
             }
-            if(syncerStart != null){
+            if(syncerOnStart != null){
                 if((flags & FLAG_DUPLICATE_SYNCER_START) == FLAG_DUPLICATE_SYNCER_START){
-                    syncerStart = entry.syncerStart.duplicate(VLCopyable.FLAG_DUPLICATE);
+                    syncerOnStart = entry.syncerOnStart.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerStart = entry.syncerStart;
+                    syncerOnStart = entry.syncerOnStart;
                 }
             }
-            if(syncerChange != null){
+            if(syncerOnChange != null){
                 if((flags & FLAG_DUPLICATE_SYNCER_CHANGE) == FLAG_DUPLICATE_SYNCER_CHANGE){
-                    syncerChange = entry.syncerChange.duplicate(VLCopyable.FLAG_DUPLICATE);
+                    syncerOnChange = entry.syncerOnChange.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerChange = entry.syncerChange;
+                    syncerOnChange = entry.syncerOnChange;
                 }
             }
-            if(syncerDone != null){
-                if((flags & FLAG_DUPLICATE_SYNCER_DONE) == FLAG_DUPLICATE_SYNCER_DONE){
-                    syncerDone = entry.syncerDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnPause != null){
+                if((flags & FLAG_DUPLICATE_SYNCER_PAUSE) == FLAG_DUPLICATE_SYNCER_PAUSE){
+                    syncerOnPause = entry.syncerOnPause.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerDone = entry.syncerDone;
+                    syncerOnPause = entry.syncerOnPause;
+                }
+            }
+            if(syncerOnDone != null){
+                if((flags & FLAG_DUPLICATE_SYNCER_DONE) == FLAG_DUPLICATE_SYNCER_DONE){
+                    syncerOnDone = entry.syncerOnDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+
+                }else{
+                    syncerOnDone = entry.syncerOnDone;
                 }
             }
 
@@ -363,11 +404,13 @@ public class VLVEntry implements VLVTypeRunner{
         log.append("[");
         log.append(getClass().getSimpleName());
         log.append("] syncerStartType[");
-        log.append(syncerStart == null ? "null" : syncerStart.getClass().getSimpleName());
+        log.append(syncerOnStart == null ? "null" : syncerOnStart.getClass().getSimpleName());
         log.append("] syncerChangeType[");
-        log.append(syncerChange == null ? "null" : syncerChange.getClass().getSimpleName());
+        log.append(syncerOnChange == null ? "null" : syncerOnChange.getClass().getSimpleName());
+        log.append("] syncerPauseType[");
+        log.append(syncerOnPause == null ? "null" : syncerOnPause.getClass().getSimpleName());
         log.append("] syncerDoneType[");
-        log.append(syncerDone == null ? "null" : syncerDone.getClass().getSimpleName());
+        log.append(syncerOnDone == null ? "null" : syncerOnDone.getClass().getSimpleName());
         log.append("] [");
 
         target.log(log, data);

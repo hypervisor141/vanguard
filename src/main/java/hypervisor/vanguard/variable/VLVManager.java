@@ -12,16 +12,18 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     public static final long FLAG_DUPLICATE_ENTRIES = 0x2L;
     public static final long FLAG_DUPLICATE_SYNCER_START = 0x4L;
     public static final long FLAG_DUPLICATE_SYNCER_CHANGE = 0x8L;
-    public static final long FLAG_DUPLICATE_SYNCER_DONE = 0x10L;
+    public static final long FLAG_DUPLICATE_SYNCER_PAUSE = 0x10L;
+    public static final long FLAG_DUPLICATE_SYNCER_DONE = 0x20L;
 
     protected boolean paused;
     protected boolean isdone;
     protected int endpointindex;
 
     protected VLListType<ENTRY> entries;
-    protected VLSyncType<VLVManager<ENTRY>> syncerStart;
-    protected VLSyncType<VLVManager<ENTRY>> syncerChange;
-    protected VLSyncType<VLVManager<ENTRY>> syncerDone;
+    protected VLSyncType<VLVManager<ENTRY>> syncerOnStart;
+    protected VLSyncType<VLVManager<ENTRY>> syncerOnChange;
+    protected VLSyncType<VLVManager<ENTRY>> syncerOnPause;
+    protected VLSyncType<VLVManager<ENTRY>> syncerOnDone;
 
     public VLVManager(int capacity, int resizer){
         entries = new VLListType<>(capacity, resizer);
@@ -31,22 +33,23 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         endpointindex = -1;
     }
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerChange){
+    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerOnChange){
         entries = new VLListType<>(capacity, resizer);
 
-        this.syncerChange = syncerChange;
+        this.syncerOnChange = syncerOnChange;
 
         paused = true;
         isdone = true;
         endpointindex = -1;
     }
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerStart, VLSyncType<VLVManager<ENTRY>> syncerChange, VLSyncType<VLVManager<ENTRY>> syncerDone){
+    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerOnStart, VLSyncType<VLVManager<ENTRY>> syncerOnChange, VLSyncType<VLVManager<ENTRY>> syncerOnPause, VLSyncType<VLVManager<ENTRY>> syncerOnDone){
         entries = new VLListType<>(capacity, resizer);
 
-        this.syncerStart = syncerStart;
-        this.syncerChange = syncerChange;
-        this.syncerDone = syncerDone;
+        this.syncerOnStart = syncerOnStart;
+        this.syncerOnChange = syncerOnChange;
+        this.syncerOnPause = syncerOnPause;
+        this.syncerOnDone = syncerOnDone;
 
         paused = true;
         isdone = true;
@@ -108,11 +111,12 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
             if(count == 0){
                 isdone = true;
+
                 pause();
                 syncDone();
 
             }else{
-                syncChange();
+                syncOnChange();
             }
 
             return count;
@@ -127,32 +131,40 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         paused = false;
         isdone = false;
 
-        syncStart();
+        syncOnStart();
     }
 
     @Override
     public void pause(){
         paused = true;
+        syncOnPause();
     }
 
     @Override
-    public void syncStart(){
-        if(syncerStart != null){
-            syncerStart.sync(this);
+    public void syncOnStart(){
+        if(syncerOnStart != null){
+            syncerOnStart.sync(this);
         }
     }
 
     @Override
-    public void syncChange(){
-        if(syncerChange != null){
-            syncerChange.sync(this);
+    public void syncOnChange(){
+        if(syncerOnChange != null){
+            syncerOnChange.sync(this);
+        }
+    }
+
+    @Override
+    public void syncOnPause(){
+        if(syncerOnPause != null){
+            syncerOnPause.sync(this);
         }
     }
 
     @Override
     public void syncDone(){
-        if(syncerDone != null){
-            syncerDone.sync(this);
+        if(syncerOnDone != null){
+            syncerOnDone.sync(this);
         }
     }
 
@@ -179,35 +191,46 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void syncStartAll(){
-        syncStart();
+    public void syncOnStartAll(){
+        syncOnStart();
 
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            entries.get(i).syncStartAll();
+            entries.get(i).syncOnStartAll();
         }
     }
 
     @Override
-    public void syncChangeAll(){
-        syncChange();
+    public void syncOnChangeAll(){
+        syncOnChange();
 
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            entries.get(i).syncChangeAll();
+            entries.get(i).syncOnChangeAll();
         }
     }
 
     @Override
-    public void syncDoneAll(){
+    public void syncOnPauseAll(){
+        syncOnPause();
+
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).syncOnPauseAll();
+        }
+    }
+
+    @Override
+    public void syncOnDoneAll(){
         syncDone();
 
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
-            entries.get(i).syncDoneAll();
+            entries.get(i).syncOnDoneAll();
         }
     }
 
@@ -262,7 +285,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
             entries.get(i).finish();
         }
 
-        syncChange();
+        syncOnChange();
         syncDone();
     }
 
@@ -322,18 +345,23 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void syncerStart(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerStart = (VLSyncType<VLVManager<ENTRY>>)syncer;
+    public void syncerOnStart(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnStart = (VLSyncType<VLVManager<ENTRY>>)syncer;
     }
 
     @Override
-    public void syncerChange(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerChange = (VLSyncType<VLVManager<ENTRY>>)syncer;
+    public void syncerOnChange(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnChange = (VLSyncType<VLVManager<ENTRY>>)syncer;
     }
 
     @Override
-    public void syncerDone(VLSyncType<? extends VLVTypeRunner> syncer){
-        this.syncerDone = (VLSyncType<VLVManager<ENTRY>>)syncer;
+    public void syncerOnPause(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnChange = (VLSyncType<VLVManager<ENTRY>>)syncer;
+    }
+
+    @Override
+    public void syncerOnDone(VLSyncType<? extends VLVTypeRunner> syncer){
+        this.syncerOnDone = (VLSyncType<VLVManager<ENTRY>>)syncer;
     }
 
     @Override
@@ -391,18 +419,23 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public VLSyncType<VLVManager<ENTRY>> syncerStart(){
-        return syncerStart;
+    public VLSyncType<VLVManager<ENTRY>> syncerOnStart(){
+        return syncerOnStart;
     }
 
     @Override
-    public VLSyncType<VLVManager<ENTRY>> syncerChange(){
-        return syncerChange;
+    public VLSyncType<VLVManager<ENTRY>> syncerOnChange(){
+        return syncerOnChange;
     }
 
     @Override
-    public VLSyncType<VLVManager<ENTRY>> syncerDone(){
-        return syncerDone;
+    public VLSyncType<VLVManager<ENTRY>> syncerOnPause(){
+        return syncerOnPause;
+    }
+
+    @Override
+    public VLSyncType<VLVManager<ENTRY>> syncerOnDone(){
+        return syncerOnDone;
     }
 
     @Override
@@ -483,21 +516,25 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
         if((flags & VLCopyable.FLAG_REFERENCE) == VLCopyable.FLAG_REFERENCE){
             entries = target.entries;
-            syncerStart = target.syncerStart;
-            syncerChange = target.syncerChange;
-            syncerDone = target.syncerDone;
+            syncerOnStart = target.syncerOnStart;
+            syncerOnChange = target.syncerOnChange;
+            syncerOnPause = target.syncerOnPause;
+            syncerOnDone = target.syncerOnDone;
 
         }else if((flags & VLCopyable.FLAG_DUPLICATE) == VLCopyable.FLAG_DUPLICATE){
             entries = target.entries.duplicate(VLCopyable.FLAG_DUPLICATE);
 
-            if(syncerStart != null){
-                syncerStart = target.syncerStart.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnStart != null){
+                syncerOnStart = target.syncerOnStart.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
-            if(syncerChange != null){
-                syncerChange = target.syncerChange.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnChange != null){
+                syncerOnChange = target.syncerOnChange.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
-            if(syncerDone != null){
-                syncerDone = target.syncerDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnPause != null){
+                syncerOnPause = target.syncerOnPause.duplicate(VLCopyable.FLAG_DUPLICATE);
+            }
+            if(syncerOnDone != null){
+                syncerOnDone = target.syncerOnDone.duplicate(VLCopyable.FLAG_DUPLICATE);
             }
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
@@ -511,28 +548,36 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");
             }
 
-            if(syncerStart != null){
+            if(syncerOnStart != null){
                 if((flags & FLAG_DUPLICATE_SYNCER_START) == FLAG_DUPLICATE_SYNCER_START){
-                    syncerStart = target.syncerStart.duplicate(VLCopyable.FLAG_DUPLICATE);
+                    syncerOnStart = target.syncerOnStart.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerStart = target.syncerStart;
+                    syncerOnStart = target.syncerOnStart;
                 }
             }
-            if(syncerChange != null){
+            if(syncerOnChange != null){
                 if((flags & FLAG_DUPLICATE_SYNCER_CHANGE) == FLAG_DUPLICATE_SYNCER_CHANGE){
-                    syncerChange = target.syncerChange.duplicate(VLCopyable.FLAG_DUPLICATE);
+                    syncerOnChange = target.syncerOnChange.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerChange = target.syncerChange;
+                    syncerOnChange = target.syncerOnChange;
                 }
             }
-            if(syncerDone != null){
-                if((flags & FLAG_DUPLICATE_SYNCER_DONE) == FLAG_DUPLICATE_SYNCER_DONE){
-                    syncerDone = target.syncerDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+            if(syncerOnPause != null){
+                if((flags & FLAG_DUPLICATE_SYNCER_PAUSE) == FLAG_DUPLICATE_SYNCER_PAUSE){
+                    syncerOnPause = target.syncerOnPause.duplicate(VLCopyable.FLAG_DUPLICATE);
 
                 }else{
-                    syncerDone = target.syncerDone;
+                    syncerOnPause = target.syncerOnPause;
+                }
+            }
+            if(syncerOnDone != null){
+                if((flags & FLAG_DUPLICATE_SYNCER_DONE) == FLAG_DUPLICATE_SYNCER_DONE){
+                    syncerOnDone = target.syncerOnDone.duplicate(VLCopyable.FLAG_DUPLICATE);
+
+                }else{
+                    syncerOnDone = target.syncerOnDone;
                 }
             }
 
@@ -564,12 +609,14 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         log.append(isdone);
         log.append("] endPointIndex[");
         log.append(endpointindex);
-        log.append("] syncerStartType[");
-        log.append(syncerStart == null ? "null" : syncerStart.getClass().getSimpleName());
-        log.append("] syncerChangeType[");
-        log.append(syncerChange == null ? "null" : syncerChange.getClass().getSimpleName());
-        log.append("] syncerDoneType[");
-        log.append(syncerDone == null ? "null" : syncerDone.getClass().getSimpleName());
+        log.append("] syncerOnStartType[");
+        log.append(syncerOnStart == null ? "null" : syncerOnStart.getClass().getSimpleName());
+        log.append("] syncerOnChangeType[");
+        log.append(syncerOnChange == null ? "null" : syncerOnChange.getClass().getSimpleName());
+        log.append("] syncerOnPauseType[");
+        log.append(syncerOnPause == null ? "null" : syncerOnPause.getClass().getSimpleName());
+        log.append("] syncerOnDoneType[");
+        log.append(syncerOnDone == null ? "null" : syncerOnDone.getClass().getSimpleName());
         log.append("] data[");
 
         if(verbose){

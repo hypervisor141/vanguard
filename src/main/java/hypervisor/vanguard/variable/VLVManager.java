@@ -23,20 +23,30 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     protected VLSyncType<VLVManager<ENTRY>> syncerChange;
     protected VLSyncType<VLVManager<ENTRY>> syncerDone;
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerStart, VLSyncType<VLVManager<ENTRY>> syncerChange, VLSyncType<VLVManager<ENTRY>> syncerDone){
+    public VLVManager(int capacity, int resizer){
         entries = new VLListType<>(capacity, resizer);
-
-        this.syncerStart = syncerStart;
-        this.syncerChange = syncerChange;
-        this.syncerDone = syncerDone;
 
         paused = true;
         isdone = true;
         endpointindex = -1;
     }
 
-    public VLVManager(int capacity, int resizer){
+    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerChange){
         entries = new VLListType<>(capacity, resizer);
+
+        this.syncerChange = syncerChange;
+
+        paused = true;
+        isdone = true;
+        endpointindex = -1;
+    }
+
+    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerStart, VLSyncType<VLVManager<ENTRY>> syncerChange, VLSyncType<VLVManager<ENTRY>> syncerDone){
+        entries = new VLListType<>(capacity, resizer);
+
+        this.syncerStart = syncerStart;
+        this.syncerChange = syncerChange;
+        this.syncerDone = syncerDone;
 
         paused = true;
         isdone = true;

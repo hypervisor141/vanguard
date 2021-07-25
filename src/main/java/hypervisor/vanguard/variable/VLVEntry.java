@@ -26,6 +26,14 @@ public class VLVEntry implements VLVTypeRunner{
         delaytracker = 0;
     }
 
+    public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerChange){
+        this.target = target;
+        this.syncerChange = syncerChange;
+        this.delay = delay;
+
+        delaytracker = 0;
+    }
+
     public VLVEntry(VLVTypeVariable target, int delay, VLSyncType<VLVEntry> syncerStart, VLSyncType<VLVEntry> syncerChange, VLSyncType<VLVEntry> syncerDone){
         this.target = target;
         this.syncerStart = syncerStart;

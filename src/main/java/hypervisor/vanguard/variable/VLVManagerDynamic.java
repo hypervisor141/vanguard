@@ -13,6 +13,11 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
         dynamicentries = new VLListType<>(entrycapacity, entryresizer);
     }
 
+    public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer, VLSyncType<VLVManager<ENTRY>> syncerChange){
+        super(capacity, resizer, syncerChange);
+        dynamicentries = new VLListType<>(entrycapacity, entryresizer);
+    }
+
     public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer, VLSyncType<VLVManager<ENTRY>> syncerStart, VLSyncType<VLVManager<ENTRY>> syncerChange, VLSyncType<VLVManager<ENTRY>> syncerEnd){
         super(capacity, resizer, syncerStart, syncerChange, syncerEnd);
         dynamicentries = new VLListType<>(entrycapacity, entryresizer);

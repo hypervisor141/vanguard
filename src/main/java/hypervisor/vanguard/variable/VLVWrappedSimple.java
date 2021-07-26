@@ -4,9 +4,10 @@ import hypervisor.vanguard.math.VLMath;
 
 public class VLVWrappedSimple extends VLV{
 
-    private final float[] CACHE = new float[2];
+    protected final float[] CACHE = new float[2];
     protected float low;
     protected float high;
+    protected float wrappedvalue;
 
     public VLVWrappedSimple(float value, float low, float high){
         super(value);
@@ -21,14 +22,6 @@ public class VLVWrappedSimple extends VLV{
 
     }
 
-    @Override
-    public void set(float value){
-        super.set(value);
-
-        VLMath.wrapOverRange(CACHE, 0, value, low, high);
-        this.value = CACHE[0];
-    }
-
     private void changeRange(float low, float high){
         if(low < high){
             this.low = low;
@@ -40,24 +33,37 @@ public class VLVWrappedSimple extends VLV{
         }
     }
 
-    public void setLow(float low){
+    @Override
+    public void set(float value){
+        super.set(value);
+
+        VLMath.wrapOverRange(CACHE, 0, value, low, high);
+        wrappedvalue = CACHE[0];
+    }
+
+    public void low(float low){
         changeRange(low, high);
     }
 
-    public void setHigh(float high){
+    public void high(float high){
         changeRange(low, high);
     }
 
-    public float getLow(){
+    @Override
+    public float get(){
+        return wrappedvalue;
+    }
+
+    public float low(){
         return low;
     }
 
-    public float getHigh(){
+    public float high(){
         return high;
     }
 
-    public float realValue(){
-        return value;
+    public float getReal(){
+        return super.get();
     }
 
     @Override
@@ -67,6 +73,7 @@ public class VLVWrappedSimple extends VLV{
         VLVWrappedSimple target = (VLVWrappedSimple)src;
         low = target.low;
         high = target.high;
+        wrappedvalue = target.wrappedvalue;
     }
 
     @Override

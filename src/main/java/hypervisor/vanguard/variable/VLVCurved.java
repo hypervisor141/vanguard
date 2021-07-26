@@ -58,22 +58,23 @@ public class VLVCurved extends VLVariable{
     @Override
     public int advance(){
         tracker += change;
-        value = VLMath.range((float)curve.process(tracker), from, to);
 
         if(tracker >= 1F){
-            value = to;
+            set(to);
             tracker = 1;
 
             deactivate();
 
         }else if(tracker <= 0F){
-            value = from;
+            set(from);
             tracker = 0;
 
             deactivate();
+
+        }else{
+            set(VLMath.range((float)curve.process(tracker), from, to));
         }
 
-        value *= director;
         return 1;
     }
 

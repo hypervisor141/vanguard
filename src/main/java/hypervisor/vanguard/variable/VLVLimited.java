@@ -36,29 +36,8 @@ public class VLVLimited extends VLVCurved{
 
     }
 
-    @Override
-    public void initialize(float from, float to, float changerate){
-        super.initialize(from, to, changerate);
-        updateValue();
-    }
-
-    @Override
-    public void set(float value){
-        super.set(value);
-        updateValue();
-    }
-
-    @Override
-    public float get(){
-        return limitedvalue;
-    }
-
-    @Override
-    public int next(){
-        int changes = super.next();
-        updateValue();
-
-        return changes;
+    private void updateValue(){
+        limitedvalue = VLMath.limit(get(), low, high);
     }
 
     private void changeRange(float low, float high){
@@ -72,8 +51,19 @@ public class VLVLimited extends VLVCurved{
         }
     }
 
-    private void updateValue(){
-        limitedvalue = VLMath.limit(value, low, high);
+    @Override
+    public void set(float value){
+        super.set(value);
+        updateValue();
+    }
+
+    @Override
+    public float get(){
+        return limitedvalue;
+    }
+
+    public float getReal(){
+        return super.get();
     }
 
     public void low(float low){
@@ -90,10 +80,6 @@ public class VLVLimited extends VLVCurved{
 
     public float high(){
         return high;
-    }
-
-    public float realValue(){
-        return value;
     }
 
     @Override

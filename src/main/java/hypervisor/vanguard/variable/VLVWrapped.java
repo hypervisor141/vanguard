@@ -4,7 +4,7 @@ import hypervisor.vanguard.math.VLMath;
 
 public final class VLVWrapped extends VLVCurved{
 
-    private final float[] CACHE = new float[2];
+    protected final float[] CACHE = new float[2];
     protected Listener listener;
 
     protected float high;
@@ -45,43 +45,29 @@ public final class VLVWrapped extends VLVCurved{
     }
 
     protected VLVWrapped(){
-        
-    }
 
-    @Override
-    public void initialize(float from, float to, float changerate){
-        super.initialize(from, to, changerate);
-        updateValue();
-    }
-
-    @Override
-    public void set(float value){
-        super.set(value);
-        updateValue();
-    }
-
-    @Override
-    public float get(){
-        return wrappedvalue;
     }
 
     @Override
     public int next(){
         int changes = super.next();
 
-        if(changes >= 0){
-            updateValue();
-
-            if(listener != null){
-                if(wrapcounts > listener.prevwrapcount){
-                    listener.crossed(this);
-                }
-
-                listener.prevwrapcount = wrapcounts;
+        if(listener != null){
+            if(wrapcounts > listener.prevwrapcount){
+                listener.crossed(this);
             }
+
+            listener.prevwrapcount = wrapcounts;
         }
 
         return changes;
+    }
+
+    private void updateValue(){
+        VLMath.wrapOverRange(CACHE, 0, get(), low, high);
+
+        wrappedvalue = CACHE[0];
+        wrapcounts = (int)CACHE[1];
     }
 
     private void changeRange(float low, float high){
@@ -95,11 +81,19 @@ public final class VLVWrapped extends VLVCurved{
         }
     }
 
-    private void updateValue(){
-        VLMath.wrapOverRange(CACHE, 0, value, low, high);
+    @Override
+    public void set(float value){
+        super.set(value);
+        updateValue();
+    }
 
-        wrappedvalue = CACHE[0];
-        wrapcounts = (int)CACHE[1];
+    @Override
+    public float get(){
+        return wrappedvalue;
+    }
+
+    public float getReal(){
+        return super.get();
     }
 
     public void low(float low){
@@ -116,10 +110,6 @@ public final class VLVWrapped extends VLVCurved{
 
     public float high(){
         return high;
-    }
-
-    public float realValue(){
-        return value;
     }
 
     public int wrapsCount(){

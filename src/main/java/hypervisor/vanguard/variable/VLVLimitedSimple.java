@@ -4,7 +4,9 @@ import hypervisor.vanguard.math.VLMath;
 
 public class VLVLimitedSimple extends VLV{
 
-    protected float low, high;
+    protected float low;
+    protected float high;
+    protected float limitedvalue;
 
     public VLVLimitedSimple(float value, float low, float high){
         super(value);
@@ -19,12 +21,6 @@ public class VLVLimitedSimple extends VLV{
 
     }
 
-    @Override
-    public void set(float value){
-        super.set(value);
-        this.value = VLMath.limit(value, low, high);
-    }
-
     private void changeRange(float low, float high){
         if(low < high){
             this.low = low;
@@ -36,12 +32,23 @@ public class VLVLimitedSimple extends VLV{
         }
     }
 
+    @Override
+    public void set(float value){
+        super.set(value);
+        limitedvalue = VLMath.limit(value, low, high);
+    }
+
     public void low(float low){
         changeRange(low, high);
     }
 
     public void high(float high){
         changeRange(low, high);
+    }
+
+    @Override
+    public float get(){
+        return limitedvalue;
     }
 
     public float low(){
@@ -52,8 +59,8 @@ public class VLVLimitedSimple extends VLV{
         return high;
     }
 
-    public float realValue(){
-        return value;
+    public float getReal(){
+        return super.get();
     }
 
     @Override
@@ -63,6 +70,7 @@ public class VLVLimitedSimple extends VLV{
         VLVLimitedSimple target = (VLVLimitedSimple)src;
         low = target.low;
         high = target.high;
+        limitedvalue = target.limitedvalue;
     }
 
     @Override

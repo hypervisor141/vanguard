@@ -55,7 +55,7 @@ public abstract class VLVariable extends VLV{
         }
 
         change = changerate;
-        value = (changerate >= 0 ? from : to);
+        set((changerate >= 0 ? from : to));
 
         loop.initialized(this);
     }
@@ -106,7 +106,7 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void finish(){
-        value = (change >= 0 ? to : from) * director;
+        set((change >= 0 ? to : from) * director);
         deactivate();
     }
 
@@ -117,18 +117,23 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public void reset(){
-        value = (change >= 0 ? from : to) * director;
+        set((change >= 0 ? from : to) * director);
         loop.reseted(this);
     }
 
     @Override
     public void chain(int cycles, float to){
-        initialize(value, to, cycles);
+        initialize(get(), to, cycles);
     }
 
     @Override
     public void chain(float changerate, float to){
-        initialize(value, to, changerate);
+        initialize(get(), to, changerate);
+    }
+
+    @Override
+    public void set(float value){
+        super.set(value * director);
     }
 
     public Loop loop(){

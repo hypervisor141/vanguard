@@ -59,11 +59,13 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void initialize(float from, float to, int cycles){
         target.initialize(from, to, cycles);
+        syncOnChange();
     }
 
     @Override
     public void initialize(float from, float to, float changerate){
         target.initialize(from, to, changerate);
+        syncOnChange();
     }
 
     @Override
@@ -86,11 +88,13 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void chain(int cycles, float to){
         target.chain(cycles, to);
+        syncOnChange();
     }
 
     @Override
     public void chain(float changerate, float to){
         target.chain(changerate, to);
+        syncOnChange();
     }
 
     @Override
@@ -101,12 +105,15 @@ public class VLVEntry implements VLVTypeRunner{
     @Override
     public void reset(){
         target.reset();
+
         resetDelayTrackers();
+        syncOnChange();
     }
 
     @Override
     public void finish(){
         target.finish();
+
         syncOnChange();
         syncDone();
     }
@@ -168,8 +175,8 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void start(){
-        syncOnStart();
         activate();
+        syncOnStart();
     }
 
     @Override

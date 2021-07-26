@@ -192,46 +192,46 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public void syncOnStartAll(){
-        syncOnStart();
-
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
             entries.get(i).syncOnStartAll();
         }
+
+        syncOnStart();
     }
 
     @Override
     public void syncOnChangeAll(){
-        syncOnChange();
-
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
             entries.get(i).syncOnChangeAll();
         }
+
+        syncOnChange();
     }
 
     @Override
     public void syncOnPauseAll(){
-        syncOnPause();
-
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
             entries.get(i).syncOnPauseAll();
         }
+
+        syncOnPause();
     }
 
     @Override
     public void syncOnDoneAll(){
-        syncDone();
-
         int size = entries.size();
 
         for(int i = 0; i < size; i++){
             entries.get(i).syncOnDoneAll();
         }
+
+        syncDone();
     }
 
     @Override
@@ -248,6 +248,8 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).chain(cycles, to);
         }
+
+        syncOnChange();
     }
 
     @Override
@@ -257,6 +259,8 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).chain(changerate, to);
         }
+
+        syncOnChange();
     }
 
     @Override
@@ -275,6 +279,8 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         for(int i = 0; i < size; i++){
             entries.get(i).reset();
         }
+
+        syncOnChange();
     }
 
     @Override

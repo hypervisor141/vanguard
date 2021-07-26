@@ -76,20 +76,24 @@ public class VLVLimited extends VLVCurved{
         limitedvalue = VLMath.limit(value, low, high);
     }
 
-    public void setLow(float low){
+    public void low(float low){
         changeRange(low, high);
     }
 
-    public void setHigh(float high){
+    public void high(float high){
         changeRange(low, high);
     }
 
-    public float getLow(){
+    public float low(){
         return low;
     }
 
-    public float getHigh(){
+    public float high(){
         return high;
+    }
+
+    public float realValue(){
+        return value;
     }
 
     @Override

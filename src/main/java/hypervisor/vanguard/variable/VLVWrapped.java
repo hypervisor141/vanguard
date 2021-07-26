@@ -102,23 +102,27 @@ public final class VLVWrapped extends VLVCurved{
         wrapcounts = (int)CACHE[1];
     }
 
-    public void setLow(float low){
+    public void low(float low){
         changeRange(low, high);
     }
 
-    public void setHigh(float high){
+    public void high(float high){
         changeRange(low, high);
     }
 
-    public float getLow(){
+    public float low(){
         return low;
     }
 
-    public float getHigh(){
+    public float high(){
         return high;
     }
 
-    public int getWrapCounts(){
+    public float realValue(){
+        return value;
+    }
+
+    public int wrapsCount(){
         return wrapcounts;
     }
 

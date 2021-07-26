@@ -56,6 +56,10 @@ public class VLVWrappedSimple extends VLV{
         return high;
     }
 
+    public float realValue(){
+        return value;
+    }
+
     @Override
     public void copy(VLVTypeRunnable src, long flags){
         super.copy(src, flags);

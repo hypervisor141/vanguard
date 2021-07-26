@@ -113,7 +113,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
                 isdone = true;
 
                 pause();
-                syncDone();
+                syncOnDone();
 
             }else{
                 syncOnChange();
@@ -162,7 +162,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
-    public void syncDone(){
+    public void syncOnDone(){
         if(syncerOnDone != null){
             syncerOnDone.sync(this);
         }
@@ -231,7 +231,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
             entries.get(i).syncOnDoneAll();
         }
 
-        syncDone();
+        syncOnDone();
     }
 
     @Override
@@ -292,7 +292,7 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         }
 
         syncOnChange();
-        syncDone();
+        syncOnDone();
     }
 
     @Override

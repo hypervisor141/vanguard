@@ -9,7 +9,7 @@ public interface VLVTypeRunner extends VLVTypeRunnable{
     void syncOnStart();
     void syncOnChange();
     void syncOnPause();
-    void syncDone();
+    void syncOnDone();
     void startAll();
     void pauseAll();
     void syncOnStartAll();

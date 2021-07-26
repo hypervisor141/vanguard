@@ -115,7 +115,7 @@ public class VLVEntry implements VLVTypeRunner{
         target.finish();
 
         syncOnChange();
-        syncDone();
+        syncOnDone();
     }
 
     @Override
@@ -200,7 +200,7 @@ public class VLVEntry implements VLVTypeRunner{
 
                 if(!target.active()){
                     syncOnPause();
-                    syncDone();
+                    syncOnDone();
 
                     resetDelayTrackers();
                 }
@@ -232,7 +232,7 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
-    public void syncDone(){
+    public void syncOnDone(){
         if(syncerOnDone != null){
             syncerOnDone.sync(this);
         }
@@ -265,7 +265,7 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void syncOnDoneAll(){
-        syncDone();
+        syncOnDone();
     }
 
     @Override

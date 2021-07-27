@@ -63,7 +63,7 @@ public class VLVLimited extends VLVCurved{
     }
 
     public float getReal(){
-        return super.get();
+        return value;
     }
 
     public void low(float low){

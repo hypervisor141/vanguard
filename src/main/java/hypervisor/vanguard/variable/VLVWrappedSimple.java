@@ -41,6 +41,15 @@ public class VLVWrappedSimple extends VLV{
         wrappedvalue = CACHE[0];
     }
 
+    @Override
+    public float get(){
+        return wrappedvalue;
+    }
+
+    public float getReal(){
+        return value;
+    }
+
     public void low(float low){
         changeRange(low, high);
     }
@@ -49,21 +58,12 @@ public class VLVWrappedSimple extends VLV{
         changeRange(low, high);
     }
 
-    @Override
-    public float get(){
-        return wrappedvalue;
-    }
-
     public float low(){
         return low;
     }
 
     public float high(){
         return high;
-    }
-
-    public float getReal(){
-        return super.get();
     }
 
     @Override

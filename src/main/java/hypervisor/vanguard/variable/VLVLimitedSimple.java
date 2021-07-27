@@ -38,6 +38,15 @@ public class VLVLimitedSimple extends VLV{
         limitedvalue = VLMath.limit(value, low, high);
     }
 
+    @Override
+    public float get(){
+        return limitedvalue;
+    }
+
+    public float getReal(){
+        return value;
+    }
+
     public void low(float low){
         changeRange(low, high);
     }
@@ -46,21 +55,12 @@ public class VLVLimitedSimple extends VLV{
         changeRange(low, high);
     }
 
-    @Override
-    public float get(){
-        return limitedvalue;
-    }
-
     public float low(){
         return low;
     }
 
     public float high(){
         return high;
-    }
-
-    public float getReal(){
-        return super.get();
     }
 
     @Override

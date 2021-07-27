@@ -60,19 +60,19 @@ public class VLVCurved extends VLVariable{
         tracker += change;
 
         if(tracker >= 1F){
-            set(to);
+            value = to * director;
             tracker = 1;
 
             deactivate();
 
         }else if(tracker <= 0F){
-            set(from);
+            value = from * director;
             tracker = 0;
 
             deactivate();
 
         }else{
-            set(VLMath.range((float)curve.process(tracker), from, to));
+            value = VLMath.range((float)curve.process(tracker), from, to) * director;
         }
 
         return 1;

@@ -20,7 +20,7 @@ public class VLV implements VLVTypeVariable{
     public static final VLV ONE = new Static(1);
     public static final VLV NEGATIVE_ONE = new Static(-1);
 
-    private float value;
+    protected float value;
 
     public VLV(float value){
         this.value = value;

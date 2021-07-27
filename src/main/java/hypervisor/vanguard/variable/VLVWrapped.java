@@ -93,7 +93,7 @@ public final class VLVWrapped extends VLVCurved{
     }
 
     public float getReal(){
-        return super.get();
+        return value;
     }
 
     public void low(float low){

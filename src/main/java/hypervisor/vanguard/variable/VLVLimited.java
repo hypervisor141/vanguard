@@ -32,7 +32,7 @@ public class VLVLimited extends VLVCurved{
         copy(src, flags);
     }
 
-    protected VLVLimited(){
+    public VLVLimited(){
 
     }
 

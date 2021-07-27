@@ -18,7 +18,7 @@ public class VLVWrappedSimple extends VLV{
         copy(src, flags);
     }
 
-    protected VLVWrappedSimple(){
+    public VLVWrappedSimple(){
 
     }
 

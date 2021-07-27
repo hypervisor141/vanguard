@@ -17,7 +17,7 @@ public class VLVLimitedSimple extends VLV{
         copy(src, flags);
     }
 
-    protected VLVLimitedSimple(){
+    public VLVLimitedSimple(){
 
     }
 

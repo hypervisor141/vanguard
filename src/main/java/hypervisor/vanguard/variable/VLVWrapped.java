@@ -44,7 +44,7 @@ public final class VLVWrapped extends VLVCurved{
         copy(src, flags);
     }
 
-    protected VLVWrapped(){
+    public VLVWrapped(){
 
     }
 

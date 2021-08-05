@@ -185,14 +185,18 @@ public class VLVEntry implements VLVTypeRunner{
 
     @Override
     public void start(){
-        activate();
-        syncOnStart();
+        if(!target.active()){
+            syncOnStart();
+            activate();
+        }
     }
 
     @Override
     public void pause(){
-        target.deactivate();
-        syncOnPause();
+        if(target.active()){
+            target.deactivate();
+            syncOnPause();
+        }
     }
 
     @Override

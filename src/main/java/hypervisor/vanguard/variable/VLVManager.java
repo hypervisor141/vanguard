@@ -146,16 +146,20 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
     @Override
     public void start(){
-        paused = false;
         isdone = false;
 
-        syncOnStart();
+        if(paused){
+            paused = false;
+            syncOnStart();
+        }
     }
 
     @Override
     public void pause(){
-        paused = true;
-        syncOnPause();
+        if(!paused){
+            syncOnPause();
+            paused = true;
+        }
     }
 
     @Override

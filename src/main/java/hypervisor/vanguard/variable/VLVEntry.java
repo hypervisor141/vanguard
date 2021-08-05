@@ -57,6 +57,16 @@ public class VLVEntry implements VLVTypeRunner{
     }
 
     @Override
+    public void initialize(int cycles){
+        target.initialize(cycles);
+    }
+
+    @Override
+    public void initialize(float changerate){
+        target.initialize(changerate);
+    }
+
+    @Override
     public void initialize(float from, float to, int cycles){
         target.initialize(from, to, cycles);
         syncOnChange();

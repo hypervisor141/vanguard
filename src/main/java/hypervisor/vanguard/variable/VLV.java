@@ -35,6 +35,16 @@ public class VLV implements VLVTypeVariable{
     }
 
     @Override
+    public void initialize(int cycles){
+
+    }
+
+    @Override
+    public void initialize(float changerate){
+
+    }
+
+    @Override
     public void initialize(float from, float to, int cycles){
 
     }

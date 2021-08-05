@@ -65,6 +65,24 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     }
 
     @Override
+    public void initialize(int cycles){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).initialize(cycles);
+        }
+    }
+
+    @Override
+    public void initialize(float changerate){
+        int size = entries.size();
+
+        for(int i = 0; i < size; i++){
+            entries.get(i).initialize(changerate);
+        }
+    }
+
+    @Override
     public void initialize(float from, float to, int cycles){
         int size = entries.size();
 

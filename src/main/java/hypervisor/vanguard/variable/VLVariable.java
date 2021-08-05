@@ -37,6 +37,16 @@ public abstract class VLVariable extends VLV{
     }
 
     @Override
+    public void initialize(int cycles){
+        initialize(from, to, cycles);
+    }
+
+    @Override
+    public void initialize(float changerate){
+        initialize(from, to, changerate);
+    }
+
+    @Override
     public void initialize(float from, float to, int cycles){
         initialize(from, to, convertCyclesToChangeRate(from, to, cycles));
     }

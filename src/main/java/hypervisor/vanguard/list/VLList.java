@@ -20,7 +20,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     }
 
-    public void resizeoverhead(int count){
+    public void resizeOverhead(int count){
         if(count < 0){
             throw new RuntimeException("Invalid resizeoverhead[" + count + "]");
         }
@@ -70,7 +70,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         virtualSize(realSize());
     }
 
-    public int resizeoverhead(){
+    public int resizeOverhead(){
         return resizeoverhead;
     }
 

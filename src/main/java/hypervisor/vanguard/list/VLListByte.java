@@ -8,13 +8,13 @@ import java.util.Arrays;
 
 public class VLListByte extends VLList<byte[]>{
 
-    public VLListByte(int capacity, int resizer){
-        super(resizer, 0);
+    public VLListByte(int capacity, int resizeoverhead){
+        super(resizeoverhead, 0);
         array = new byte[capacity];
     }
 
-    public VLListByte(byte[] data, int resizer){
-        super(resizer, data.length);
+    public VLListByte(byte[] data, int resizeoverhead){
+        super(resizeoverhead, data.length);
         array = data;
     }
 
@@ -155,9 +155,9 @@ public class VLListByte extends VLList<byte[]>{
     }
 
     @Override
-    public void reinitialize(int capacity, int resizer){
+    public void reinitialize(int capacity, int resizeoverhead){
         reinitialize(capacity);
-        this.resizer = resizer;
+        this.resizeoverhead = resizeoverhead;
     }
 
     @Override

@@ -25,16 +25,16 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
     protected VLSyncType<VLVManager<ENTRY>> syncerOnPause;
     protected VLSyncType<VLVManager<ENTRY>> syncerOnDone;
 
-    public VLVManager(int capacity, int resizer){
-        entries = new VLListType<>(capacity, resizer);
+    public VLVManager(int capacity, int resizeoverhead){
+        entries = new VLListType<>(capacity, resizeoverhead);
 
         paused = true;
         isdone = true;
         endpointindex = -1;
     }
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerOnChange){
-        entries = new VLListType<>(capacity, resizer);
+    public VLVManager(int capacity, int resizeoverhead, VLSyncType<VLVManager<ENTRY>> syncerOnChange){
+        entries = new VLListType<>(capacity, resizeoverhead);
 
         this.syncerOnChange = syncerOnChange;
 
@@ -43,8 +43,8 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
         endpointindex = -1;
     }
 
-    public VLVManager(int capacity, int resizer, VLSyncType<VLVManager<ENTRY>> syncerOnStart, VLSyncType<VLVManager<ENTRY>> syncerOnChange, VLSyncType<VLVManager<ENTRY>> syncerOnPause, VLSyncType<VLVManager<ENTRY>> syncerOnDone){
-        entries = new VLListType<>(capacity, resizer);
+    public VLVManager(int capacity, int resizeoverhead, VLSyncType<VLVManager<ENTRY>> syncerOnStart, VLSyncType<VLVManager<ENTRY>> syncerOnChange, VLSyncType<VLVManager<ENTRY>> syncerOnPause, VLSyncType<VLVManager<ENTRY>> syncerOnDone){
+        entries = new VLListType<>(capacity, resizeoverhead);
 
         this.syncerOnStart = syncerOnStart;
         this.syncerOnChange = syncerOnChange;

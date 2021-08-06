@@ -8,24 +8,24 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
 
     protected TYPE array;
 
-    protected int resizer;
+    protected int resizeoverhead;
     protected int currentsize;
 
-    public VLList(int resizer, int currentsize){
+    public VLList(int resizeoverhead, int currentsize){
         this.currentsize = currentsize;
-        this.resizer = resizer;
+        this.resizeoverhead = resizeoverhead;
     }
 
     protected VLList(){
 
     }
 
-    public void resizer(int count){
+    public void resizeoverhead(int count){
         if(count < 0){
-            throw new RuntimeException("Invalid resizer[" + count + "]");
+            throw new RuntimeException("Invalid resizeoverhead[" + count + "]");
         }
 
-        resizer = count;
+        resizeoverhead = count;
     }
 
     public void virtualSize(int size){
@@ -33,7 +33,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
             throw new RuntimeException("Invalid virtualSize[" + size + "]");
 
         }else if(currentsize > realSize()){
-            resize(currentsize + resizer);
+            resize(currentsize + resizeoverhead);
         }
 
         currentsize = size;
@@ -70,8 +70,8 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         virtualSize(realSize());
     }
 
-    public int resizer(){
-        return resizer;
+    public int resizeoverhead(){
+        return resizeoverhead;
     }
 
     public int size(){
@@ -86,7 +86,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         return array;
     }
 
-    public abstract void reinitialize(int capacity, int resizer);
+    public abstract void reinitialize(int capacity, int resizeoverhead);
 
     public abstract void reinitialize(int capacity);
 
@@ -110,7 +110,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         int newsize = currentsize + expansionsize;
 
         if(newsize >= realSize()){
-            resize(newsize + resizer);
+            resize(newsize + resizeoverhead);
         }
     }
 
@@ -126,7 +126,7 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
             VLCopyable.Helper.throwMissingDefaultFlags();
         }
 
-        resizer = src.resizer;
+        resizeoverhead = src.resizeoverhead;
         currentsize = src.currentsize;
     }
 
@@ -139,8 +139,8 @@ public abstract class VLList<TYPE> implements VLLoggable, VLCopyable<VLList<TYPE
         log.append(realSize());
         log.append("] size[");
         log.append(currentsize);
-        log.append("] resizer[");
-        log.append(resizer);
+        log.append("] resizeoverhead[");
+        log.append(resizeoverhead);
         log.append("]");
     }
 }

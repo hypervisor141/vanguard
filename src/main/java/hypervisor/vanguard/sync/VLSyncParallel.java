@@ -8,8 +8,8 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
     public static final long FLAG_REFERENCE_ENTRIES = 0x1L;
     public static final long FLAG_DUPLICATE_ENTRIES = 0x2L;
 
-    public VLSyncParallel(int capacity, int resizer){
-        super(new VLListType<>(capacity, resizer));
+    public VLSyncParallel(int capacity, int resizeoverhead){
+        super(new VLListType<>(capacity, resizeoverhead));
     }
 
     public VLSyncParallel(VLSyncType<SOURCE>[] array){

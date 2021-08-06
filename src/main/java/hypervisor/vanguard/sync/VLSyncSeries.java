@@ -8,8 +8,8 @@ public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap
     public static final long FLAG_REFERENCE_ENTRIES = 0x1L;
     public static final long FLAG_DUPLICATE_ENTRIES = 0x2L;
 
-    public VLSyncSeries(int capacity, int resizer){
-        super(new VLListType<>(capacity, resizer));
+    public VLSyncSeries(int capacity, int resizeoverhead){
+        super(new VLListType<>(capacity, resizeoverhead));
     }
 
     public VLSyncSeries(VLSyncMap<?, ?>[] array){

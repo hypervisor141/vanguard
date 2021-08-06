@@ -8,19 +8,19 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
 
     protected VLListType<Entry<ENTRY>> dynamicentries;
 
-    public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer){
-        super(capacity, resizer);
-        dynamicentries = new VLListType<>(entrycapacity, entryresizer);
+    public VLVManagerDynamic(int capacity, int resizeoverhead, int entrycapacity, int entryresizeoverhead){
+        super(capacity, resizeoverhead);
+        dynamicentries = new VLListType<>(entrycapacity, entryresizeoverhead);
     }
 
-    public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer, VLSyncType<VLVManager<ENTRY>> syncerOnChange){
-        super(capacity, resizer, syncerOnChange);
-        dynamicentries = new VLListType<>(entrycapacity, entryresizer);
+    public VLVManagerDynamic(int capacity, int resizeoverhead, int entrycapacity, int entryresizeoverhead, VLSyncType<VLVManager<ENTRY>> syncerOnChange){
+        super(capacity, resizeoverhead, syncerOnChange);
+        dynamicentries = new VLListType<>(entrycapacity, entryresizeoverhead);
     }
 
-    public VLVManagerDynamic(int capacity, int resizer, int entrycapacity, int entryresizer, VLSyncType<VLVManager<ENTRY>> syncerOnStart, VLSyncType<VLVManager<ENTRY>> syncerOnChange, VLSyncType<VLVManager<ENTRY>> syncerOnPause, VLSyncType<VLVManager<ENTRY>> syncerOnEnd){
-        super(capacity, resizer, syncerOnStart, syncerOnChange, syncerOnPause, syncerOnEnd);
-        dynamicentries = new VLListType<>(entrycapacity, entryresizer);
+    public VLVManagerDynamic(int capacity, int resizeoverhead, int entrycapacity, int entryresizeoverhead, VLSyncType<VLVManager<ENTRY>> syncerOnStart, VLSyncType<VLVManager<ENTRY>> syncerOnChange, VLSyncType<VLVManager<ENTRY>> syncerOnPause, VLSyncType<VLVManager<ENTRY>> syncerOnEnd){
+        super(capacity, resizeoverhead, syncerOnStart, syncerOnChange, syncerOnPause, syncerOnEnd);
+        dynamicentries = new VLListType<>(entrycapacity, entryresizeoverhead);
     }
 
     public VLVManagerDynamic(VLVManagerDynamic<ENTRY> src, long flags){

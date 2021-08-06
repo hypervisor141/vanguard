@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public final class VLListInt extends VLList<int[]>{
 
-    public VLListInt(int capacity, int resizer){
-        super(resizer, 0);
+    public VLListInt(int capacity, int resizeoverhead){
+        super(resizeoverhead, 0);
         array = new int[capacity];
     }
 
-    public VLListInt(int[] data, int resizer){
-        super(resizer, data.length);
+    public VLListInt(int[] data, int resizeoverhead){
+        super(resizeoverhead, data.length);
         array = data;
     }
 
@@ -155,9 +155,9 @@ public final class VLListInt extends VLList<int[]>{
     }
 
     @Override
-    public void reinitialize(int capacity, int resizer){
+    public void reinitialize(int capacity, int resizeoverhead){
         reinitialize(capacity);
-        this.resizer = resizer;
+        this.resizeoverhead = resizeoverhead;
     }
 
     @Override

@@ -11,13 +11,13 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     public static final long FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS = 0x1L;
     public static final long FLAG_DUPLICATE_ARRAY_FULLY = 0x2L;
 
-    public VLListType(int capacity, int resizer){
-        super(resizer, 0);
+    public VLListType(int capacity, int resizeoverhead){
+        super(resizeoverhead, 0);
         array = new Object[capacity];
     }
 
-    public VLListType(TYPE[] data, int resizer){
-        super(resizer, data.length);
+    public VLListType(TYPE[] data, int resizeoverhead){
+        super(resizeoverhead, data.length);
         array = data;
     }
 
@@ -169,9 +169,9 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     }
 
     @Override
-    public void reinitialize(int capacity, int resizer){
+    public void reinitialize(int capacity, int resizeoverhead){
         reinitialize(capacity);
-        this.resizer = resizer;
+        this.resizeoverhead = resizeoverhead;
     }
 
     @Override
@@ -232,7 +232,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                     }
 
                 }else{
-                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_resizerREFERENCE_ARRAY", "FLAG_resizerDUPLICATE_ARRAY");
+                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_resizeoverheadREFERENCE_ARRAY", "FLAG_resizeoverheadDUPLICATE_ARRAY");
                 }
 
             }else{
@@ -243,7 +243,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
             VLCopyable.Helper.throwMissingAllFlags();
         }
 
-        resizer = src.resizer;
+        resizeoverhead = src.resizeoverhead;
         currentsize = src.currentsize;
     }
 

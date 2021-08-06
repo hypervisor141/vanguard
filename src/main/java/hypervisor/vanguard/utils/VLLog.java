@@ -10,15 +10,15 @@ public class VLLog{
     protected VLListType<String> tags;
     protected int debugtagsoffset;
 
-    public VLLog(String[] tags, int resizer){
+    public VLLog(String[] tags, int resizeoverhead){
         builder = new StringBuilder();
-        this.tags = new VLListType<>(tags, resizer);
+        this.tags = new VLListType<>(tags, resizeoverhead);
         debugtagsoffset = Integer.MAX_VALUE;
     }
 
-    public VLLog(String[] tags, int resizer, int debugtagsoffset){
+    public VLLog(String[] tags, int resizeoverhead, int debugtagsoffset){
         builder = new StringBuilder();
-        this.tags = new VLListType<>(tags, resizer);
+        this.tags = new VLListType<>(tags, resizeoverhead);
         this.debugtagsoffset = debugtagsoffset;
     }
 

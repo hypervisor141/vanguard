@@ -7,13 +7,13 @@ import java.util.Arrays;
 
 public final class VLListFloat extends VLList<float[]>{
 
-    public VLListFloat(int capacity, int resizer){
-        super(resizer, 0);
+    public VLListFloat(int capacity, int resizeoverhead){
+        super(resizeoverhead, 0);
         array = new float[capacity];
     }
 
-    public VLListFloat(float[] data, int resizer){
-        super(resizer, data.length);
+    public VLListFloat(float[] data, int resizeoverhead){
+        super(resizeoverhead, data.length);
         array = data;
     }
 
@@ -155,9 +155,9 @@ public final class VLListFloat extends VLList<float[]>{
     }
 
     @Override
-    public void reinitialize(int capacity, int resizer){
+    public void reinitialize(int capacity, int resizeoverhead){
         reinitialize(capacity);
-        this.resizer = resizer;
+        this.resizeoverhead = resizeoverhead;
     }
 
     @Override

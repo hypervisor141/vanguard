@@ -12,8 +12,8 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
 
     protected VLListType<VLListType<VLVTypeVariable>> matrix;
 
-    public VLVMatrix(int capacity, int resizer){
-        matrix = new VLListType<>(capacity, resizer);
+    public VLVMatrix(int capacity, int resizeoverhead){
+        matrix = new VLListType<>(capacity, resizeoverhead);
     }
 
     public VLVMatrix(VLVMatrix src, long flags){
@@ -24,12 +24,12 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
 
     }
 
-    public void addRow(int initialcapacity, int resizercount){
-        matrix.add(new VLListType<VLVTypeVariable>(initialcapacity, resizercount));
+    public void addRow(int capacity, int resizeoverhead){
+        matrix.add(new VLListType<VLVTypeVariable>(capacity, resizeoverhead));
     }
 
-    public void addRow(int index, int initialcapacity, int resizercount){
-        matrix.add(index, new VLListType<VLVTypeVariable>(initialcapacity, resizercount));
+    public void addRow(int index, int capacity, int resizeoverhead){
+        matrix.add(index, new VLListType<VLVTypeVariable>(capacity, resizeoverhead));
     }
 
     public void addColumn(int index, VLVTypeVariable element){
@@ -40,8 +40,8 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
         matrix.get(index).add(columnindex, element);
     }
 
-    public void setRow(int index, int initialcapacity, int resizercount){
-        matrix.set(index, new VLListType<>(initialcapacity, resizercount));
+    public void setRow(int index, int capacity, int resizeoverhead){
+        matrix.set(index, new VLListType<>(capacity, resizeoverhead));
     }
 
     public void setRow(int index, VLListType<VLVTypeVariable> row){

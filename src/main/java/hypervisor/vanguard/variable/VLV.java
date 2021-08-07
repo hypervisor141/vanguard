@@ -4,10 +4,15 @@ import hypervisor.vanguard.utils.VLLog;
 
 public class VLV implements VLVTypeVariable{
 
-    private static final class Static extends VLV{
+    private static final class Constant extends VLV{
 
-        private Static(int value){
+        private Constant(int value){
             super(value);
+        }
+
+        @Override
+        public void set(float value){
+            throw new RuntimeException("Can't modify a constant VLV.");
         }
 
         @Override
@@ -16,9 +21,9 @@ public class VLV implements VLVTypeVariable{
         }
     };
 
-    public static final VLV ZERO = new Static(0);
-    public static final VLV ONE = new Static(1);
-    public static final VLV NEGATIVE_ONE = new Static(-1);
+    public static final VLV ZERO = new Constant(0);
+    public static final VLV ONE = new Constant(1);
+    public static final VLV NEGATIVE_ONE = new Constant(-1);
 
     protected float value;
 

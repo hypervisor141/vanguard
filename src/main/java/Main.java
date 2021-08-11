@@ -1,14 +1,28 @@
+import hypervisor.vanguard.buffer.VLBufferFloat;
+import hypervisor.vanguard.utils.VLLoggable;
 import hypervisor.vanguard.variable.*;
+
+import java.nio.ByteOrder;
+import java.util.Random;
 
 public class Main {
 
     public static void main(String[] args){
-        VLVLimited limited = new VLVLimited(-100, 100, 50, 0, 5, VLVariable.LOOP_RETURN_ONCE, VLVCurved.CURVE_LINEAR);
-        limited.activate();
+        try{
+            VLBufferFloat buffer = new VLBufferFloat.Direct(5);
+            buffer.adjustPreInitCapacity(10);
+            buffer.initialize(ByteOrder.LITTLE_ENDIAN);
 
-        while(limited.active()){
-            limited.next();
-            System.out.println(limited.get() + "  ");
+            System.out.println(buffer.size() + "  ");
+
+            for(int i = 0; i < 13; i++){
+                System.out.println(buffer.position() + "   index " + i);
+                buffer.put((float)i);
+            }
+
+            System.out.println(VLLoggable.Helper.getString("wtf", buffer, null));
+        }catch(Exception ex){
+            ex.printStackTrace();
         }
     }
 }

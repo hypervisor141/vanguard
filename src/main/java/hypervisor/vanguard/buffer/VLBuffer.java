@@ -26,32 +26,16 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     }
 
-    public ByteBuffer initialize(ByteOrder order, int capacity){
-        this.resizeoverhead = resizeoverhead;
-        return generateBuffer(capacity, order);
-    }
+    public abstract ByteBuffer initialize(int capacity, ByteOrder order);
 
     public ByteBuffer initialize(ByteOrder order){
-        this.resizeoverhead = resizeoverhead;
-        return generateBuffer(preInitCapacity, order);
+        return initialize(preInitCapacity, order);
     }
+
+    public abstract void initialize(ByteBuffer buffer);
 
     public void initialize(BUFFER buffer){
         this.buffer = buffer;
-        this.resizeoverhead = resizeoverhead;
-    }
-
-    public void initializeDirect(ByteBuffer buffer){
-        this.resizeoverhead = resizeoverhead;
-        generateBuffer(buffer);
-    }
-
-    protected abstract ByteBuffer generateBuffer(int capacity, ByteOrder order);
-
-    protected abstract void generateBuffer(ByteBuffer buffer);
-
-    protected ByteBuffer generateBuffer(ByteOrder order){
-        return generateBuffer(preInitCapacity, order);
     }
 
     public void put(byte data){
@@ -862,8 +846,10 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     protected final void expandIfNeeded(int expansionsize){
-        if(resizeoverhead > 0 && position() + expansionsize >= size()){
-            resize(expansionsize + resizeoverhead);
+        int currentsize = size();
+
+        if(resizeoverhead > 0 && position() + expansionsize > currentsize){
+            resize(currentsize + expansionsize + resizeoverhead);
         }
     }
 

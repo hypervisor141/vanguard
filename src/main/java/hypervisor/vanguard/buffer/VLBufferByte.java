@@ -18,7 +18,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
     }
 
     @Override
-    public void generateBuffer(ByteBuffer buffer){
+    public void initialize(ByteBuffer buffer){
         this.buffer = buffer;
         buffer.position(0);
     }
@@ -77,7 +77,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
     @Override
     public void remove(int offset, int size){
         ByteBuffer b = buffer;
-        generateBuffer(buffer.capacity() - size, buffer.order());
+        initialize(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
         for(int i = 0; i < offset; i++){
@@ -91,7 +91,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
     @Override
     public void remove(int offset, int unitsize, int stride, int size){
         ByteBuffer b = buffer;
-        generateBuffer(buffer.capacity() - size, buffer.order());
+        initialize(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
@@ -114,7 +114,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         int orgposition = position();
 
         ByteBuffer b = buffer;
-        generateBuffer(size, buffer.order());
+        initialize(size, buffer.order());
         b.position(0);
 
         if(b.hasArray()){
@@ -162,10 +162,10 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         ByteBuffer target = src.buffer;
 
         if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
-            generateBuffer(target);
+            initialize(target);
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            generateBuffer(target.capacity(), target.order());
+            initialize(target.capacity(), target.order());
 
             if(target.hasArray()){
                 buffer.put(target.array());
@@ -203,7 +203,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
 
         @Override
-        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = ByteBuffer.allocate(capacity);
             buffer.order(order);
             buffer.position(0);
@@ -232,7 +232,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
         }
 
         @Override
-        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
+        public ByteBuffer initialize(int capacity, ByteOrder order){
             buffer = ByteBuffer.allocateDirect(capacity * getTypeBytes());
             buffer.order(order);
             buffer.position(0);

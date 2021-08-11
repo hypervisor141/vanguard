@@ -1,6 +1,6 @@
 package hypervisor.vanguard.buffer;
 
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.utils.VLLoggable;
@@ -10,25 +10,38 @@ import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+@SuppressWarnings("unused")
 public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> implements VLLoggable, VLCopyable<VLBuffer<ELEMENT, BUFFER>> {
 
     public BUFFER buffer;
     protected int preInitCapacity;
+    protected int resizeoverhead;
 
     protected VLBuffer(){
-
+        preInitCapacity = 0;
     }
 
-    public abstract ByteBuffer initialize(int capacity, ByteOrder order);
-
-    public abstract void initialize(ByteBuffer buffer);
-
-    public final ByteBuffer initialize(ByteOrder order){
-        return initialize(preInitCapacity, order);
+    public ByteBuffer initialize(int capacity, int resizeoverhead, ByteOrder order){
+        this.resizeoverhead = resizeoverhead;
+        return generateBuffer(capacity, order);
     }
 
-    public void initialize(BUFFER buffer){
+    public ByteBuffer initialize(ByteOrder order, int resizeoverhead){
+        this.resizeoverhead = resizeoverhead;
+        return generateBuffer(preInitCapacity, order);
+    }
+
+    public void initialize(BUFFER buffer, int resizeoverhead){
         this.buffer = buffer;
+        this.resizeoverhead = resizeoverhead;
+    }
+
+    protected abstract ByteBuffer generateBuffer(int capacity, ByteOrder order);
+
+    protected abstract void generateBuffer(ByteBuffer buffer);
+
+    protected ByteBuffer generateBuffer(ByteOrder order){
+        return generateBuffer(preInitCapacity, order);
     }
 
     public void put(byte data){
@@ -838,9 +851,23 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
+    protected final void expandIfNeeded(int expansionsize){
+        if(resizeoverhead > 0 && position() + expansionsize >= size()){
+            resize(expansionsize + resizeoverhead);
+        }
+    }
+
     public abstract void remove(int offset, int size);
 
-    public abstract void removeInterleaved(int offset, int unitsize, int stride, int size);
+    public abstract void remove(int offset, int unitsize, int stride, int size);
+
+    public void remove(VLBufferTracker tracker){
+        remove(tracker.offset, tracker.count);
+    }
+
+    public void removeInterleaved(VLBufferTracker tracker){
+        remove(tracker.offset, tracker.unitsize, tracker.stride, tracker.count);
+    }
 
     public void position(int pos){
         buffer.position(pos);
@@ -858,7 +885,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public abstract int getTypeBytes();
 
-    public void release(){
+    public void destroy(){
         buffer = null;
     }
 

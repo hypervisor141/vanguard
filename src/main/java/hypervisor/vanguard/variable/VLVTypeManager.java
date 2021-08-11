@@ -1,6 +1,6 @@
 package hypervisor.vanguard.variable;
 
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 
 public interface VLVTypeManager<ENTRY extends VLVTypeRunner> extends VLVTypeRunner{
 

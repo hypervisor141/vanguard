@@ -1,6 +1,6 @@
 package hypervisor.vanguard.concurrency;
 
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 
 public class VLThreadManager{
 

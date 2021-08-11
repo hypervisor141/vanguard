@@ -1,24 +1,25 @@
-package hypervisor.vanguard.list;
+package hypervisor.vanguard.list.arraybacked;
 
 import hypervisor.vanguard.array.VLArrayUtils;
+import hypervisor.vanguard.list.VLList;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
 
 import java.util.Arrays;
 
-public final class VLListType<TYPE> extends VLList<Object[]>{
+public final class VLListType<TYPE> extends VLListArrayBacked<Object[]> {
 
     public static final long FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS = 0x1L;
     public static final long FLAG_DUPLICATE_ARRAY_FULLY = 0x2L;
 
     public VLListType(int capacity, int resizeoverhead){
-        super(resizeoverhead, 0);
-        array = new Object[capacity];
+        super(0, resizeoverhead);
+        backend = new Object[capacity];
     }
 
     public VLListType(TYPE[] data, int resizeoverhead){
-        super(resizeoverhead, data.length);
-        array = data;
+        super(data.length, resizeoverhead);
+        backend = data;
     }
 
     public VLListType(VLListType<TYPE> src, long flags){
@@ -31,7 +32,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     public void add(TYPE item){
         expandIfNeeded(1);
-        array[currentsize++] = item;
+        backend[vsize++] = item;
     }
 
     public void add(TYPE[] items){
@@ -39,7 +40,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         expandIfNeeded(size);
 
         for(int i = 0; i < size; i++){
-            array[currentsize++] = items[i];
+            backend[vsize++] = items[i];
         }
     }
 
@@ -50,38 +51,38 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         size = items.size();
 
         for(int i = 0; i < size; i++){
-            array[currentsize++] = items.get(i);
+            backend[vsize++] = items.get(i);
         }
     }
 
     public void add(int index, TYPE item){
         expandIfNeeded(1);
-        VLArrayUtils.addInPlace(index, currentsize, array, item);
-        currentsize++;
+        VLArrayUtils.addInPlace(index, vsize, backend, item);
+        vsize++;
     }
 
     public void add(int index, TYPE[] items, int offset, int count){
         expandIfNeeded(count);
 
-        VLArrayUtils.addInPlace(index, offset, currentsize, array, items, count);
-        currentsize++;
+        VLArrayUtils.addInPlace(index, offset, vsize, backend, items, count);
+        vsize++;
     }
 
     public void add(int index, VLListType<TYPE> items, int offset, int count){
         expandIfNeeded(count);
-        VLArrayUtils.spaceOut(array, index, count);
+        VLArrayUtils.spaceOut(backend, index, count);
 
         set(index, items, offset, count);
     }
 
     public void set(int index, TYPE item){
         checkOperableRange(index, 1);
-        array[index] = item;
+        backend[index] = item;
     }
 
     public void set(int index, TYPE[] items, int offset, int count){
         checkOperableRange(index, 1);
-        System.arraycopy(items, offset, array, index, count);
+        System.arraycopy(items, offset, backend, index, count);
     }
 
     public void set(int index, VLListType<TYPE> items, int offset, int count){
@@ -89,22 +90,22 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         int endpoint = offset + count;
 
         for(int i = offset; i < endpoint; i++){
-            array[index++] = items.get(i);
+            backend[index++] = items.get(i);
         }
     }
 
     public TYPE get(int index){
         checkOperableRange(index, 1);
-        return (TYPE)array[index];
+        return (TYPE) backend[index];
     }
 
     public int indexOf(Object item){
-        return VLArrayUtils.indexOf(array, 0, currentsize, item);
+        return VLArrayUtils.indexOf(backend, 0, vsize, item);
     }
 
     public int indexOf(Object item, int searchoffset, int searchcount){
         checkOperableRange(searchoffset, searchcount);
-        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
+        return VLArrayUtils.indexOf(backend, searchoffset, searchcount, item);
     }
 
     public void remove(Object item){
@@ -127,24 +128,24 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
     public void remove(int index, int count){
         super.remove(index, count);
 
-        int cap = currentsize + count;
+        int cap = vsize + count;
 
-        for(int i = currentsize; i < cap; i++){
-            array[i] = null;
+        for(int i = vsize; i < cap; i++){
+            backend[i] = null;
         }
     }
 
     @Override
     public int realSize(){
-        return array.length;
+        return backend.length;
     }
 
     @Override
     public void reverse(){
-        int cap = array.length - 1;
+        int cap = backend.length - 1;
 
         for(int i = 0, i2 = cap; i < i2; i++, i2--){
-            array[i] = array[i2];
+            backend[i] = backend[i2];
         }
     }
 
@@ -153,19 +154,19 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         if(size < 0){
             throw new RuntimeException("Invalid size[" + size + "]");
         }
-        if(currentsize > size){
-            currentsize = size;
+        if(vsize > size){
+            vsize = size;
         }
 
         Object[] newarray = new Object[size];
-        System.arraycopy(array, 0, newarray, 0, currentsize);
-        array = newarray;
+        System.arraycopy(backend, 0, newarray, 0, vsize);
+        backend = newarray;
     }
 
     @Override
     public void reinitialize(int capacity){
-        array = new Object[capacity];
-        currentsize = 0;
+        backend = new Object[capacity];
+        vsize = 0;
     }
 
     @Override
@@ -176,40 +177,40 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
 
     @Override
     public void nullify(){
-        nullify(0, currentsize);
+        nullify(0, vsize);
     }
 
     @Override
     public void nullify(int index, int count){
         for(; index < count; index++){
-            array[index] = null;
+            backend[index] = null;
         }
     }
 
     @Override
     public void copy(VLList<Object[]> src, long flags){
         if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
-            array = src.array;
+            backend = src.backend();
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            array = src.array.clone();
+            backend = src.backend().clone();
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
-            int size = src.currentsize;
+            int size = src.size();
 
             if(size > 0){
-                Object[] srcarray = src.array;
-                array = new Object[srcarray.length];
+                Object[] srcarray = src.backend();
+                backend = new Object[srcarray.length];
 
                 if((flags & FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS) == FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS){
                     if(srcarray[0] instanceof VLListType){
                         for(int i = 0; i < size; i++){
-                            array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                            backend[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
                         }
 
                     }else if(srcarray[0] instanceof VLCopyable){
                         for(int i = 0; i < size; i++){
-                            array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
+                            backend[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
                         }
 
                     }else{
@@ -219,12 +220,12 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                 }else if((flags & FLAG_DUPLICATE_ARRAY_FULLY) == FLAG_DUPLICATE_ARRAY_FULLY){
                     if(srcarray[0] instanceof VLListType){
                         for(int i = 0; i < size; i++){
-                            array[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_FULLY);
+                            backend[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_FULLY);
                         }
 
                     }else if(srcarray[0] instanceof VLCopyable){
                         for(int i = 0; i < size; i++){
-                            array[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
+                            backend[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
                         }
 
                     }else{
@@ -236,15 +237,15 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
                 }
 
             }else{
-                array = new Object[0];
+                backend = new Object[0];
             }
 
         }else{
             VLCopyable.Helper.throwMissingAllFlags();
         }
 
-        resizeoverhead = src.resizeoverhead;
-        currentsize = src.currentsize;
+        resizeoverhead = src.resizeOverhead();
+        vsize = src.size();
     }
 
     @Override
@@ -257,7 +258,7 @@ public final class VLListType<TYPE> extends VLList<Object[]>{
         super.log(log, data);
 
         log.append(" content[");
-        log.append(Arrays.toString(array));
+        log.append(Arrays.toString(backend));
         log.append("]");
     }
 }

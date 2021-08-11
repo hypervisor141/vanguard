@@ -1,7 +1,7 @@
 package hypervisor.vanguard.sync;
 
 import hypervisor.vanguard.utils.VLCopyable;
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 
 public class VLSyncSeries<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncMap>>{
 

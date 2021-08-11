@@ -1,7 +1,7 @@
 package hypervisor.vanguard.buffer;
 
 import hypervisor.vanguard.utils.VLCopyable;
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 import hypervisor.vanguard.variable.VLVTypeVariable;
 
 import java.nio.ByteBuffer;
@@ -19,42 +19,47 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
     }
 
     @Override
-    public void initialize(ByteBuffer buffer){
+    public void generateBuffer(ByteBuffer buffer){
         this.buffer = buffer.asDoubleBuffer();
         buffer.position(0);
     }
 
     @Override
-    public void put(double data) {
+    public void put(double data){
+        expandIfNeeded(1);
         buffer.put(data);
     }
 
     @Override
-    public void put(VLVTypeVariable data) {
+    public void put(VLVTypeVariable data){
+        expandIfNeeded(1);
         buffer.put((double)data.get());
     }
 
     @Override
-    public void put(VLListType<VLVTypeVariable> data, int offset, int count) {
+    public void put(VLListType<VLVTypeVariable> data, int offset, int count){
+        expandIfNeeded(count);
+
         int limit = offset + count;
 
-        for (int i = offset; i < limit; i++) {
+        for (int i = offset; i < limit; i++){
             buffer.put((double)data.get(i).get());
         }
     }
 
     @Override
-    public void put(double[] data, int offset, int count) {
+    public void put(double[] data, int offset, int count){
+        expandIfNeeded(count);
         buffer.put(data, offset, count);
     }
 
     @Override
-    public Double read(int index) {
+    public Double read(int index){
         return buffer.get(index);
     }
 
     @Override
-    public void read(double[] results, int offset, int count) {
+    public void read(double[] results, int offset, int count){
         buffer.get(results, offset, count);
     }
 
@@ -71,61 +76,63 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
     }
 
     @Override
-    public void remove(int offset, int size) {
+    public void remove(int offset, int size){
         DoubleBuffer b = buffer;
-        initialize(buffer.capacity() - size, buffer.order());
+        generateBuffer(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
-        for (int i = 0; i < offset; i++) {
+        for (int i = 0; i < offset; i++){
             buffer.put(b.get(i));
         }
-        for (int i = offset + size; i < cap; i++) {
+        for (int i = offset + size; i < cap; i++){
             buffer.put(b.get(i));
         }
     }
 
     @Override
-    public void removeInterleaved(int offset, int unitsize, int stride, int size) {
+    public void remove(int offset, int unitsize, int stride, int size){
         DoubleBuffer b = buffer;
-        initialize(buffer.capacity() - size, buffer.order());
+        generateBuffer(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
 
-        for (int i = 0; i < offset; i++) {
+        for (int i = 0; i < offset; i++){
             buffer.put(b.get(i));
         }
-        for (int i = offset + unitsize; i < max; i += stride) {
-            for (int i2 = 0; i2 < chunksize; i2++) {
+        for (int i = offset + unitsize; i < max; i += stride){
+            for (int i2 = 0; i2 < chunksize; i2++){
                 buffer.put(b.get(i + i2));
             }
         }
-        for (int i = max; i < b.capacity(); i++) {
+        for (int i = max; i < b.capacity(); i++){
             buffer.put(b.get(i));
         }
     }
 
     @Override
-    public void resize(int size) {
+    public void resize(int size){
+        int orgposition = position();
+        
         DoubleBuffer b = buffer;
-        initialize(size, buffer.order());
+        generateBuffer(size, buffer.order());
         b.position(0);
 
-        if (b.hasArray()) {
-            if (b.capacity() <= buffer.capacity()) {
+        if (b.hasArray()){
+            if (b.capacity() <= buffer.capacity()){
                 buffer.put(b.array());
 
-            } else {
+            } else{
                 buffer.put(b.array(), 0, buffer.capacity());
             }
 
-        } else {
+        } else{
             double[] data;
 
-            if (b.capacity() <= buffer.capacity()) {
+            if (b.capacity() <= buffer.capacity()){
                 data = new double[b.capacity()];
 
-            } else {
+            } else{
                 data = new double[buffer.capacity()];
             }
 
@@ -133,16 +140,21 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
             buffer.put(data);
         }
 
-        buffer.position(0);
+        if(orgposition > size){
+            position(size);
+
+        }else{
+            position(orgposition);
+        }
     }
 
     @Override
-    public int getTypeBytes() {
+    public int getTypeBytes(){
         return Double.SIZE / Byte.SIZE;
     }
 
     @Override
-    public int sizeBytes() {
+    public int sizeBytes(){
         return buffer.capacity() * getTypeBytes();
     }
 
@@ -151,10 +163,10 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
         DoubleBuffer target = src.buffer;
 
         if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
-            initialize(target);
+            buffer = target;
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            initialize(target.capacity(), target.order());
+            generateBuffer(target.capacity(), target.order());
 
             if(target.hasArray()){
                 buffer.put(target.array());
@@ -187,7 +199,7 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
         }
 
         @Override
-        public ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
             buffer = DoubleBuffer.allocate(capacity);
             buffer.position(0);
 
@@ -211,7 +223,7 @@ public abstract class VLBufferDouble extends VLBuffer<Double, DoubleBuffer>{
         }
 
         @Override
-        public ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
             ByteBuffer buffer = ByteBuffer.allocateDirect(capacity * getTypeBytes());
             buffer.order(order);
             buffer.position(0);

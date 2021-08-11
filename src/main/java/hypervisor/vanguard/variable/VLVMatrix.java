@@ -3,7 +3,7 @@ package hypervisor.vanguard.variable;
 import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.utils.VLLoggable;
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 
 public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
 

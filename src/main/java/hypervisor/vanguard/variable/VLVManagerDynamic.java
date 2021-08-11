@@ -1,6 +1,6 @@
 package hypervisor.vanguard.variable;
 
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 import hypervisor.vanguard.sync.VLSyncType;
 import hypervisor.vanguard.utils.VLCopyable;
 

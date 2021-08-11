@@ -1,20 +1,20 @@
-package hypervisor.vanguard.list;
+package hypervisor.vanguard.list.arraybacked;
 
 import hypervisor.vanguard.utils.VLLog;
 import hypervisor.vanguard.array.VLArrayUtils;
 
 import java.util.Arrays;
 
-public final class VLListDouble extends VLList<double[]>{
+public final class VLListDouble extends VLListArrayBacked<double[]> {
 
     public VLListDouble(int capacity, int resizeoverhead){
-        super(resizeoverhead, 0);
-        array = new double[capacity];
+        super(0, resizeoverhead);
+        backend = new double[capacity];
     }
 
     public VLListDouble(double[] data, int resizeoverhead){
-        super(resizeoverhead, data.length);
-        array = data;
+        super(data.length, resizeoverhead);
+        backend = data;
     }
 
     public VLListDouble(VLListDouble src, long flags){
@@ -27,7 +27,7 @@ public final class VLListDouble extends VLList<double[]>{
 
     public void add(double item){
         expandIfNeeded(1);
-        array[currentsize++] = item;
+        backend[vsize++] = item;
     }
 
     public void add(double[] items){
@@ -35,7 +35,7 @@ public final class VLListDouble extends VLList<double[]>{
         expandIfNeeded(size);
 
         for(int i = 0; i < size; i++){
-            array[currentsize++] = items[i];
+            backend[vsize++] = items[i];
         }
     }
 
@@ -46,38 +46,38 @@ public final class VLListDouble extends VLList<double[]>{
         size = items.size();
 
         for(int i = 0; i < size; i++){
-            array[currentsize++] = items.get(i);
+            backend[vsize++] = items.get(i);
         }
     }
 
     public void add(int index, double item){
         expandIfNeeded(1);
-        VLArrayUtils.addInPlace(index, currentsize, array, item);
-        currentsize++;
+        VLArrayUtils.addInPlace(index, vsize, backend, item);
+        vsize++;
     }
 
     public void add(int index, double[] items, int offset, int count){
         expandIfNeeded(count);
 
-        VLArrayUtils.addInPlace(index, offset, currentsize, array, items, count);
-        currentsize++;
+        VLArrayUtils.addInPlace(index, offset, vsize, backend, items, count);
+        vsize++;
     }
 
     public void add(int index, VLListDouble items, int offset, int count){
         expandIfNeeded(count);
-        VLArrayUtils.spaceOut(array, index, count);
+        VLArrayUtils.spaceOut(backend, index, count);
 
         set(index, items, offset, count);
     }
 
     public void set(int index, double item){
         checkOperableRange(index, 1);
-        array[index] = item;
+        backend[index] = item;
     }
 
     public void set(int index, double[] items, int offset, int count){
         checkOperableRange(index, 1);
-        System.arraycopy(items, offset, array, index, count);
+        System.arraycopy(items, offset, backend, index, count);
     }
 
     public void set(int index, VLListDouble items, int offset, int count){
@@ -85,22 +85,22 @@ public final class VLListDouble extends VLList<double[]>{
         int endpoint = offset + count;
 
         for(int i = offset; i < endpoint; i++){
-            array[index++] = items.get(i);
+            backend[index++] = items.get(i);
         }
     }
 
     public double get(int index){
         checkOperableRange(index, 1);
-        return array[index];
+        return backend[index];
     }
 
     public int indexOf(double item){
-        return VLArrayUtils.indexOf(array, 0, currentsize, item);
+        return VLArrayUtils.indexOf(backend, 0, vsize, item);
     }
 
     public int indexOf(double item, int searchoffset, int searchcount){
         checkOperableRange(searchoffset, searchcount);
-        return VLArrayUtils.indexOf(array, searchoffset, searchcount, item);
+        return VLArrayUtils.indexOf(backend, searchoffset, searchcount, item);
     }
 
     public void remove(double item){
@@ -121,15 +121,15 @@ public final class VLListDouble extends VLList<double[]>{
 
     @Override
     public int realSize(){
-        return array.length;
+        return backend.length;
     }
 
     @Override
     public void reverse(){
-        int cap = array.length - 1;
+        int cap = backend.length - 1;
 
         for(int i = 0, i2 = cap; i < i2; i++, i2--){
-            array[i] = array[i2];
+            backend[i] = backend[i2];
         }
     }
 
@@ -138,20 +138,20 @@ public final class VLListDouble extends VLList<double[]>{
         if(size < 0){
             throw new RuntimeException("Invalid size[" + size + "]");
         }
-        if(currentsize > size){
-            currentsize = size;
+        if(vsize > size){
+            vsize = size;
         }
 
         double[] newarray = new double[size];
-        System.arraycopy(array, 0, newarray, 0, currentsize);
-        array = newarray;
+        System.arraycopy(backend, 0, newarray, 0, vsize);
+        backend = newarray;
     }
 
 
     @Override
     public void reinitialize(int capacity){
-        array = new double[capacity];
-        currentsize = 0;
+        backend = new double[capacity];
+        vsize = 0;
     }
 
     @Override
@@ -162,13 +162,13 @@ public final class VLListDouble extends VLList<double[]>{
 
     @Override
     public void nullify(){
-        nullify(0, currentsize);
+        nullify(0, vsize);
     }
 
     @Override
     public void nullify(int index, int count){
         for(; index < count; index++){
-            array[index] = 0;
+            backend[index] = 0;
         }
     }
 
@@ -182,7 +182,7 @@ public final class VLListDouble extends VLList<double[]>{
         super.log(log, data);
 
         log.append(" content[");
-        log.append(Arrays.toString(array));
+        log.append(Arrays.toString(backend));
         log.append("]");
     }
 }

@@ -1,7 +1,7 @@
 package hypervisor.vanguard.buffer;
 
 import hypervisor.vanguard.utils.VLCopyable;
-import hypervisor.vanguard.list.VLListType;
+import hypervisor.vanguard.list.arraybacked.VLListType;
 import hypervisor.vanguard.variable.VLVTypeVariable;
 
 import java.nio.ByteBuffer;
@@ -19,23 +19,27 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public void initialize(ByteBuffer buffer){
+    public void generateBuffer(ByteBuffer buffer){
         this.buffer = buffer.asIntBuffer();
         buffer.position(0);
     }
 
     @Override
     public void put(int data){
+        expandIfNeeded(1);
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
+        expandIfNeeded(1);
         buffer.put((int)data.get());
     }
 
     @Override
     public void put(VLListType<VLVTypeVariable> data, int offset, int count){
+        expandIfNeeded(count);
+
         int limit = offset + count;
 
         for(int i = offset; i < limit; i++){
@@ -45,6 +49,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
     @Override
     public void put(int[] data, int offset, int count){
+        expandIfNeeded(count);
         buffer.put(data, offset, count);
     }
 
@@ -73,7 +78,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     @Override
     public void remove(int offset, int size){
         IntBuffer b = buffer;
-        initialize(buffer.capacity() - size, buffer.order());
+        generateBuffer(buffer.capacity() - size, buffer.order());
         int cap = b.capacity();
 
         for(int i = 0; i < offset; i++){
@@ -85,9 +90,9 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
     }
 
     @Override
-    public void removeInterleaved(int offset, int unitsize, int size, int stride){
+    public void remove(int offset, int unitsize, int size, int stride){
         IntBuffer b = buffer;
-        initialize(buffer.capacity() - size, buffer.order());
+        generateBuffer(buffer.capacity() - size, buffer.order());
 
         int max = offset + ((size / unitsize) * stride);
         int chunksize = stride - unitsize;
@@ -107,8 +112,10 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
     @Override
     public void resize(int size){
+        int orgposition = position();
+
         IntBuffer b = buffer;
-        initialize(size, buffer.order());
+        generateBuffer(size, buffer.order());
         b.position(0);
 
         if(b.hasArray()){
@@ -133,7 +140,12 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
             buffer.put(data);
         }
 
-        buffer.position(0);
+        if(orgposition > size){
+            position(size);
+
+        }else{
+            position(orgposition);
+        }
     }
 
     @Override
@@ -151,10 +163,10 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         IntBuffer target = src.buffer;
 
         if((flags & FLAG_REFERENCE) == FLAG_REFERENCE){
-            initialize(target);
+            buffer = target;
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            initialize(target.capacity(), target.order());
+            generateBuffer(target.capacity(), target.order());
 
             if(target.hasArray()){
                 buffer.put(target.array());
@@ -187,7 +199,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         }
 
         @Override
-        public ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
             buffer = IntBuffer.allocate(capacity);
             buffer.position(0);
 
@@ -211,7 +223,7 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
         }
 
         @Override
-        public ByteBuffer initialize(int capacity, ByteOrder order){
+        public ByteBuffer generateBuffer(int capacity, ByteOrder order){
             ByteBuffer buffer = ByteBuffer.allocateDirect(capacity * getTypeBytes());
             buffer.order(order);
             buffer.position(0);

@@ -17,26 +17,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     protected int preInitCapacity;
     protected int resizeoverhead;
 
-    protected VLBuffer(){
+    protected VLBuffer(int resizeoverhead){
+        this.resizeoverhead = resizeoverhead;
         preInitCapacity = 0;
     }
 
-    public ByteBuffer initialize(ByteOrder order, int capacity, int resizeoverhead){
+    protected VLBuffer(){
+
+    }
+
+    public ByteBuffer initialize(ByteOrder order, int capacity){
         this.resizeoverhead = resizeoverhead;
         return generateBuffer(capacity, order);
     }
 
-    public ByteBuffer initialize(ByteOrder order, int resizeoverhead){
+    public ByteBuffer initialize(ByteOrder order){
         this.resizeoverhead = resizeoverhead;
         return generateBuffer(preInitCapacity, order);
     }
 
-    public void initialize(BUFFER buffer, int resizeoverhead){
+    public void initialize(BUFFER buffer){
         this.buffer = buffer;
         this.resizeoverhead = resizeoverhead;
     }
 
-    public void initializeDirect(ByteBuffer buffer, int resizeoverhead){
+    public void initializeDirect(ByteBuffer buffer){
         this.resizeoverhead = resizeoverhead;
         generateBuffer(buffer);
     }
@@ -878,6 +883,10 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         buffer.position(pos);
     }
 
+    public void resizeOverhead(int overhead){
+        resizeoverhead = overhead;
+    }
+
     public abstract void resize(int size);
 
     public void adjustPreInitCapacity(int amount){
@@ -886,6 +895,10 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int position(){
         return buffer.position();
+    }
+
+    public int resizeOverhead(){
+        return resizeoverhead;
     }
 
     public abstract int getTypeBytes();

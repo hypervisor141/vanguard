@@ -9,8 +9,8 @@ import java.nio.ByteOrder;
 
 public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
-    public VLBufferByte(VLBufferByte src, long flags){
-        copy(src, flags);
+    public VLBufferByte(int resizeoverhead){
+        super(resizeoverhead);
     }
 
     protected VLBufferByte(){
@@ -189,13 +189,18 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
     public static class Normal extends VLBufferByte{
 
+        public Normal(int resizeoverhead){
+            super(resizeoverhead);
+        }
+
         public Normal(Normal src, long flags){
-            super(src, flags);
+            copy(src, flags);
         }
 
-        public Normal(){
+        protected Normal(){
 
         }
+
 
         @Override
         public ByteBuffer generateBuffer(int capacity, ByteOrder order){
@@ -214,11 +219,15 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
     public static class Direct extends VLBufferByte{
 
-        public Direct(Direct src, long flags){
-            super(src, flags);
+        public Direct(int resizeoverhead){
+            super(resizeoverhead);
         }
 
-        public Direct(){
+        public Direct(Direct src, long flags){
+            copy(src, flags);
+        }
+
+        protected Direct(){
 
         }
 

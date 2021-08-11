@@ -1,7 +1,7 @@
 package hypervisor.vanguard.buffer;
 
-import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.list.arraybacked.VLListType;
+import hypervisor.vanguard.utils.VLCopyable;
 import hypervisor.vanguard.variable.VLVTypeVariable;
 
 import java.nio.ByteBuffer;
@@ -10,8 +10,8 @@ import java.nio.IntBuffer;
 
 public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
-    public VLBufferInt(VLBufferInt src, long flags){
-        copy(src, flags);
+    public VLBufferInt(int resizeoverhead){
+        super(resizeoverhead);
     }
 
     protected VLBufferInt(){
@@ -190,11 +190,15 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
     public static class Normal extends VLBufferInt{
 
-        public Normal(Normal src, long flags){
-            super(src, flags);
+        public Normal(int resizeoverhead){
+            super(resizeoverhead);
         }
 
-        public Normal(){
+        public Normal(Normal src, long flags){
+            copy(src, flags);
+        }
+
+        protected Normal(){
 
         }
 
@@ -214,11 +218,15 @@ public abstract class VLBufferInt extends VLBuffer<Integer, IntBuffer>{
 
     public static class Direct extends VLBufferInt{
 
-        public Direct(Direct src, long flags){
-            super(src, flags);
+        public Direct(int resizeoverhead){
+            super(resizeoverhead);
         }
 
-        public Direct(){
+        public Direct(Direct src, long flags){
+            copy(src, flags);
+        }
+
+        protected Direct(){
 
         }
 

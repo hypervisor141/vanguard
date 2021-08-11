@@ -21,7 +21,7 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         preInitCapacity = 0;
     }
 
-    public ByteBuffer initialize(int capacity, ByteOrder order, int resizeoverhead){
+    public ByteBuffer initialize(ByteOrder order, int capacity, int resizeoverhead){
         this.resizeoverhead = resizeoverhead;
         return generateBuffer(capacity, order);
     }
@@ -36,16 +36,9 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         this.resizeoverhead = resizeoverhead;
     }
 
-    public ByteBuffer initialize(int capacity, ByteOrder order){
-        return initialize(capacity, order, 0);
-    }
-
-    public ByteBuffer initialize(ByteOrder order){
-        return initialize(order, 0);
-    }
-
-    public void initialize(BUFFER buffer){
-        initialize(buffer, 0);
+    public void initializeDirect(ByteBuffer buffer, int resizeoverhead){
+        this.resizeoverhead = resizeoverhead;
+        generateBuffer(buffer);
     }
 
     protected abstract ByteBuffer generateBuffer(int capacity, ByteOrder order);

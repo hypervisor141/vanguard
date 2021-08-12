@@ -849,12 +849,12 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     protected final void checkVirtualAttributes(int expansionsize){
         int currentsize = size();
-        int position = position();
+        int finalposition = position() + expansionsize;
 
-        if(vsize <= position){
-            vsize = position + 1;
+        if(vsize <= finalposition){
+            vsize = finalposition;
         }
-        if(resizeoverhead > 0 && position + expansionsize > currentsize){
+        if(resizeoverhead > 0 && finalposition > currentsize){
             resize(currentsize + expansionsize + resizeoverhead);
         }
     }

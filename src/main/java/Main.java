@@ -15,6 +15,7 @@ public class Main {
 
             for(int i = 0; i < 13; i++){
                 buffer.put((float)i);
+                System.out.println(buffer.position() + "   index " + i + "  " + buffer.virtualSize());
             }
 
             System.out.println(VLLoggable.Helper.getString("wtf", buffer, null));

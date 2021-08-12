@@ -1,9 +1,7 @@
 import hypervisor.vanguard.buffer.VLBufferFloat;
 import hypervisor.vanguard.utils.VLLoggable;
-import hypervisor.vanguard.variable.*;
 
 import java.nio.ByteOrder;
-import java.util.Random;
 
 public class Main {
 
@@ -16,11 +14,11 @@ public class Main {
             System.out.println(buffer.size() + "  ");
 
             for(int i = 0; i < 13; i++){
-                System.out.println(buffer.position() + "   index " + i);
                 buffer.put((float)i);
             }
 
             System.out.println(VLLoggable.Helper.getString("wtf", buffer, null));
+
         }catch(Exception ex){
             ex.printStackTrace();
         }

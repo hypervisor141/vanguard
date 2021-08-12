@@ -25,19 +25,19 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
     @Override
     public void put(byte data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put((byte)data.get());
     }
 
     @Override
     public void put(VLListType<VLVTypeVariable> data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
 
         int limit = offset + count;
 
@@ -48,7 +48,7 @@ public abstract class VLBufferByte extends VLBuffer<Byte, ByteBuffer>{
 
     @Override
     public void put(byte[] data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
         buffer.put(data, offset, count);
     }
 

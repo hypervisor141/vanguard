@@ -15,10 +15,12 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public BUFFER buffer;
     protected int preInitCapacity;
+    protected int vsize;
     protected int resizeoverhead;
 
     protected VLBuffer(int resizeoverhead){
         this.resizeoverhead = resizeoverhead;
+        vsize = 0;
         preInitCapacity = 0;
     }
 
@@ -845,10 +847,14 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
-    protected final void expandIfNeeded(int expansionsize){
+    protected final void checkVirtualAttributes(int expansionsize){
         int currentsize = size();
+        int position = position();
 
-        if(resizeoverhead > 0 && position() + expansionsize > currentsize){
+        if(vsize <= position){
+            vsize = position + 1;
+        }
+        if(resizeoverhead > 0 && position + expansionsize > currentsize){
             resize(currentsize + expansionsize + resizeoverhead);
         }
     }
@@ -869,15 +875,19 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         buffer.position(pos);
     }
 
+    public void positionToEndPoint(){
+        position(vsize);
+    }
+
+    public void virtualSize(int size){
+        vsize = size;
+    }
+
     public void resizeOverhead(int overhead){
         resizeoverhead = overhead;
     }
 
     public abstract void resize(int size);
-
-    public void adjustPreInitCapacity(int amount){
-        preInitCapacity += amount;
-    }
 
     public int position(){
         return buffer.position();
@@ -885,6 +895,14 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
 
     public int resizeOverhead(){
         return resizeoverhead;
+    }
+
+    public int virtualSize(){
+        return vsize;
+    }
+
+    public void adjustPreInitCapacity(int amount){
+        preInitCapacity += amount;
     }
 
     public abstract int getTypeBytes();

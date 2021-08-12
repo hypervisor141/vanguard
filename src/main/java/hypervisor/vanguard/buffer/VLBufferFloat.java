@@ -26,19 +26,19 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
 
     @Override
     public void put(float data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put(data.get());
     }
 
     @Override
     public void put(VLListType<VLVTypeVariable> data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
 
         int limit = offset + count;
 
@@ -49,7 +49,7 @@ public abstract class VLBufferFloat extends VLBuffer<Float, FloatBuffer>{
 
     @Override
     public void put(float[] data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
         buffer.put(data, offset, count);
     }
 

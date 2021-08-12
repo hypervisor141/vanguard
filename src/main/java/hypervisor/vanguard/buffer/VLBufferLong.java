@@ -26,19 +26,19 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
 
     @Override
     public void put(long data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put(data);
     }
 
     @Override
     public void put(VLVTypeVariable data){
-        expandIfNeeded(1);
+        checkVirtualAttributes(1);
         buffer.put((long)data.get());
     }
 
     @Override
     public void put(VLListType<VLVTypeVariable> data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
 
         int limit = offset + count;
 
@@ -49,7 +49,7 @@ public abstract class VLBufferLong extends VLBuffer<Long, LongBuffer>{
 
     @Override
     public void put(long[] data, int offset, int count){
-        expandIfNeeded(count);
+        checkVirtualAttributes(count);
         buffer.put(data, offset, count);
     }
 

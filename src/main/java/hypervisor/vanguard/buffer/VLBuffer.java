@@ -875,7 +875,12 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
         buffer.position(pos);
     }
 
-    public void positionToEndPoint(){
+    public void clear(){
+        buffer.clear();
+        vsize = 0;
+    }
+
+    public void positionVirtualSize(){
         position(vsize);
     }
 

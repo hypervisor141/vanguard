@@ -229,11 +229,11 @@ public final class VLListType<TYPE> extends VLListArrayBacked<Object[]> {
                         }
 
                     }else{
-                        throw new RuntimeException("List element type is not a VLCopyable type [" + srcarray[0].getClass().getSimpleName() + "]");
+                        throw new RuntimeException("Requested deep copy but list contains non-VLCopyable elements [" + srcarray[0].getClass().getSimpleName() + "]");
                     }
 
                 }else{
-                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_resizeoverheadREFERENCE_ARRAY", "FLAG_resizeoverheadDUPLICATE_ARRAY");
+                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS", "FLAG_DUPLICATE_ARRAY_FULLY");
                 }
 
             }else{

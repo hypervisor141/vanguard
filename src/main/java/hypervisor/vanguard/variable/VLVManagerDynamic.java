@@ -110,10 +110,10 @@ public class VLVManagerDynamic<ENTRY extends VLVTypeRunner> extends VLVManager<E
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
             if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
-                dynamicentries = target.dynamicentries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                dynamicentries = target.dynamicentries.duplicate(VLCopyable.FLAG_REFERENCE);
 
             }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
-                dynamicentries = target.dynamicentries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
+                dynamicentries = target.dynamicentries.duplicate(VLCopyable.FLAG_DUPLICATE);
 
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");

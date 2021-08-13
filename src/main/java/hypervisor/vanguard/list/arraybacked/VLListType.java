@@ -9,9 +9,6 @@ import java.util.Arrays;
 
 public final class VLListType<TYPE> extends VLListArrayBacked<Object[]> {
 
-    public static final long FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS = 0x1L;
-    public static final long FLAG_DUPLICATE_ARRAY_FULLY = 0x2L;
-
     public VLListType(int capacity, int resizeoverhead){
         super(0, resizeoverhead);
         backend = new Object[capacity];
@@ -193,51 +190,23 @@ public final class VLListType<TYPE> extends VLListArrayBacked<Object[]> {
             backend = src.backend();
 
         }else if((flags & FLAG_DUPLICATE) == FLAG_DUPLICATE){
-            backend = src.backend().clone();
+            Object[] srcarray = src.backend();
+            backend = new Object[srcarray.length];
 
-        }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
             int size = src.size();
 
-            if(size > 0){
-                Object[] srcarray = src.backend();
-                backend = new Object[srcarray.length];
+            for(int i = 0; i < size; i++){
+                Object item = srcarray[i];
 
-                if((flags & FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS) == FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS){
-                    if(srcarray[0] instanceof VLListType){
-                        for(int i = 0; i < size; i++){
-                            backend[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
-                        }
+                if(item instanceof VLListType){
+                    backend[i] = ((VLListType<?>)item).duplicate(FLAG_DUPLICATE);
 
-                    }else if(srcarray[0] instanceof VLCopyable){
-                        for(int i = 0; i < size; i++){
-                            backend[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_REFERENCE);
-                        }
-
-                    }else{
-                        throw new RuntimeException("List element type is not a VLCopyable type [" + srcarray[0].getClass().getSimpleName() + "]");
-                    }
-
-                }else if((flags & FLAG_DUPLICATE_ARRAY_FULLY) == FLAG_DUPLICATE_ARRAY_FULLY){
-                    if(srcarray[0] instanceof VLListType){
-                        for(int i = 0; i < size; i++){
-                            backend[i] = ((VLListType<?>)srcarray[i]).duplicate(FLAG_CUSTOM | FLAG_DUPLICATE_ARRAY_FULLY);
-                        }
-
-                    }else if(srcarray[0] instanceof VLCopyable){
-                        for(int i = 0; i < size; i++){
-                            backend[i] = ((VLCopyable<?>)srcarray[i]).duplicate(FLAG_DUPLICATE);
-                        }
-
-                    }else{
-                        throw new RuntimeException("Requested deep copy but list contains non-VLCopyable elements [" + srcarray[0].getClass().getSimpleName() + "]");
-                    }
+                }else if(item instanceof VLCopyable){
+                    backend[i] = ((VLCopyable<?>)item).duplicate(FLAG_DUPLICATE);
 
                 }else{
-                    VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS", "FLAG_DUPLICATE_ARRAY_FULLY");
+                    backend[i] = item;
                 }
-
-            }else{
-                backend = new Object[0];
             }
 
         }else{

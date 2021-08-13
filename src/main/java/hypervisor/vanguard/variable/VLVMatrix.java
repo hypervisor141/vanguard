@@ -94,10 +94,10 @@ public class VLVMatrix implements VLLoggable, VLCopyable<VLVMatrix> {
 
         }else if((flags & FLAG_CUSTOM) == FLAG_CUSTOM){
             if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
-                matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                matrix = src.matrix.duplicate(VLCopyable.FLAG_REFERENCE);
 
             }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
-                matrix = src.matrix.duplicate(FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
+                matrix = src.matrix.duplicate(VLCopyable.FLAG_DUPLICATE);
 
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");

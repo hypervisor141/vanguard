@@ -45,10 +45,10 @@ public class VLSyncParallel<SOURCE> extends VLSyncMap<SOURCE, VLListType<VLSyncT
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
             if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
-                target = syncer.target.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                target = syncer.target.duplicate(VLCopyable.FLAG_REFERENCE);
 
             }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
-                target = syncer.target.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
+                target = syncer.target.duplicate(VLCopyable.FLAG_DUPLICATE);
 
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");

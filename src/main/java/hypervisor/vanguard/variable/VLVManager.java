@@ -567,10 +567,10 @@ public class VLVManager<ENTRY extends VLVTypeRunner> implements VLVTypeManager<E
 
         }else if((flags & VLCopyable.FLAG_CUSTOM) == VLCopyable.FLAG_CUSTOM){
             if((flags & FLAG_REFERENCE_ENTRIES) == FLAG_REFERENCE_ENTRIES){
-                entries = target.entries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_BUT_REFERENCE_ELEMENTS);
+                entries = target.entries.duplicate(VLCopyable.FLAG_REFERENCE);
 
             }else if((flags & FLAG_DUPLICATE_ENTRIES) == FLAG_DUPLICATE_ENTRIES){
-                entries = target.entries.duplicate(VLCopyable.FLAG_CUSTOM | VLListType.FLAG_DUPLICATE_ARRAY_FULLY);
+                entries = target.entries.duplicate(VLCopyable.FLAG_DUPLICATE);
 
             }else{
                 VLCopyable.Helper.throwMissingSubFlags("FLAG_CUSTOM", "FLAG_REFERENCE_ENTRIES", "FLAG_DUPLICATE_ENTRIES");

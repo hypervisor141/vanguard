@@ -198,6 +198,10 @@ public final class VLListType<TYPE> extends VLListArrayBacked<Object[]> {
             for(int i = 0; i < size; i++){
                 Object item = srcarray[i];
 
+                if(item == null){
+                    continue;
+                }
+
                 if(item instanceof VLListType){
                     backend[i] = ((VLListType<?>)item).duplicate(FLAG_DUPLICATE);
 

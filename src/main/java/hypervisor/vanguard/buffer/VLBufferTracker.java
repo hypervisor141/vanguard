@@ -27,6 +27,8 @@ public class VLBufferTracker implements VLLoggable, VLCopyable<VLBufferTracker> 
 
     @Override
     public void copy(VLBufferTracker src, long flags){
+        srcoffset = src.srcoffset;
+        srccount = src.srccount;
         offset = src.offset;
         count = src.count;
         unitoffset = src.unitoffset;

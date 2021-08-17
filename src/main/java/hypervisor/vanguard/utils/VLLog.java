@@ -122,9 +122,8 @@ public class VLLog{
         tags.remove(tags.size() - 1);
     }
 
-    public void removeTags(){
-        tags.nullify();
-        tags.virtualSize(0);
+    public void clearTags(){
+        tags.clear();
     }
 
     public void removeDebugTags(){

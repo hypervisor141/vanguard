@@ -12,7 +12,7 @@ public class VLV implements VLVTypeVariable{
 
         @Override
         public void set(float value){
-            throw new RuntimeException("Can't modify a constant VLV.");
+            throw new UnsupportedOperationException("Can't modify a constant VLV.");
         }
 
         @Override

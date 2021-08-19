@@ -41,31 +41,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(byte data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(short data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(int data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(long data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(float data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(double data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(VLVTypeVariable data){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(byte[] data){
@@ -97,31 +97,31 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public void put(byte[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(short[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(int[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(long[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(float[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(double[] data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void put(VLListType<VLVTypeVariable> data, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public int put(byte[] data, int arrayoffset, int arraycount, int unitoffset, int unitsize, int unitsubcount, int stride){
@@ -796,55 +796,55 @@ public abstract class VLBuffer<ELEMENT extends Number, BUFFER extends Buffer> im
     }
 
     public ELEMENT read(int index){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(byte[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(short[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(int[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(long[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(float[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(double[] results, int arrayoffset, int arraycount){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, byte[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, short[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, int[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, long[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, float[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     public void read(VLBufferTracker tracker, double[] results, int offset){
-        throw new RuntimeException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
+        throw new UnsupportedOperationException("This method is not meant for this buffer type, current buffer type operates on " + buffer.getClass().getSimpleName());
     }
 
     protected final void checkVirtualAttributes(int expansionsize){

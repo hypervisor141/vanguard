@@ -197,7 +197,7 @@ public abstract class VLVariable extends VLV{
 
     @Override
     public VLVariable duplicate(long flags){
-        throw new RuntimeException("Can't clone this class directly");
+        throw new UnsupportedOperationException("Can't duplicate this class directly");
     }
 
     public abstract static class Loop{
